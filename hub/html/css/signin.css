@@ -1,0 +1,108 @@
+@font-face {
+    font-family: Poppins-Regular, sans-serif;
+    src: url('../font/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: PermanentMarker-Regular;
+    src: url('../font/PermanentMarker-Regular.ttf');
+}
+
+.preview-sign {
+    background-image: url('../img/preview_corewar.png');
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+    font-family: PermanentMarker-Regular, sans-serif;
+}
+
+.logo21-sign {
+    background-image: url('../img/preview_logo21.png');
+    background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    -webkit-background-size: cover;
+}
+
+.choice-sign {
+    font-family: Poppins-Regular, sans-serif;
+}
+
+@media (max-width: 140px) {
+    .preview-sign {
+        font-size: 1px;
+    }
+    .choice-sign {
+        font-size: 5px;
+    }
+    .logo21-sign {
+        width: 75px;
+        height: 75px;
+    }
+}
+
+@media (min-width: 340px) {
+    .preview-sign {
+        font-size: 15px;
+    }
+    .choice-sign {
+        font-size: 20px;
+    }
+    .logo21-sign {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (min-width: 576px) {
+    .preview-sign {
+        font-size: 25px;
+    }
+    .choice-sign {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 768px) {
+    .preview-sign {
+        font-size: 50px;
+    }
+    .choice-sign {
+        font-size: 25px;
+    }
+    .logo21-sign {
+        width: 125px;
+        height: 125px;
+    }
+}
+
+@media (min-width: 992px) {
+    .preview-sign {
+        font-size: 75px;
+    }
+    .choice-sign {
+        font-size: 30px;
+    }
+    .logo21-sign {
+        width: 150px;
+        height: 150px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .preview-sign {
+        font-size: 100px;
+    }
+    .choice-sign {
+        font-size: 30px;
+    }
+    .logo21-sign {
+        width: 175px;
+        height: 175px;
+    }
+}
+
+button {
+    font-family: Poppins-Regular, sans-serif;
+}
