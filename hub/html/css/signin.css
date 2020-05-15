@@ -1,5 +1,5 @@
 @font-face {
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Poppins-Regular;
     src: url('../font/Poppins-Regular.ttf');
 }
 
@@ -104,5 +104,5 @@
 }
 
 button {
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Poppins-Regular;
 }

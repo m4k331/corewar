@@ -1,0 +1,88 @@
+@font-face {
+    font-family: Righteous-Regular;
+    src: url('../font/Righteous-Regular.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../font/Poppins-Regular.ttf');
+}
+
+.navbar {
+    font-family: Poppins-Regular;
+}
+
+.new-game {
+    background-image: url('../img/new_game.png');
+    background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    -webkit-background-size: 100%;
+    height: 32vh;
+}
+
+.list-game {
+    background-image: url('../img/list_of_game.jpg');
+    background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    -webkit-background-size: 100%;
+    height: 32vh;
+}
+
+.statistics {
+    background-image: url('../img/statistics.jpg');
+    background-size: 100%;
+    -moz-background-size: 100%;
+    -o-background-size: 100%;
+    -webkit-background-size: 100%;
+    height: 32vh;
+}
+
+.card-body {
+    height: inherit;
+}
+
+.card-text {
+    font-family: Righteous-Regular;
+}
+
+@media (max-width: 340px) {
+    .card-text {
+        font-size: 40px;
+    }
+}
+
+@media (min-width: 340px) {
+    .card-text {
+        font-size: 45px;
+    }
+}
+
+@media (min-width: 576px) {
+    .card-text {
+        font-size: 65px;
+    }
+}
+
+@media (min-width: 768px) {
+    .card-text {
+        font-size: 75px;
+    }
+}
+
+@media (min-width: 992px) {
+    .card-text {
+        font-size: 85px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .card-text {
+        font-size: 100px;
+    }
+}
+
+body {
+    background-color: #1C1C1C;
+}
