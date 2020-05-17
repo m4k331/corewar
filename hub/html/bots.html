@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/fonts.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/profile.css">
+    <title>Profile</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand navbar-dark" href="index.html">
+            <img src="img/21.svg" width="30" height="30" class="d-inline-block align-top mr-3" alt="21">
+            CoreWar
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link" href="profile.html">Profile</a>
+                <a class="nav-item nav-link" href="#">New Game</a>
+                <a class="nav-item nav-link" href="#">List of Game</a>
+                <a class="nav-item nav-link" href="#">Statistics</a>
+                <a class="nav-item nav-link" href="#">Logout</a>
+            </div>
+        </div>
+    </nav>
+</header>
+<section>
+    <div class="container min-vh-100">
+        <div class="row border-0 m-2 shadow">
+            <div class="col">
+                <div class="row label m-1">Ahugh Bots:</div>
+                <div class="row m-1">
+                    <div id="list-bots" class="col-4 list-group text-center">
+                        <a class="list-group-item list-group-item-action list-group-item-dark field p-1" href="#list-item-1">Item 1</a>
+                        <a class="list-group-item list-group-item-action list-group-item-dark field p-1" href="#list-item-2">Item 2</a>
+                        <a class="list-group-item list-group-item-action list-group-item-dark field p-1" href="#list-item-3">Item 3</a>
+                        <a class="list-group-item list-group-item-action list-group-item-dark field p-1" href="#list-item-4">Item 4</a>
+                    </div>
+                    <div data-spy="scroll" data-target="#list-bots" data-offset="1" class="col overflow-auto code">
+                        <h4 id="list-item-1" class="label">Item 1</h4>
+                        <pre>
+                                        <code class="field">
+func oauth(w http.ResponseWriter, r *http.Request) {
+	httpClient := http.Client{}
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Printf("Could not parse query: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	code := r.FormValue("code")
+
+	urii := `http%3A%2F%2Flocalhost%3A4221%2Foauth`
+	reqURL := fmt.Sprintf("https://api.intra.42.fr/oauth/token?grant_type=authorization_code&client_id=%s&client_secret=%s&code=%s&redirect_uri=%s", clientID, clientSecret, code, urii)
+	req, err := http.NewRequest(http.MethodPost, reqURL, nil)
+	if err != nil {
+		fmt.Printf("Could not create HTTP request: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("accept", "application/json")
+
+	res, err := httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Could not send HTTP request: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
+
+	var t OAuthAccessResponse
+	if err := json.NewDecoder(res.Body).Decode(&t); err != nil {
+		fmt.Printf("Could not parse JSON response: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	meReq := "https://api.intra.42.fr/v2/me"
+	header := strings.Title(t.Type) + " " + t.AccessToken
+
+	req, err = http.NewRequest(http.MethodGet, meReq, nil)
+	if err != nil {
+		fmt.Printf("Could not create HTTP request: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("Authorization", header)
+
+	res, err = httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Could not send HTTP request: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
+
+	var user IntraUser
+	if err := json.NewDecoder(res.Body).Decode(&user); err != nil {
+		fmt.Printf("Could not parse JSON response: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	fmt.Printf("OPS: %+v\n", user)
+}
+                                        </code>
+                                    </pre>
+                        <h4 id="list-item-2" class="label">Item 2</h4>
+                        <pre>
+                                        <code class="field">
+func oauth(w http.ResponseWriter, r *http.Request) {
+	httpClient := http.Client{}
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Printf("Could not parse query: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	code := r.FormValue("code")
+
+	urii := `http%3A%2F%2Flocalhost%3A4221%2Foauth`
+	reqURL := fmt.Sprintf("https://api.intra.42.fr/oauth/token?grant_type=authorization_code&client_id=%s&client_secret=%s&code=%s&redirect_uri=%s", clientID, clientSecret, code, urii)
+	req, err := http.NewRequest(http.MethodPost, reqURL, nil)
+	if err != nil {
+		fmt.Printf("Could not create HTTP request: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("accept", "application/json")
+
+	res, err := httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Could not send HTTP request: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
+
+	var t OAuthAccessResponse
+	if err := json.NewDecoder(res.Body).Decode(&t); err != nil {
+		fmt.Printf("Could not parse JSON response: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	meReq := "https://api.intra.42.fr/v2/me"
+	header := strings.Title(t.Type) + " " + t.AccessToken
+
+	req, err = http.NewRequest(http.MethodGet, meReq, nil)
+	if err != nil {
+		fmt.Printf("Could not create HTTP request: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("Authorization", header)
+
+	res, err = httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Could not send HTTP request: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
+
+	var user IntraUser
+	if err := json.NewDecoder(res.Body).Decode(&user); err != nil {
+		fmt.Printf("Could not parse JSON response: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	fmt.Printf("OPS: %+v\n", user)
+}
+                                    </code>
+                                        </pre>
+                        <h4 id="list-item-3" class="label">Item 3</h4>
+                        <pre>
+                                        <code class="field">
+func oauth(w http.ResponseWriter, r *http.Request) {
+	httpClient := http.Client{}
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Printf("Could not parse query: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	code := r.FormValue("code")
+
+	urii := `http%3A%2F%2Flocalhost%3A4221%2Foauth`
+	reqURL := fmt.Sprintf("https://api.intra.42.fr/oauth/token?grant_type=authorization_code&client_id=%s&client_secret=%s&code=%s&redirect_uri=%s", clientID, clientSecret, code, urii)
+	req, err := http.NewRequest(http.MethodPost, reqURL, nil)
+	if err != nil {
+		fmt.Printf("Could not create HTTP request: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("accept", "application/json")
+
+	res, err := httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Could not send HTTP request: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
+
+	var t OAuthAccessResponse
+	if err := json.NewDecoder(res.Body).Decode(&t); err != nil {
+		fmt.Printf("Could not parse JSON response: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	meReq := "https://api.intra.42.fr/v2/me"
+	header := strings.Title(t.Type) + " " + t.AccessToken
+
+	req, err = http.NewRequest(http.MethodGet, meReq, nil)
+	if err != nil {
+		fmt.Printf("Could not create HTTP request: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("Authorization", header)
+
+	res, err = httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Could not send HTTP request: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
+
+	var user IntraUser
+	if err := json.NewDecoder(res.Body).Decode(&user); err != nil {
+		fmt.Printf("Could not parse JSON response: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	fmt.Printf("OPS: %+v\n", user)
+}
+                                    </code>
+                                        </pre>
+                        <h4 id="list-item-4" class="label">Item 4</h4>
+                        <pre>
+                                        <code class="field">
+func oauth(w http.ResponseWriter, r *http.Request) {
+	httpClient := http.Client{}
+	err := r.ParseForm()
+	if err != nil {
+		fmt.Printf("Could not parse query: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	code := r.FormValue("code")
+
+	urii := `http%3A%2F%2Flocalhost%3A4221%2Foauth`
+	reqURL := fmt.Sprintf("https://api.intra.42.fr/oauth/token?grant_type=authorization_code&client_id=%s&client_secret=%s&code=%s&redirect_uri=%s", clientID, clientSecret, code, urii)
+	req, err := http.NewRequest(http.MethodPost, reqURL, nil)
+	if err != nil {
+		fmt.Printf("Could not create HTTP request: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("accept", "application/json")
+
+	res, err := httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Could not send HTTP request: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
+
+	var t OAuthAccessResponse
+	if err := json.NewDecoder(res.Body).Decode(&t); err != nil {
+		fmt.Printf("Could not parse JSON response: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	meReq := "https://api.intra.42.fr/v2/me"
+	header := strings.Title(t.Type) + " " + t.AccessToken
+
+	req, err = http.NewRequest(http.MethodGet, meReq, nil)
+	if err != nil {
+		fmt.Printf("Could not create HTTP request: %v\n", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+	req.Header.Set("Authorization", header)
+
+	res, err = httpClient.Do(req)
+	if err != nil {
+		fmt.Printf("Could not send HTTP request: %v", err)
+		w.WriteHeader(http.StatusInternalServerError)
+		return
+	}
+	defer res.Body.Close()
+
+	var user IntraUser
+	if err := json.NewDecoder(res.Body).Decode(&user); err != nil {
+		fmt.Printf("Could not parse JSON response: %v", err)
+		w.WriteHeader(http.StatusBadRequest)
+		return
+	}
+
+	fmt.Printf("OPS: %+v\n", user)
+}
+                                    </code>
+                                        </pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+		<div class="row m-3 justify-content-center">
+			<form action="load_bot.html" method="post" id="load" class="col justify-content-center p-0">
+				<button type="submit" form="load" value="load" class="col btn btn-dark border-white label">Load</button>
+			</form>
+			<form action="edit_bot.html" method="post" id="edit" class="col justify-content-center p-0">
+				<button type="submit" form="edit" value="edit" class="col btn btn-dark border-white label">Edit</button>
+			</form>
+			<form action="delete_bot.html" method="post" id="delete" class="col justify-content-center p-0">
+				<button type="submit" form="delete" value="delete" class="col btn btn-dark border-white label">Delete</button>
+			</form>
+		</div>
+    </div>
+</section>
+<footer>
+    <div class="footer-copyright text-center bg-dark">© 2020 Copyright:
+        <a class="text-white" href="https://21-school.ru/">21-school.ru</a>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+</body>
+</html>
