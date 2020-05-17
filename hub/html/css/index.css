@@ -1,17 +1,3 @@
-@font-face {
-    font-family: Righteous-Regular;
-    src: url('../font/Righteous-Regular.ttf');
-}
-
-@font-face {
-    font-family: Poppins-Regular;
-    src: url('../font/Poppins-Regular.ttf');
-}
-
-.navbar {
-    font-family: Poppins-Regular;
-}
-
 .new-game {
     background-image: url('../img/new_game.png');
     background-size: 100%;

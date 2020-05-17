@@ -1,20 +1,10 @@
-@font-face {
-    font-family: Poppins-Regular;
-    src: url('../font/Poppins-Regular.ttf');
-}
-
-@font-face {
-    font-family: PermanentMarker-Regular;
-    src: url('../font/PermanentMarker-Regular.ttf');
-}
-
 .preview-sign {
     background-image: url('../img/preview_corewar.png');
     background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     -webkit-background-size: cover;
-    font-family: PermanentMarker-Regular, sans-serif;
+    font-family: PermanentMarker-Regular;
 }
 
 .logo21-sign {
@@ -26,7 +16,7 @@
 }
 
 .choice-sign {
-    font-family: Poppins-Regular, sans-serif;
+    font-family: Poppins-Regular;
 }
 
 @media (max-width: 140px) {
