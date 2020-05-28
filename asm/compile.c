@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   compile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:47:45 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:47:53 by dorphan          ###   ########.fr       */

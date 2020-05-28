@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parse_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:53:31 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:53:33 by dorphan          ###   ########.fr       */
@@ -42,7 +42,7 @@ void		delete_token(t_data *data)
 	}
 }
 
-int		parse_label(t_data *data)
+int			parse_label(t_data *data)
 {
 	data->current_token = data->current_token->next;
 	if (ft_strcmp(data->current_token->type, "INSTRUCTION") &&

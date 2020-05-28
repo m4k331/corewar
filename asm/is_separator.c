@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   is_separator.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:51:01 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:51:03 by dorphan          ###   ########.fr       */

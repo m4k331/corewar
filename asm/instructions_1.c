@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   instructions_1.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:49:08 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:49:21 by dorphan          ###   ########.fr       */
@@ -24,9 +24,10 @@ int			op_and_or_xor(t_data *data)
 		args_calc++;
 		if (args_calc > 3)
 			return (error_invalid_arg(data, arg, args_calc - 1));
-		if ((args_calc == 1 || args_calc == 2) && ft_strncmp(arg->type, "INDIRECT", 8) &&
-													ft_strcmp(arg->type, "REGISTER") &&
-													ft_strncmp(arg->type, "DIRECT", 6))
+		if ((args_calc == 1 || args_calc == 2)
+				&& ft_strncmp(arg->type, "INDIRECT", 8)
+				&& ft_strcmp(arg->type, "REGISTER")
+				&& ft_strncmp(arg->type, "DIRECT", 6))
 			return (error_invalid_arg(data, arg, args_calc - 1));
 		if (args_calc == 3 && ft_strcmp(arg->type, "REGISTER"))
 			return (error_invalid_arg(data, arg, args_calc - 1));
@@ -73,7 +74,7 @@ int			op_st(t_data *data)
 			return (error_invalid_arg(data, arg, args_calc - 1));
 		if (args_calc == 1 && ft_strcmp(arg->type, "REGISTER"))
 			return (error_invalid_arg(data, arg, args_calc - 1));
-		if (args_calc == 2  && ft_strncmp(arg->type, "INDIRECT", 8)
+		if (args_calc == 2 && ft_strncmp(arg->type, "INDIRECT", 8)
 				&& ft_strcmp(arg->type, "REGISTER"))
 			return (error_invalid_arg(data, arg, args_calc - 1));
 		arg = arg->next;

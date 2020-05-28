@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:48:50 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:48:52 by dorphan          ###   ########.fr       */
@@ -12,21 +12,21 @@
 
 #include "asm.h"
 
-char	*g_name_of_type[] = {
-		"ENDLINE",
-		"NAME",
-		"NAME_COMMENT",
-		"STRING",
-		"COMMENT",
-		"SEPARATOR",
-		"INDIRECT",
-		"INDIRECT_LABEL",
-		"DIRECT",
-		"DIRECT_LABEL",
-		"LABEL",
-		"INSTRUCTION",
-		"REGISTER",
-		"END"
+char		*g_name_of_type[] = {
+	"ENDLINE",
+	"NAME",
+	"NAME_COMMENT",
+	"STRING",
+	"COMMENT",
+	"SEPARATOR",
+	"INDIRECT",
+	"INDIRECT_LABEL",
+	"DIRECT",
+	"DIRECT_LABEL",
+	"LABEL",
+	"INSTRUCTION",
+	"REGISTER",
+	"END"
 };
 
 int			init_buffer(t_data *data)
@@ -38,7 +38,7 @@ int			init_buffer(t_data *data)
 	len = data->current_byte + PROG_NAME_LENGTH + COMMENT_LENGTH + 17;
 	if (!(data->buffer = (unsigned char*)malloc(len)))
 	{
-		ft_putstr_fd(ERROR_MEMORY_ALLOCATION,2);
+		ft_putstr_fd(ERROR_MEMORY_ALLOCATION, 2);
 		return (0);
 	}
 	while (i < len)
@@ -65,7 +65,7 @@ t_token		*init_token(t_data *data, char *line, int type, int len)
 
 	if (!(token = (t_token *)malloc(sizeof(t_token))))
 	{
-		ft_putstr_fd(ERROR_MEMORY_ALLOCATION,2);
+		ft_putstr_fd(ERROR_MEMORY_ALLOCATION, 2);
 		return (NULL);
 	}
 	token->char_num = data->char_num;
@@ -93,7 +93,7 @@ t_data		*init_data(void)
 
 	if ((data = (t_data*)malloc(sizeof(t_data))) == NULL)
 	{
-		ft_putstr_fd(ERROR_MEMORY_ALLOCATION,2);
+		ft_putstr_fd(ERROR_MEMORY_ALLOCATION, 2);
 		return (NULL);
 	}
 	data->fd = 0;

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   parse_instruction.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:53:05 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:53:06 by dorphan          ###   ########.fr       */

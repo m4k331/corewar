@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:51:33 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:51:35 by dorphan          ###   ########.fr       */
@@ -27,12 +27,12 @@ int			get_tokens_from_line_2(t_data *data, char *line)
 	else if (line[data->char_num] == LABEL_CHAR && is_label_char(data, line))
 		return (1);
 	else if (((line[data->char_num] == '-'
-			   && ft_isdigit(line[data->char_num + 1]))
-			  || ft_isdigit(line[data->char_num]))
-			 && is_num(data, line))
+				&& ft_isdigit(line[data->char_num + 1]))
+				|| ft_isdigit(line[data->char_num]))
+				&& is_num(data, line))
 		return (1);
 	else if (ft_strchr(LABEL_CHARS, line[data->char_num])
-			 && is_label_instr_reg(data, line))
+				&& is_label_instr_reg(data, line))
 		return (1);
 	return (0);
 }
@@ -47,13 +47,13 @@ int			get_tokens_from_line(t_data *data, char *line)
 			get_continue_of_string(data, line);
 		else if (line[data->char_num] == ' ' || line[data->char_num] == '\t')
 			data->char_num++;
-		else if (get_tokens_from_line_2(data,line))
+		else if (get_tokens_from_line_2(data, line))
 			continue ;
 		else
 			return (lex_error_label(data, data->char_num + 1));
 	}
 	if (line[0] && data->current_token && data->current_token->is_finished)
-		init_token(data, line,  ENDLINE, 1);
+		init_token(data, line, ENDLINE, 1);
 	return (1);
 }
 

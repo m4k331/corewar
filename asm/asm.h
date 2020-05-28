@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/05/27 17:46:28 by dorphan           #+#    #+#             */
-/*   Updated: 2020/05/27 17:46:40 by dorphan          ###   ########.fr       */
+/*   Created: 2020/05/28 13:22:39 by dorphan           #+#    #+#             */
+/*   Updated: 2020/05/28 13:22:51 by dorphan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 */
 
 # define USAGE "Usage: ./asm champion_name.s\n"
-
 
 /*
 ** ERRORS
@@ -33,12 +32,11 @@
 # define ERROR_LONG_COMMENT "Champion comment too long (Max length 2048)\n"
 # define ERROR_LEXICAL "Lexical error at "
 # define ERROR_SYNTAX "Syntax error at token [TOKEN]"
-# define ERROR_NO_END_OF_LINE "Syntax error - unexpected end of input (Perhaps you forgot to end with a newline?)\n"
+# define ERROR_NO_END_OF_LINE "Syntax error - unexpected end of input\n"
 # define ERROR_INVALID_INSTRUCTION "Invalid instruction at token [TOKEN]"
 # define ERROR_INVALID_ARG "Invalid parameter "
 # define ERROR_INVALID_ARGS_COUNT "Invalid parameter count for instruction "
 # define ERROR_NO_LABEL "No such label "
-
 
 /*
 ** Types of tokens
@@ -51,10 +49,8 @@
 # define COMMENT 4
 # define LABEL 5
 
-
 # include "libft/includes/libft.h"
 # include "op.h"
-
 
 /*
 ** tokens list
@@ -76,7 +72,6 @@ typedef struct		s_token
 	struct s_token	*args;
 	struct s_token	*next;
 }					t_token;
-
 
 /*
 ** main data structure
@@ -119,7 +114,6 @@ int					compile(char *filename);
 /*
 ** initialization.c
 */
-int					increase_buffer(t_data *data);
 int					init_buffer(t_data *data);
 t_token				*init_token(t_data *data, char *line, int type, int len);
 t_data				*init_data(void);
@@ -132,26 +126,23 @@ int					lexer(t_data *data, char *filename);
 /*
 ** check_last_end.c
 */
-int 				check_last_end(t_data *data, char *filename);
+int					check_last_end(t_data *data, char *filename);
 
 /*
 ** memory_cleaning.c
 */
 void				free_data(t_data *data);
 
-
 /*
 ** is_name_or_comment.c
 */
 int					is_name_or_comment(t_data *data, char *line);
-
 
 /*
 ** is_string.c
 */
 int					get_continue_of_string(t_data *data, char *line);
 int					is_string(t_data *data, char *line);
-
 
 /*
 ** is_comment.c
@@ -167,14 +158,12 @@ int					is_separator(t_data *data, char *line);
 ** is_label_char.c
 */
 int					is_lonely_label_char(t_data *data);
-int 				is_label_char(t_data *data, char *line);
-
+int					is_label_char(t_data *data, char *line);
 
 /*
 ** is_direct.c
 */
 int					is_direct(t_data *data, char *line);
-
 
 /*
 ** is_num.c
@@ -222,7 +211,6 @@ int					op_st(t_data *data);
 int					op_add_sub(t_data *data);
 int					op_and_or_xor(t_data *data);
 
-
 /*
 ** instructions_2.c
 */
@@ -234,7 +222,6 @@ int					op_aff(t_data *data);
 ** make_hex_buffer.c
 */
 int					make_hex_buffer(t_data *data);
-
 
 /*
 ** put_commands.c
@@ -249,7 +236,8 @@ void				calc_sizes(t_data *data);
 /*
 ** get_op_weight.c
 */
-void				get_op_weight(t_data *data, unsigned char op_code, int t_dir_size, unsigned char args_code);
+void				get_op_weight(t_data *data, unsigned char op_code,
+									int t_dir_size, unsigned char args_code);
 
 /*
 ** make_file.c.c

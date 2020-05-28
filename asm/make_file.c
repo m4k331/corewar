@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   make_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:51:57 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:51:59 by dorphan          ###   ########.fr       */
@@ -22,7 +22,7 @@ char		*make_filename(char *filename)
 	i = 0;
 	if (!(dot_cor = (char*)malloc(len + 4)))
 	{
-		ft_putstr_fd(ERROR_MEMORY_ALLOCATION,2);
+		ft_putstr_fd(ERROR_MEMORY_ALLOCATION, 2);
 		return (NULL);
 	}
 	while (i < len)

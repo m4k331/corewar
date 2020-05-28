@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   is_label_instr_reg.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:50:28 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:50:30 by dorphan          ###   ########.fr       */
@@ -70,13 +70,14 @@ int		is_label_instr_reg(t_data *data, char *line)
 	if (line[i] && line[i] == LABEL_CHAR)
 		return (is_label(data, line, i));
 	else if (!line[i] || line[i] == ' ' || line[i] == '\t'
-				|| line[i] == SEPARATOR_CHAR || line[i] == DIRECT_CHAR || line[i] == '-')
+				|| line[i] == SEPARATOR_CHAR
+				|| line[i] == DIRECT_CHAR || line[i] == '-')
 	{
-		if (line[data->char_num] == 'r' && ((i - data->char_num == 2 && digit_counter == 1)
-											|| (i - data->char_num == 3 && digit_counter == 2)))
+		if (line[data->char_num] == 'r'
+				&& ((i - data->char_num == 2 && digit_counter == 1)
+				|| (i - data->char_num == 3 && digit_counter == 2)))
 			return (is_register(data, line, i));
-		else
-			return (is_instruction(data, line, i));
+		return (is_instruction(data, line, i));
 	}
 	else
 		return (lex_error_label(data, i));

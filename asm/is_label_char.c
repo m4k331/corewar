@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   is_label_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:50:09 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:50:12 by dorphan          ###   ########.fr       */
@@ -24,7 +24,7 @@ int		is_lonely_label_char(t_data *data)
 	return (0);
 }
 
-int 	is_label_char(t_data *data, char *line)
+int		is_label_char(t_data *data, char *line)
 {
 	int	i;
 
@@ -38,7 +38,6 @@ int 	is_label_char(t_data *data, char *line)
 	{
 		data->char_num = i;
 		return (1);
-
 	}
 	return (0);
 }

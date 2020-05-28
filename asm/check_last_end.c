@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   check_last_end.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:47:33 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:47:36 by dorphan          ###   ########.fr       */
@@ -20,15 +20,15 @@ int			opening_error_2(char *filename)
 	return (0);
 }
 
-int			no_end_of_line()
+int			no_end_of_line(void)
 {
-	ft_putstr_fd(ERROR_NO_END_OF_LINE,2);
+	ft_putstr_fd(ERROR_NO_END_OF_LINE, 2);
 	return (0);
 }
 
-int 		check_last_end(t_data *data, char *filename)
+int			check_last_end(t_data *data, char *filename)
 {
-	char 	buf[1001];
+	char	buf[1001];
 	int		ret;
 	int		len;
 	char	last_char;

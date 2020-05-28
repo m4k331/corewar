@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   put_commands.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:53:55 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:53:57 by dorphan          ###   ########.fr       */
@@ -12,7 +12,8 @@
 
 #include "asm.h"
 
-int					put_num(t_data *data, t_token *arg, int *current_pos, long content)
+int					put_num(t_data *data, t_token *arg,
+							int *current_pos, long content)
 {
 	char			sign;
 	unsigned char	*byte;
@@ -32,7 +33,8 @@ int					put_num(t_data *data, t_token *arg, int *current_pos, long content)
 	return (1);
 }
 
-int					put_label(t_data *data, t_token *arg, int *current_pos, char *c)
+int					put_label(t_data *data, t_token *arg,
+								int *current_pos, char *c)
 {
 	t_token			*tmp;
 	int				len;

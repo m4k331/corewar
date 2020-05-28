@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   get_op_weight.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:48:37 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:48:40 by dorphan          ###   ########.fr       */
@@ -54,7 +54,8 @@ void		if_register(t_data *data, t_token **arg, int arg_num)
 	*arg = (*arg)->next;
 }
 
-void		get_op_weight(t_data *data, unsigned char op_code, int t_dir_size, unsigned char args_code)
+void		get_op_weight(t_data *data, unsigned char op_code,
+							int t_dir_size, unsigned char args_code)
 {
 	t_token	*arg;
 	int		arg_num;

@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   check_file_name.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:47:14 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:47:18 by dorphan          ###   ########.fr       */

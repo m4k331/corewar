@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   is_direct.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:49:52 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:49:55 by dorphan          ###   ########.fr       */

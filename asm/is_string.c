@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   is_string.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <dorphan@student.21-school.ru      +#+  +:+       +#+        */
+/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:51:20 by dorphan           #+#    #+#             */
 /*   Updated: 2020/05/27 17:51:22 by dorphan          ###   ########.fr       */
@@ -21,8 +21,8 @@ void		free_tmp_pointers(char *tmp, char *tmp_2)
 int			get_continue_of_string(t_data *data, char *line)
 {
 	int		i;
-	char 	*tmp;
-	char 	*tmp_2;
+	char	*tmp;
+	char	*tmp_2;
 
 	i = 0;
 	while (line[i] && line[i] != '\"')
@@ -72,7 +72,8 @@ int			is_string(t_data *data, char *line)
 		if (!init_token(data, line, STRING, i - data->char_num))
 			return (memory_allocation_error());
 		tmp = data->current_token->content;
-		data->current_token->content = ft_strjoin(data->current_token->content, "\n");
+		data->current_token->content =
+				ft_strjoin(data->current_token->content, "\n");
 		free(tmp);
 		data->current_token->is_finished = 0;
 		data->char_num = i;
