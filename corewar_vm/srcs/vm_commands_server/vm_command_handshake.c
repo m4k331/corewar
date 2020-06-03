@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 07:31:39 by kona              #+#    #+#             */
-/*   Updated: 2020/04/10 07:36:39 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/03 16:11:53 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			vm_command_handshake_recv(t_io_interface *io)
 	uint8_t	*msg;
 	int		i;
 
-	if (vm_socket_receive_data_wait(io, 5 + 2 * ONLINE) != 5 + 2 * ONLINE)
+	if (vm_socket_receive_data_wait(io, 5 + 4 * ONLINE) != 5 + 4 * ONLINE)
 		return (vm_nofity_err(io->err_fd, ERR_SZ_HNDSHK, CD_ERR_SZ_HNDSHK));
 	msg = (uint8_t*)io->netbuf->start;
 	if (msg[0] != TYPE_HANDSHAKE)
@@ -43,7 +43,7 @@ int			vm_command_handshake_recv(t_io_interface *io)
 	i = -1;
 	while (++i < ONLINE)
 		((t_input*)io->superior)->wk_sockets[i] =
-		ft_itoa(vm_socket_bytes_to_int(msg + 5 + i * 2, 2));
+		ft_itoa(vm_socket_bytes_to_int(msg + 5 + i * 4, 4));
 	ft_printfd(io->cout, " from %s:%s received\n",
 			io->address, io->port);
 	return (0);

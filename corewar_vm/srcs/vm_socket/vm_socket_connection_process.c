@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 08:06:36 by kona              #+#    #+#             */
-/*   Updated: 2020/04/10 08:15:34 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/03 17:31:18 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ static void				*get_in_addr(struct sockaddr *sa)
 		return (&(((struct sockaddr_in*)sa)->sin_addr));
 	return (&(((struct sockaddr_in6*)sa)->sin6_addr));
 }
+static in_port_t		get_in_port(struct sockaddr *sa)
+{
+	if (sa->sa_family == AF_INET)
+		return (((struct sockaddr_in*)sa)->sin_port);
+	return (((struct sockaddr_in6*)sa)->sin6_port);
+}
 
 static struct addrinfo	*vm_connection_getservinfo(t_io_interface *io,
 						struct addrinfo	**servinfo)
@@ -60,6 +66,9 @@ static struct addrinfo	*vm_connection_getservinfo(t_io_interface *io,
 		vm_socket_io_clean(io);
 		return (NULL);
 	}
+	io->sock_fd = get_in_port((*servinfo)->ai_addr);
+	ft_printfd(io->err_fd,"Assigned port is %d\n",
+			io->sock_fd);
 	return (*servinfo);
 }
 

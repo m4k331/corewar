@@ -229,6 +229,7 @@ void						vm_worker_fill_io_interface(t_io_interface *io,
 {
 	io->address = input->io->address;
 	io->port = input->wk_sockets[id_wk];
+	vm_socket_fill(&(input->io->hints));
 }
 
 void						vm_worker_set_interface(t_worker *worker,
