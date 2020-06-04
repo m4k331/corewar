@@ -15,10 +15,9 @@ type HandshakeVM struct {
 }
 
 func readHandshakeVM(conn net.Conn) (*HandshakeVM, error) {
-	var (
-		e error
-		m *HandshakeVM
-	)
+	var e error
+
+	m := &HandshakeVM{}
 
 	m.Type = TypeMsgHandshakeVM
 	if e = binary.Read(conn, binary.BigEndian, &m.Key); e != nil {

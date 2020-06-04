@@ -34,13 +34,6 @@ func handleConnection(conn net.Conn, handler func(net.Conn) error) {
 		addr = conn.RemoteAddr().String()
 	)
 
-	// TODO: delete
-	go func() {
-		timer := time.NewTimer(time.Second * 5)
-		<-timer.C
-		tmpInitialGame(conn, 3) // n - number champs
-	}()
-
 	for {
 		err = handler(conn)
 		if err != nil {
@@ -63,5 +56,11 @@ func main() {
 		}
 		fmt.Printf("Connect to hub %+v\n", conn.RemoteAddr().String())
 		go handleConnection(conn, handleGeneralSocket)
+		// TODO: delete
+		go func() {
+			timer := time.NewTimer(time.Second * 10)
+			<-timer.C
+			tmpInitialGame(conn, 3) // n - number champs
+		}()
 	}
 }

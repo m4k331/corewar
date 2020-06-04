@@ -27,8 +27,8 @@ func readGameStatus(conn net.Conn) (*GameStatus, error) {
 	var (
 		n int
 		e error
-		m *GameStatus
 	)
+	m := &GameStatus{}
 
 	m.Type = TypeMsgGameStatus
 	if e = binary.Read(conn, binary.BigEndian, &m.Id); e != nil {

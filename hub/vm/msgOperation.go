@@ -19,8 +19,8 @@ func readOperation(conn net.Conn) (*Operation, error) {
 	var (
 		n int
 		e error
-		m *Operation
 	)
+	m := &Operation{}
 
 	m.Type = TypeMsgOperation
 	if e = binary.Read(conn, binary.BigEndian, &m.Id); e != nil {

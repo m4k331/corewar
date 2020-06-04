@@ -18,8 +18,8 @@ func readEndOfGame(conn net.Conn) (*EndOfGame, error) {
 	var (
 		n int
 		e error
-		m *EndOfGame
 	)
+	m := &EndOfGame{}
 
 	m.Type = TypeMsgEndOfGame
 	if e = binary.Read(conn, binary.BigEndian, &m.Id); e != nil {
