@@ -42,7 +42,7 @@
 # define TYPE_GAME_END			7
 # define TIMEOUT_CONNECT		5000
 # define TIMEOUT_RECV			5000
-# define MAXDATASIZE			1024
+# define MAXDATASIZE			1024 * 10
 # define NETBUF_INITLEN			4096
 
 typedef struct					s_message_header

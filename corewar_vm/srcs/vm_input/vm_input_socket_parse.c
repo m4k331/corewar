@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 07:48:44 by kona              #+#    #+#             */
-/*   Updated: 2020/04/10 08:00:12 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 01:16:11 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int						vm_input_socket_receive_header(t_input *input,
 	head->msg_type = *((uint8_t*)input->io->netbuf->start);
 	head->game_id = (int)*((int*)input->io->netbuf->start + 1);
 	head->msg_len = (int)*((int*)input->io->netbuf->start + 5);
+	// TODO: delete
+	ft_printf("MSG_TYPE: %d, GAME_ID: %d, MSG_LEN: %d", head->msg_type, head->game_id, head->msg_len);
 	return (head->msg_type);
 }
 
@@ -60,7 +62,10 @@ int						vm_input_socket_message_receive(t_input *input)
 
 	ft_bzero(&header, sizeof(t_message_header));
 	if (!vm_input_socket_receive_header(input, &header))
+	{
+		ft_printfd(input->io->err_fd, "Error: wrong socket header message\n");
 		return (0);
+	}
 	darr_remove_front(input->io->netbuf, input->io->netbuf->len);
 	if (header.msg_len != vm_socket_receive_data(input->io, header.msg_len))
 	{
