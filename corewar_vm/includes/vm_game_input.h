@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:24:18 by limry             #+#    #+#             */
-/*   Updated: 2020/04/10 08:36:52 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 14:43:34 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ int					vm_input_parse_champ_online(t_champ *champ,
 void				vm_input_create_queue(t_input *input);
 t_gminput			*vm_input_av_parse(t_input *input);
 int					vm_input_recieve_data(t_input *input);
-int					vm_input_socket_game_received(t_input *input);
+int					vm_input_socket_is_game_received(t_input *input);
 
 #endif

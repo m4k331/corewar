@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 08:48:27 by kona              #+#    #+#             */
-/*   Updated: 2020/04/10 10:27:13 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 18:48:08 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,13 @@
 */
 # define OFFLINE		-1
 # define ONLINE			3
+/*
+** structure of head is following:
+** 1 byte  -  message type
+** 4 bytes -  game id
+** 4 bytes -  len msg
+*/
+# define HEADER_MSG_LEN 9
 
 typedef struct			s_short_champ
 {

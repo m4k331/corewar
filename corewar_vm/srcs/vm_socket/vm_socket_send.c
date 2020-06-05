@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 08:04:59 by kona              #+#    #+#             */
-/*   Updated: 2020/04/10 08:05:04 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 15:04:35 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int			vm_socket_send(int fd, void *data, int num_bytes)
 	total = 0;
 	left = num_bytes;
 	sended = 0;
-	while (left)
+	while (left > 0)
 	{
 		sended = send(fd, (uint8_t*)data + total,
 					left, 0);
@@ -39,6 +39,9 @@ int			vm_socket_send_buff(t_io_interface *io)
 
 	sended = vm_socket_send(io->sock_fd,
 		io->netbuf->start, io->netbuf->len_data);
+	// TODO: delete
+	sleep(1000);
+	ft_printf("Sended to %s:%s = %d bytes (fd:%d)", io->address, io->port, io->netbuf->len_data, io->sock_fd);
 	darr_remove_front(io->netbuf, io->netbuf->len);
 	return (sended);
 }

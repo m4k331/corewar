@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 07:48:19 by kona              #+#    #+#             */
-/*   Updated: 2020/04/10 07:48:19 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 19:16:40 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,17 +15,17 @@
 
 int		vm_input_recieve_data(t_input *input)
 {
-	int	res;
+	int	games_loaded;
 
-	res = 0;
+	games_loaded = 0;
 	if (input->mode == ONLINE)
 	{
 		poll(input->fds, 2, TIMEOUT_INPUT);
 		if ((input->fds[0].revents) & POLLIN)
 			vm_input_listen_command(input);
 		if ((input->fds[1].revents) & POLLIN)
-			res = vm_input_socket_game_received(input);
-		return (res);
+			games_loaded = vm_input_socket_is_game_received(input);
+		return (games_loaded);
 	}
 	else if (input->mode == OFFLINE)
 	{

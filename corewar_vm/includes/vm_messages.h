@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 08:55:04 by kona              #+#    #+#             */
-/*   Updated: 2020/04/10 11:12:26 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 19:08:40 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,5 +104,8 @@
 # define CD_ER_MO_CHMPS 21
 # define ERR_SOCK_RECV "Error: %d is not enough data\n"
 # define MSG_SOCK_RECV "Receive  %d bytes from %s:%s\n"
+# define CD_ER_WRONG_SOCKET_HEADER_MSG 22
+# define ER_PROC_PARSE_GAME "Error: error in game parsing process\n"
+# define CD_ER_PROC_PARSE_GAME 23
 
 #endif
