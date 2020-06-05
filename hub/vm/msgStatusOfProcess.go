@@ -17,8 +17,8 @@ func readStatusOfProcess(conn net.Conn) (*StatusOfProcess, error) {
 	var (
 		n int
 		e error
+		m = new(StatusOfProcess)
 	)
-	m  := &StatusOfProcess{}
 
 	m.Type = TypeMsgStatusOfProcess
 	if e = binary.Read(conn, binary.BigEndian, &m.Id); e != nil {

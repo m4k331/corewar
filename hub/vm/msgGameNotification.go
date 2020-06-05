@@ -21,8 +21,8 @@ type GameNotification struct {
 func readGameNotification(conn net.Conn) (*GameNotification, error) {
 	var (
 		e error
+		m = new(GameNotification)
 	)
-	m := &GameNotification{}
 
 	m.Type = TypeMsgGameNotification
 	if e = binary.Read(conn, binary.BigEndian, &m.Id); e != nil {

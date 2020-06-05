@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
 	"log"
@@ -20,45 +21,53 @@ type InitialGame struct {
 func (sg InitialGame) Send(conn net.Conn) error {
 	var (
 		err error
+		buff = new(bytes.Buffer)
 	)
 
-	if err = binary.Write(conn, binary.BigEndian, &sg.Type); err != nil {
+	if err = binary.Write(buff, binary.BigEndian, sg.Type); err != nil {
 		return err
 	}
-	if err = binary.Write(conn, binary.BigEndian, &sg.Id); err != nil {
+	if err = binary.Write(buff, binary.BigEndian, sg.Id); err != nil {
 		return err
 	}
-	if err = binary.Write(conn, binary.BigEndian, &sg.Len); err != nil {
+	if err = binary.Write(buff, binary.BigEndian, sg.Len); err != nil {
 		return err
 	}
-	if err = binary.Write(conn, binary.BigEndian, &sg.Number); err != nil {
+	if err = binary.Write(buff, binary.BigEndian, sg.Number); err != nil {
 		return err
 	}
-	if _, err = conn.Write(sg.Champs); err != nil {
+	if _, err = buff.Write(sg.Champs); err != nil {
+		return err
+	}
+	if _, err = conn.Write(buff.Bytes()); err != nil {
 		return err
 	}
 
 	return err
 }
 
+// TODO: delete smell code
 func tmpInitialGame(conn net.Conn, n uint8) {
 	var (
 		msg InitialGame
+		err error
 	)
 
 	msg.Type = TypeMsgInitialGame
+	//msg.Type = 2
 	msg.Id = rand.Uint32()
 	msg.Number = n
 	fmt.Println("GO INIT GAME")
-	file, err := os.Open("champs/ex.cor")
-	if err != nil {
-		log.Fatal(err)
-	}
 	size := 2215 * int(n)
 	msg.Len = uint32(size + 1)
 	msg.Champs = make([]byte, size)
 	for i := 0; i < int(n); i++ {
+		file, err := os.Open("champs/ex.cor")
+		if err != nil {
+			log.Fatal(err)
+		}
 		file.Read(msg.Champs[i*2215:])
+		file.Close()
 	}
 	err = msg.Send(conn)
 	if err != nil {
@@ -67,5 +76,5 @@ func tmpInitialGame(conn net.Conn, n uint8) {
 	fmt.Printf("SEND GAME " +
 		"{type:%d, id:%d, len:%d, number:%d}\n",
 		msg.Type, msg.Id, msg.Len, msg.Number)
-	fmt.Printf("%+v\n", msg)
+	//fmt.Printf("%+v\n", msg)
 }

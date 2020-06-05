@@ -2,3 +2,6 @@
 *.ws*
 *.o
 hub/go_build*
+hub/vm/initialGame_test.go
+hb/vm/champs/main.go
+

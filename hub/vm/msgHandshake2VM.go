@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
 	"golang.org/x/net/context"
@@ -14,19 +15,26 @@ type Handshake2VM struct {
 }
 
 func (hb *Handshake2VM) Send(conn net.Conn) error {
-	var err error
+	var (
+		err error
+		buff = new(bytes.Buffer)
+	)
 
-	if err = binary.Write(conn, binary.BigEndian, &hb.Type); err != nil {
+	if err = binary.Write(buff, binary.BigEndian, hb.Type); err != nil {
 		return err
 	}
-	if err = binary.Write(conn, binary.BigEndian, &hb.Key); err != nil {
+	if err = binary.Write(buff, binary.BigEndian, hb.Key); err != nil {
 		return err
 	}
 	for i := range hb.Ports {
-		if err = binary.Write(conn, binary.BigEndian, &hb.Ports[i]); err != nil {
+		if err = binary.Write(buff, binary.BigEndian, hb.Ports[i]); err != nil {
 			return err
 		}
 	}
+	if _, err = conn.Write(buff.Bytes()); err != nil {
+		return err
+	}
+
 	return err
 }
 
