@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 15:46:20 by limry             #+#    #+#             */
-/*   Updated: 2020/06/05 14:43:33 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 21:46:05 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void				vm_server_run(t_input *input, pthread_attr_t *tattr)
 				vm_worker_get_data_from_queue(
 				input->worker_manager->workers[id_of_free_wk],
 				input->games_input_queue);
+				vm_message_game_loaded(input->worker_manager->workers[id_of_free_wk], input);
 				pthread_create(&(input->threads[id_of_free_wk]), tattr,
 				vm_worker_run,
 				(void*)(input->worker_manager->workers[id_of_free_wk]));

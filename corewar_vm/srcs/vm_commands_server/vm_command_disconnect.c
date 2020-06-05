@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 07:32:04 by kona              #+#    #+#             */
-/*   Updated: 2020/06/05 14:43:34 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/06 00:41:55 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,12 @@ int			vm_command_disconnect(t_io_interface *io)
 		ft_putstr_fd(ERR_SOCK_DISCONNECT, io->err_fd);
 		return (CODE_ERR_SOCK_DISCONNECT);
 	}
+	ft_printfd(io->cout,"Disconnection from hub %s:%s \n",
+			io->address, io->port);
 	vm_socket_disconnect(io);
 	vm_command_io_clean(io);
 	vm_disconnect_workers((t_input*)io->superior);
 	vm_diconnect_socket(io);
+	ft_putstr_fd("Disconnection completed\n", io->cout);
 	return (0);
 }

@@ -32,11 +32,12 @@ INPUT = $(DIR_INPUT)/vm_input_av_parse.c \
 
 DIR_MESSAGE = vm_message
 MESSAGE = $(DIR_MESSAGE)/vm_message_endgame.c \
-          $(DIR_MESSAGE)/vm_message_game_loaded_notify.c \
+          $(DIR_MESSAGE)/vm_message_presentation_champs.c \
           $(DIR_MESSAGE)/vm_message_operation.c \
           $(DIR_MESSAGE)/vm_message_proc_statuses.c \
           $(DIR_MESSAGE)/vm_message_sendgame.c \
-          $(DIR_MESSAGE)/vm_message_set_header.c
+          $(DIR_MESSAGE)/vm_message_set_header.c \
+          $(DIR_MESSAGE)/vm_message_game_loaded.c
 
 DIR_SOCKET = vm_socket
 SOCKET = $(DIR_SOCKET)/vm_socket_block.c \

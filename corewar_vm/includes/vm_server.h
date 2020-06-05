@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:18:02 by limry             #+#    #+#             */
-/*   Updated: 2020/06/05 14:43:34 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 21:52:53 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,10 +153,11 @@ void					vm_connect_socket_setup(t_io_interface *io);
 
 void					vm_message_set_header(uint8_t type,
 						int game_id, int len_msg, t_darr *buffer);
-void					vm_message_game_loaded_notify(t_worker *wk);
+void					vm_message_champs_present(t_worker *wk);
 void					vm_message_sendgame(t_worker *wk);
 void					vm_message_operation(t_worker *wk, t_car *car);
 void					vm_message_proc_statuses(t_worker *wk);
 void					vm_message_endgame(t_worker *wk);
+void					vm_message_game_loaded(t_worker *wk, t_input *input);
 
 #endif

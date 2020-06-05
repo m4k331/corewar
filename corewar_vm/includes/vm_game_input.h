@@ -26,7 +26,7 @@ typedef struct		s_champ
 
 typedef struct		s_gminput
 {
-	int				game_id;
+	uint32_t 		game_id;
 	uint8_t			num_players;
 	t_champ			players[4];
 }					t_gminput;

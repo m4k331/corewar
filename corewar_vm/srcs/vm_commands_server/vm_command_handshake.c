@@ -46,5 +46,7 @@ int			vm_command_handshake_recv(t_io_interface *io)
 		ft_itoa(vm_socket_bytes_to_int(msg + 5 + i * 4, 4));
 	ft_printfd(io->cout, " from %s:%s received\n",
 			io->address, io->port);
+	//TODO: clear handshake msg
+	darr_remove_front(io->netbuf, io->netbuf->len);
 	return (0);
 }

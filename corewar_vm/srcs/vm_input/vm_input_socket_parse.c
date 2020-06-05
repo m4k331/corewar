@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 07:48:44 by kona              #+#    #+#             */
-/*   Updated: 2020/06/05 19:11:45 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/06 00:36:59 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ int						vm_input_socket_parse_game(t_input *input, int game_id)
 
 	new_game.game_id = game_id;
 	err_no = 0;
-	data_start = (uint8_t*)input->io->netbuf->start + HEADER_MSG_LEN;
-	if (4 < (new_game.num_players =*data_start))
+	data_start = (uint8_t*)input->io->netbuf->start;
+	if (4 < (new_game.num_players = *data_start))
 		return (vm_nofity_err(input->io->err_fd, ER_MO_CHMPS, CD_ER_MO_CHMPS));
 	champ_id = -1;
 	data_start += 1;
@@ -31,6 +31,10 @@ int						vm_input_socket_parse_game(t_input *input, int game_id)
 		if ((err_no = vm_input_parse_champ_online(&(new_game.players[champ_id]),
 			data_start, input->io->err_fd)))
 			break ;
+		new_game.players[champ_id].id = champ_id + 1;
+		//TODO: delett
+		ft_printf("Player %s is on board\n", new_game.players[champ_id].name);
+		//
 		data_start += new_game.players[champ_id].code_size +
 				sizeof(t_header_new);
 	}
@@ -43,18 +47,30 @@ int						vm_input_socket_parse_game(t_input *input, int game_id)
 int						vm_input_socket_receive_header(t_input *input,
 						t_message_header *head)
 {
-	darr_remove_front(input->io->netbuf, input->io->netbuf->len);
+	uint8_t				*msg;
+
 	if (9 != vm_socket_receive_data_wait(input->io, 9))
 	{
 		ft_printfd(input->io->err_fd, "Error: can't read head data\n");
 		return (0);
 	}
-	head->msg_type = *((uint8_t*)input->io->netbuf->start);
-	head->game_id = (int)*((uint8_t*)input->io->netbuf->start + 1);
-	head->msg_len = (int)*((uint8_t*)input->io->netbuf->start + 5);
+
+	msg = input->io->netbuf->start;
+//	// TODO: delete
+//	ft_printf("MSG_BY_BYTES:\n");
+//	for (int i = 0; i < 9; i++) {
+//		ft_printf("%d ",msg[i]);
+//	}
+//	ft_printf("\n");
+//	//
+	head->msg_type = *msg;
+	head->game_id = vm_socket_bytes_to_int(msg + 1, 4);
+	head->msg_len = vm_socket_bytes_to_int(msg + 5, 4);
+	darr_remove_front(input->io->netbuf, input->io->netbuf->len);
 	// TODO: delete
-	ft_printf("MSG_TYPE: %d, GAME_ID: %d, MSG_LEN: %d\n",
+	ft_printf("MSG_TYPE: %d, GAME_ID: %u, MSG_LEN: %u\n",
 	head->msg_type, head->game_id, head->msg_len);
+	//
 	return (head->msg_type);
 }
 
@@ -71,13 +87,13 @@ int						vm_input_socket_message_receive(t_input *input)
 		return (CD_ER_WRONG_SOCKET_HEADER_MSG);
 	}
 	darr_remove_front(input->io->netbuf, input->io->netbuf->len);
-	if (header.msg_len !=
-	vm_socket_receive_data_wait(input->io, header.msg_len))
+	if (header.msg_len != (uint32_t)vm_socket_receive_data_wait(input->io,
+			header.msg_len))
 	{
 		ft_printfd(input->io->err_fd, "Error: wrong size of message\n");
 		return (0);
 	}
-	if (header.msg_type == TYPE_GAME_LOADED)
+	if (header.msg_type == TYPE_GAME_COMING)
 		if ((err_no = vm_input_socket_parse_game(input, header.game_id)))
 		{
 			ft_printfd(input->io->err_fd, ER_PROC_PARSE_GAME);

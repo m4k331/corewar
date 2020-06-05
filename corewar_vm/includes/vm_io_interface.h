@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 08:50:39 by kona              #+#    #+#             */
-/*   Updated: 2020/06/05 14:43:34 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 21:34:38 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@
 # define LOOP_MODE				1
 # define MAGIC_TOKEN			0xC1C1
 # define TYPE_HANDSHAKE			1
-# define TYPE_PORT_SENDING		2
+# define TYPE_GAME_COMING		2
 # define TYPE_GAME_LOADED		3
 # define TYPE_GAME_STAT			4
 # define TYPE_OPERATION			5
 # define TYPE_DEAD_PROC			6
 # define TYPE_GAME_END			7
+# define TYPE_CHAMP_PRES		8
 # define TIMEOUT_CONNECT		5000
 # define TIMEOUT_RECV			5000
 # define MAXDATASIZE			1024 * 10
@@ -48,8 +49,8 @@
 typedef struct					s_message_header
 {
 	uint8_t						msg_type;
-	int							game_id;
-	int							msg_len;
+	uint32_t					game_id;
+	uint32_t					msg_len;
 }								t_message_header;
 
 typedef struct					s_io_interface

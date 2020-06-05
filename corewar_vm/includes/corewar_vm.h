@@ -94,7 +94,7 @@ typedef struct			s_worker
 	int32_t				car_num;
 	struct s_ops		*lib_ops;
 	t_dstr				*log;
-	int32_t				gameid;
+	uint32_t			gameid;
 }						t_worker;
 
 typedef struct			s_ops

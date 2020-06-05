@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 08:04:38 by kona              #+#    #+#             */
-/*   Updated: 2020/06/05 14:43:34 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 22:28:55 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 uint32_t			vm_socket_bytes_to_int(uint8_t *data_start, int32_t size)
 {
-	int				res;
+	uint32_t		res;
 	int				i;
 
 	res = 0;
@@ -35,5 +35,5 @@ void				vm_socket_int_to_bytes(uint8_t *data_start,
 	size = size > 4 ? 4 : size;
 	while (++i < size)
 		*(data_start + i) =
-				(uint8_t)((num >> ((size - 1 - i) * 8U)) & 0xFF);
+				(uint8_t)((num >> ((size - 1u - i) * 8U)) & 0xFF);
 }

@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/04/10 08:05:10 by kona              #+#    #+#             */
-/*   Updated: 2020/06/05 14:43:34 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 21:12:45 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,9 @@ int					vm_socket_receive_data_wait(t_io_interface *io,
 	vm_socket_unblock(io->sock_fd);
 	while (left > 0)
 	{
+		//TODO: delete
+		ft_printf("left to read %d\n", left);
+		//
 		if ((read = vm_socket_recv_timeout(io->sock_fd, buf, left,
 				TIMEOUT_RECV)) < 0)
 		{

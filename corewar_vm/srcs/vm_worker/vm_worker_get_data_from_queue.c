@@ -6,22 +6,22 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/06 16:54:53 by limry             #+#    #+#             */
-/*   Updated: 2020/06/05 14:43:34 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/05 22:57:56 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm_game_input.h"
 #include "vm_server.h"
 
-static void		vm_worker_add_player_id(t_worker *worker,
+static void		vm_worker_add_player_id(t_worker **worker,
 				int i, t_gminput input, int j)
 {
-	worker->gameid = input.game_id;
-	ft_memcpy(worker->champs[j].name,
+	(*worker)->gameid = input.game_id;
+	ft_memcpy((*worker)->champs[j].name,
 			input.players[i].name, PROG_NAME_LENGTH + 1);
-	ft_memcpy(worker->champs[j].comment,
+	ft_memcpy((*worker)->champs[j].comment,
 			input.players[i].comment, COMMENT_LENGTH + 1);
-	worker->champs[j].code_size = input.players[i].code_size;
+	(*worker)->champs[j].code_size = input.players[i].code_size;
 }
 
 static void		vm_worker_prep_for_init_data(int *i, int *j, t_car *car,
@@ -45,7 +45,7 @@ void			vm_worker_init_game(t_worker *worker, t_gminput input)
 	while (++i < MAX_PLAYERS)
 		if (input.players[i].id != 0 && ++j + 1)
 		{
-			vm_worker_add_player_id(worker, i, input, j);
+			vm_worker_add_player_id(&worker, i, input, j);
 			ft_memcpy(worker->map + j * zone,
 					input.players[i].code, input.players[i].code_size);
 			ft_memset(worker->set + j * zone,
@@ -70,4 +70,5 @@ void			vm_worker_get_data_from_queue(t_worker *worker,
 		return ;
 	darr_pop_front_wo_mal(vm_input_queue, (void*)&game, 1);
 	vm_worker_init_game(worker, game);
+	ft_printf("LOADING GAME #%u (in worker %u)\n", game.game_id, worker->gameid);
 }

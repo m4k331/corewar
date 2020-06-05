@@ -1,28 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   vm_message_set_header.c                            :+:      :+:    :+:   */
+/*   vm_message_presentation_champs.c                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:01:59 by kona              #+#    #+#             */
-/*   Updated: 2020/06/05 22:37:53 by kona             ###   ########.fr       */
+/*   Created: 2020/06/05 21:53:00 by kona              #+#    #+#             */
+/*   Updated: 2020/06/05 22:44:52 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm_server.h"
 
-void		vm_message_set_header(uint8_t type,
-			int game_id, int len_msg, t_darr *buffer)
+void	vm_message_champs_present(t_worker *wk)
 {
-	uint8_t	buf[4];
 
-	darr_remove_back(buffer, buffer->len);
-	darr_join(buffer, (uint8_t*)&type, 1, sizeof(uint8_t));
-	ft_bzero(&buf,4);
-	vm_socket_int_to_bytes(buf, game_id, 4);
-	darr_join(buffer, (uint8_t*)buf, 4, sizeof(uint8_t));
-	ft_bzero(&buf,4);
-	vm_socket_int_to_bytes(buf, len_msg, 4);
-	darr_join(buffer, (uint8_t*)buf, 4, sizeof(uint8_t));
+	vm_message_set_header(TYPE_CHAMP_PRES,
+	wk->gameid, 4 + (int)wk->log->len_data, wk->io->netbuf);
+	darr_join(wk->io->netbuf, (uint8_t*)wk->log->start, wk->log->len_data,
+			sizeof(uint8_t));
+	vm_socket_send_buff(wk->io);
 }

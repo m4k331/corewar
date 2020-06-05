@@ -17,6 +17,7 @@ void		vm_worker_socket_notify(t_worker *wk)
 	int		i;
 
 	i = -1;
+	dstr_remove_back(wk->log, wk->log->len);
 	while (++i < MAX_PLAYERS)
 		if (wk->champs[i].name[0] != '\0')
 		{
@@ -26,7 +27,7 @@ void		vm_worker_socket_notify(t_worker *wk)
 					wk->champs[i].name, wk->champs[i].comment);
 		}
 	if (wk->gameid > 0)
-		vm_message_game_loaded_notify(wk);
+		vm_message_champs_present(wk);
 	ft_putstr_fd(wk->log->start, wk->io->cout);
 	dstr_remove_front(wk->log, wk->log->len_data);
 }
