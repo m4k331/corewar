@@ -19,6 +19,7 @@ const (
 	TypeMsgOperation
 	TypeMsgStatusOfProcess
 	TypeMsgEndOfGame
+	TypeMsgGamePresentation
 )
 
 const (

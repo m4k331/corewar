@@ -38,6 +38,11 @@ func handleGameWorker(conn net.Conn) error {
 		if err = handleEndOfGame(conn); err != nil {
 			return fmt.Errorf("Error handle end of game message: %v ", err)
 		}
+	case TypeMsgGamePresentation:
+		fmt.Printf("Worker %v: Handling game presentation...\n", addr)
+		if err = handleGamePresentation(conn); err != nil {
+			return fmt.Errorf("Error handle game presentation message: %v ", err)
+		}
 	}
 
 	return err

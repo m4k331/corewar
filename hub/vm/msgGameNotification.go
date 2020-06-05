@@ -6,16 +6,11 @@ import (
 	"net"
 )
 
-const (
-	commentSize = 2048
-)
-
 type GameNotification struct {
 	Type uint8
 	Id   uint32
 	Len  uint32
 	Socket  uint32
-	Comment []byte
 }
 
 func readGameNotification(conn net.Conn) (*GameNotification, error) {
@@ -34,13 +29,6 @@ func readGameNotification(conn net.Conn) (*GameNotification, error) {
 	if e = binary.Read(conn, binary.BigEndian, &m.Socket); e != nil {
 		return m, e
 	}
-	m.Len -= 4
-	// TODO: check socket exist
-	if m.Len % commentSize != 0 {
-		return m, fmt.Errorf("Bad comment length %d ", m.Len)
-	}
-	m.Comment = make([]byte, m.Len)
-	conn.Read(m.Comment)
 	return m, e
 }
 
@@ -58,7 +46,9 @@ func handleGameNotification(conn net.Conn) error {
 	fmt.Printf("Hub received a game notification msg from %s\n", addr)
 
 	// TODO: send game notification on web site
-	fmt.Printf("Hub send game notification on web site {type: %d, id: %d, len: %d, socket: %d, msg: %d}\n", msg.Type, msg.Id, msg.Len, msg.Socket, len(msg.Comment))
+	fmt.Printf("Hub send game notification on web site " +
+		"{type: %d, id: %d, len: %d, socket: %d}\n",
+		msg.Type, msg.Id, msg.Len, msg.Socket)
 
 	return err
 }
