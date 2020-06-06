@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/02/28 18:06:03 by limry             #+#    #+#             */
-/*   Updated: 2020/03/05 13:44:15 by limry            ###   ########.fr       */
+/*   Updated: 2020/06/06 17:37:28 by dorphan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 long				ft_atoli(const char *str)
 {
-	uint64_t		res;
+	u_int64_t		res;
 	long			sign;
 	char			*hd;
 

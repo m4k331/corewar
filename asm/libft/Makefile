@@ -6,7 +6,7 @@
 #    By: dorphan <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/09/10 21:09:24 by dorphan           #+#    #+#              #
-#    Updated: 2019/11/09 17:50:15 by dorphan          ###   ########.fr        #
+#    Updated: 2020/06/06 17:29:47 by dorphan          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -92,7 +92,7 @@ $(NAME): $(OBJ)
 			ranlib $(NAME)
 
 %.o: %.c libft.h
-			$(CC) -o $@ $(FLAGS) $<
+			gcc -o $@ $(FLAGS) $<
 clean:
 			/bin/rm -f $(OBJ)
 
