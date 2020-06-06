@@ -6,7 +6,7 @@
 /*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/05 21:51:31 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 00:38:52 by kona             ###   ########.fr       */
+/*   Updated: 2020/06/06 19:05:03 by kona             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ void		vm_message_game_loaded(t_worker *wk, t_input *input)
 {
 	int		port;
 
+	if (input->mode == OFFLINE)
+		return ;
 	port = ft_atoi(wk->io->port);
 	vm_message_set_header(TYPE_GAME_LOADED,
 	wk->gameid, 4, input->io->netbuf);
