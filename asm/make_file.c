@@ -50,7 +50,7 @@ int			make_file(t_data *data, char *filename)
 		free(dot_cor);
 		return (0);
 	}
-	write(data->fd, data->buffer, data->buffer_len);
+	write(data->fd, data->buffer, data->buffer_len - 1);
 	ft_putstr("Writing output program to ");
 	ft_putstr(dot_cor);
 	ft_putchar('\n');
