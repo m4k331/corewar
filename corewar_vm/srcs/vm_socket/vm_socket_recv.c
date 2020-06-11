@@ -82,9 +82,6 @@ int					vm_socket_receive_data_wait(t_io_interface *io,
 	vm_socket_unblock(io->sock_fd);
 	while (left > 0)
 	{
-		//TODO: delete
-		ft_printf("left to read %d\n", left);
-		//
 		if ((read = vm_socket_recv_timeout(io->sock_fd, buf, left,
 				TIMEOUT_RECV)) < 0)
 		{

@@ -106,6 +106,7 @@ int						vm_input_socket_message_receive(t_input *input)
 ** This function parse game from hub and if there is no errors
 **  then one game was loaded, so we return 1. Otherwise, return 0 - no new games.
 */
+
 int						vm_input_socket_is_game_received(t_input *input)
 {
 	int					err_no;
