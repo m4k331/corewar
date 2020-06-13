@@ -1,3 +1,39 @@
-.load-main {
-    height: 50vw;
+.load-text {
+    font-family: LexendTera-Regular;
+}
+
+@media (max-width: 340px) {
+    .load-text {
+        font-size: 20px;
+    }
+}
+
+@media (min-width: 340px) {
+    .load-text {
+        font-size: 25px;
+    }
+}
+
+@media (min-width: 576px) {
+    .load-text {
+        font-size: 30px;
+    }
+}
+
+@media (min-width: 768px) {
+    .load-text {
+        font-size: 35px;
+    }
+}
+
+@media (min-width: 992px) {
+    .load-text {
+        font-size: 40px;
+    }
+}
+
+@media (min-width: 1200px) {
+    .load-text {
+        font-size: 50px;
+    }
 }

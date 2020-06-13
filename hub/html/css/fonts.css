@@ -12,3 +12,8 @@
     font-family: PermanentMarker-Regular;
     src: url('../font/PermanentMarker-Regular.ttf');
 }
+
+@font-face {
+    font-family: LexendTera-Regular;
+    src: url('../font/LexendTera-Regular.ttf');
+}

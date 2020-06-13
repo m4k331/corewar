@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/profile.css">
-    <title>Profile</title>
+    <link rel="stylesheet" href="css/load.css">
+    <title>List of Game</title>
 </head>
 <body>
 <header>
@@ -31,35 +31,38 @@
     </nav>
 </header>
 <section>
-    <div class="container">
-        <div class="row vh-100 bg-white align-content-center">
+    <div class="container min-vh-100">
+        <div class="row align-content-center min-vh-100">
             <div class="col">
-                <div class="row">
-                    <div class="offset-5 rounded-circle icon shadow"></div>
+                <div class="row text-center">
+                    <div class="col load-text">GAMES</div>
                 </div>
-                <div class="row text-center border-bottom m-2 shadow">
-                    <div class="col label text-right">Nick:</div>
-                    <div class="col offset-3 offset-md-2 field text-left">Ahugh</div>
+                <div class="list-group">
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">FORD</h5>
+                            <small class="text-danger">playing</small>
+                        </div>
+                        <p class="mb-1">Leader Ahugh</p>
+                        <small>#1 splash #2 makzzi #3 14devochek</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">FOREST</h5>
+                            <small class="text-success">search</small>
+                        </div>
+                        <p class="mb-1">Leader Mbartole</p>
+                        <small>#1 boomer #2 hyper</small>
+                    </a>
+                    <a href="#" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">GO</h5>
+                            <small class="text-success">search</small>
+                        </div>
+                        <p class="mb-1">Leader Epouros</p>
+                        <small>#1 cw</small>
+                    </a>
                 </div>
-                <div class="row text-center border-bottom m-2 shadow">
-                    <div class="col label text-right">Name:</div>
-                    <div class="col offset-3 offset-md-2 field text-left">Maxim</div>
-                </div>
-                <div class="row text-center border-bottom m-2 shadow">
-                    <div class="col label text-right">Last Name:</div>
-                    <div class="col offset-3 offset-md-2 field text-left">Zlodeev</div>
-                </div>
-                <div class="row text-center border-bottom m-2 shadow">
-                    <div class="col label text-right">Grade:</div>
-                    <div class="col offset-3 offset-md-2 field text-left">Leitinant</div>
-                </div>
-                <div class="row text-center border-bottom m-2 shadow">
-                    <div class="col label text-right">Level:</div>
-                    <div class="col offset-3 offset-md-2 field text-left">10.16%</div>
-                </div>
-				<form action="bots.html" method="post" id="bots" class="row m-3 justify-content-center">
-					<button type="submit" form="bots" value="OK" class="col-8 btn btn-dark border-white label">Edit Bots</button>
-				</form>
             </div>
         </div>
     </div>

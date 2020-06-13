@@ -6,8 +6,8 @@
     <link rel="stylesheet" href="css/bootstrap.min.css">
     <link rel="stylesheet" href="css/fonts.css">
     <link rel="stylesheet" href="css/nav.css">
-    <link rel="stylesheet" href="css/profile.css">
-    <title>Profile</title>
+    <link rel="stylesheet" href="css/load.css">
+    <title>Load bot</title>
 </head>
 <body>
 <header>
@@ -22,27 +22,30 @@
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link" href="profile.html">Profile</a>
-                <a class="nav-item nav-link" href="#">New Game</a>
-                <a class="nav-item nav-link" href="#">List of Game</a>
-                <a class="nav-item nav-link" href="#">Statistics</a>
-                <a class="nav-item nav-link" href="#">Logout</a>
+                <a class="nav-item nav-link" href="new_game.html">New Game</a>
+                <a class="nav-item nav-link" href="list_of_game.html">List of Game</a>
+                <a class="nav-item nav-link" href="statistics.html">Statistics</a>
+                <a class="nav-item nav-link" href="logout.html">Logout</a>
             </div>
         </div>
     </nav>
 </header>
 <section>
     <div class="container min-vh-100">
-        <div class="row vh-100 align-content-center">
-            <div class="col shadow load-main">
-                <div class="row">
-                    <div class="col">
-                        <div class="row field">k</div>
-                        <div class="row">k</div>
-                        <div class="row">k</div>
-                        <div class="row">k</div>
-                        <div class="row">k</div>
-                    </div>
+        <div class="row align-content-center min-vh-100">
+            <div class="col shadow align-items-center text-center">
+                <div class="row justify-content-center"><img src="img/bot.svg" alt="bot" width="150" height="150"></div>
+                <div class="row-12 p-2 load-text">LOAD BOT</div>
+                <div class="row-12 p-2">
+                    <form class="was-validated">
+                        <div class="custom-file text-left">
+                            <input type="file" class="custom-file-input" id="validatedCustomFile" required>
+                            <label class="custom-file-label" for="validatedCustomFile">Choose file...</label>
+                            <div class="invalid-feedback text-center">Missing file with code</div>
+                        </div>
+                    </form>
                 </div>
+                <div class="row-12 p-3"><button class="btn btn-dark" type="submit">Submit bot</button></div>
             </div>
         </div>
     </div>
