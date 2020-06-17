@@ -45,6 +45,7 @@
 # define TIMEOUT_RECV			5000
 # define MAXDATASIZE			1024 * 10
 # define NETBUF_INITLEN			4096
+# define ERROR_TOLERATE			5
 
 typedef struct					s_message_header
 {
@@ -64,6 +65,7 @@ typedef struct					s_io_interface
 	int							err_fd;
 	void						*superior;
 	t_darr						*netbuf;
+	int8_t						error_tolerate;
 }								t_io_interface;
 
 /*

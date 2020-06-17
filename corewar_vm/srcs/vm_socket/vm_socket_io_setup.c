@@ -17,6 +17,7 @@ void				vm_socket_io_clean(t_io_interface *io)
 	io->address = NULL;
 	io->port = NULL;
 	io->sock_fd = -1;
+	io->error_tolerate = ERROR_TOLERATE;
 }
 
 t_io_interface		*vm_socket_io_init(void *superior)

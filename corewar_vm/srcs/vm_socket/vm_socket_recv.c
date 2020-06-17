@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "vm_io_interface.h"
+#include "vm_server.h"
 
 int					vm_socket_receive_data(t_io_interface *io,
 					int32_t size_read_bytes)
@@ -85,6 +86,9 @@ int					vm_socket_receive_data_wait(t_io_interface *io,
 		if ((read = vm_socket_recv_timeout(io->sock_fd, buf, left,
 				TIMEOUT_RECV)) < 0)
 		{
+			if (!(io->error_tolerate--)){
+				vm_command_disconnect(io);
+			}
 			ft_printfd(io->err_fd, ERR_SOCK_RECV, total + read);
 			darr_remove_front(io->netbuf, io->netbuf->len);
 			return (0);
