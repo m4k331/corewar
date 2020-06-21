@@ -7,4 +7,4 @@ corewar_vm/.idea
 *.d
 asm/asm
 .vscode
-*.s
+*.cor

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   asm.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:22:39 by dorphan           #+#    #+#             */
-/*   Updated: 2020/05/28 13:22:51 by dorphan          ###   ########.fr       */
+/*   Updated: 2020/06/21 18:51:42 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,16 @@ typedef struct		s_data
 }					t_data;
 
 /*
+** struct for command line options
+*/
+
+typedef struct s_options{
+	char	server;
+	short	port;
+	char	*filename;
+}	t_options;
+
+/*
 ** error.c
 */
 int					error(t_data *data);
@@ -109,7 +119,7 @@ int					check_file_name(char *filename);
 /*
 ** assembler.c
 */
-int					compile(char *filename);
+t_data				*compile(char *filename);
 
 /*
 ** initialization.c

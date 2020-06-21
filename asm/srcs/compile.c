@@ -3,33 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   compile.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:47:45 by dorphan           #+#    #+#             */
-/*   Updated: 2020/05/27 17:47:53 by dorphan          ###   ########.fr       */
+/*   Updated: 2020/06/21 18:58:12 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "asm.h"
 #include <fcntl.h>
 
-int				opening_failed(t_data *data, char *filename)
+void			*opening_failed(t_data *data, char *filename)
 {
 	ft_putstr_fd(ERROR_OPENING_FAILED, 2);
 	ft_putstr_fd(filename, 2);
 	ft_putchar_fd('\n', 2);
 	close(data->fd);
 	free_data(data);
-	return (0);
+	return (NULL);
 }
 
-int				free_and_return(t_data *data)
+void			*free_and_return(t_data *data)
 {
 	free_data(data);
-	return (0);
+	return (NULL);
 }
 
-int				compile(char *filename)
+// FIXME: надо наверно пофиксить ретурны при ошибках, но мне пока лень
+t_data				*compile(char *filename)
 {
 	t_data		*data;
 
@@ -37,6 +38,7 @@ int				compile(char *filename)
 		return (0);
 	if ((data->fd = open(filename, O_RDONLY)) == -1)
 		return (opening_failed(data, filename));
+	// FIXME: Лучше наверно разбить на 2 части и в check_last_end происходит затирание открытого data->fd, надо пофиксить
 	if (!lexer(data, filename) || !check_last_end(data, filename))
 	{
 		close(data->fd);
@@ -50,8 +52,9 @@ int				compile(char *filename)
 	calc_sizes(data);
 	if (!make_hex_buffer(data))
 		return (free_and_return(data));
-	if (!make_file(data, filename))
-		return (free_and_return(data));
-	free_data(data);
-	return (1);
+	// Убрал, чтобы можно было использовать функцию для сетевой части
+	// if (!make_file(data, filename))
+	// 	return (free_and_return(data));
+	// free_data(data);
+	return (data);
 }

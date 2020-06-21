@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   make_file.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dorphan <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:51:57 by dorphan           #+#    #+#             */
-/*   Updated: 2020/05/27 17:51:59 by dorphan          ###   ########.fr       */
+/*   Updated: 2020/06/21 16:31:09 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int			make_file(t_data *data, char *filename)
 		free(dot_cor);
 		return (0);
 	}
+	// FIXME: write can fail
 	write(data->fd, data->buffer, data->buffer_len - 1);
 	ft_putstr("Writing output program to ");
 	ft_putstr(dot_cor);
