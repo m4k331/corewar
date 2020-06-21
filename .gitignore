@@ -5,3 +5,6 @@ corewar_vm/.idea
 *.o
 *.a
 *.d
+asm/asm
+.vscode
+*.s

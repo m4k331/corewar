@@ -1,13 +1,29 @@
 NAME = asm
 
-.PHONY : all clean fclean re directories
+CC = gcc
 
-DIR_OBJ = obj/
+#BIN_DIR = ../resources
+BIN_DIR ?= .
 
-LIB = libft.a
-DIR_LIB	= $(LIB:.a=/)
+CDIR = srcs
+HDIR = includes
+ODIR = objects
 
-SOURCE = \
+LBDIRS = libft
+LBNAMES = libft.a
+
+FRAMEWORKS = -framework OpenGL -framework AppKit
+
+LDFLAGS += $(addprefix -L , $(LBDIRS)) $(FRAMEWORKS)
+LDLIBS += $(addprefix -l , $(LBNAMES:lib%.a=%))
+
+INCDIRS = $(HDIR) $(LBDIRS) $(addsuffix /includes, $(LBDIRS))
+
+# DBCFLAGS = -Wno-error -g
+OPTFLAGS = -O3
+CFLAGS = -Wall -Wextra -Werror -MD $(addprefix -I , $(INCDIRS)) $(DBCFLAGS) $(OPTFLAGS)
+
+SOURCES = \
          check_file_name.c\
          compile.c\
          initialization.c\
@@ -37,45 +53,41 @@ SOURCE = \
          make_file.c\
          main.c
 
+OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
+.PHONY: all libs clean clean_name fclean re
 
-HEADERS =	asm.h\
-            op.h
+all: libs $(ODIR) $(BIN_DIR) $(BIN_DIR)/$(NAME)
 
-FLAGS = -Wall -Wextra -Werror
-OBJ = $(SOURCE:%.c=%.o)
-DEP = $(OBJ:%.o=%.d)
-SRCS = $(addprefix $(SRC))
-OBJS = $(addprefix $(DIR_OBJ),$(OBJ))
-DEPS = $(addprefix $(DIR_OBJ),$(DEP))
+$(BIN_DIR):
+	mkdir -p $@
 
-MKDIR_P = mkdir -p
+$(BIN_DIR)/$(NAME): $(OBJECTS)
+	$(LINK.o) $^ $(LDLIBS) -o $@
 
-all: $(NAME)
+$(ODIR):
+	mkdir -p $(ODIR)
 
-$(NAME): $(OBJS) | $(LIB)
-	gcc $(FLAGS) -o $(NAME) $+ -L$(DIR_LIB) -lft
-
-$(DIR_OBJ)%.o: %.c
-	gcc $(FLAGS) -MD -o $@ -c $< -I$(DIR_INC) -I$(LIB_INCLUDES)
-include $(wildcard $(DEPS))
-
-$(OBJS): | $(DIR_OBJ)
-
-$(LIB):
-	$(MAKE) -C $(DIR_LIB)
-
-$(DIR_OBJ):
-	$(MKDIR_P) $@
+$(ODIR)/%.o: $(CDIR)/%.c
+	$(COMPILE.c) $(OUTPUT_OPTION) $<
 
 clean:
-	rm -f $(DIR_OBJ)*.o
-	rm -rf $(DIR_OBJ)
-	$(MAKE) -s -C $(DIR_LIB) clean
+	rm -rf $(ODIR)
+	@for i in $(LBDIRS); do \
+		if ! $(MAKE) -C $$i fclean 2> /dev/null; then \
+			$(MAKE) -C $$i clean; \
+		fi; \
+	done
 
-fclean: clean
-	rm -f $(NAME)
-	$(MAKE) -s -C $(DIR_LIB) fclean
+clean_name:
+	rm -f $(BIN_DIR)/$(NAME)
+
+fclean: clean clean_name
 
 re: fclean all
 
+MAKEOVERRIDES =
+libs:
+	@for i in $(LBDIRS); do \
+		make -C $$i 2> /dev/null ; \
+	done

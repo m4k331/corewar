@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "asm.h"
+#include <fcntl.h>
 
 char		*make_filename(char *filename)
 {

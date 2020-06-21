@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "asm.h"
+#include <fcntl.h>
 
 int				opening_failed(t_data *data, char *filename)
 {

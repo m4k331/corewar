@@ -49,7 +49,7 @@
 # define COMMENT 4
 # define LABEL 5
 
-# include "libft/includes/libft.h"
+# include "libft.h"
 # include "op.h"
 
 /*
