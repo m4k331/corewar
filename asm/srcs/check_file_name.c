@@ -19,7 +19,8 @@ int		check_file_name(char *filename)
 	len = ft_strlen(filename);
 	// FIXME: тут получается, что идет обращение к len - 1 и len - 2,
 	//        но чисто технически len может быть 0
-	if (filename[len - 1] == 's' && filename[len - 2] == '.')
+	// FIXED
+	if (len && filename[len - 1] == 's' && filename[len - 2] == '.')
 		return (1);
 	return (0);
 }

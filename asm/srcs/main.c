@@ -20,7 +20,8 @@ int		main_old(int ac, char **av)
 	else if (ac > 2)
 		ft_putstr_fd(ERROR_MANY_ARGS, 2);
 	// FIXME: ac == 2 избыточно, тк уже были проверки на ac > 2 и ac == 1
-	else if (ac == 2 && check_file_name(av[1]))
+	//FIXED
+	else if (check_file_name(av[1]))
 		compile(av[1]);
 	else
 		ft_putstr_fd(ERROR_INVALID_CHAMP_NAME, 2);

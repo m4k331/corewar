@@ -29,22 +29,37 @@ void			*free_and_return(t_data *data)
 	return (NULL);
 }
 
-// FIXME: надо наверно пофиксить ретурны при ошибках, но мне пока лень
-t_data				*compile(char *filename)
+void			*work_with_file(t_data *data, char *filename)
 {
-	t_data		*data;
-
-	if (!(data = init_data()))
-		return (0);
 	if ((data->fd = open(filename, O_RDONLY)) == -1)
 		return (opening_failed(data, filename));
-	// FIXME: Лучше наверно разбить на 2 части и в check_last_end происходит затирание открытого data->fd, надо пофиксить
-	if (!lexer(data, filename) || !check_last_end(data, filename))
+	if (!lexer(data, filename))
 	{
 		close(data->fd);
 		return (free_and_return(data));
 	}
 	close(data->fd);
+	if (!check_last_end(data, filename))
+		return (free_and_return(data));
+	return (filename);
+}
+
+// FIXME: надо наверно пофиксить ретурны при ошибках, но мне пока лень
+
+/// Объясни, что не так, я поправлю. Сейчас на каждую ошибку есть соответствующий вывод.
+
+// FIXME: Лучше наверно разбить на 2 части и в check_last_end происходит затирание открытого data->fd, надо пофиксить
+// FIXED: Исправил затерание data->fd;
+//			Разбил compile  на работу с файлом и работу с заполненной структурой data
+
+t_data			*compile(char *filename)
+{
+	t_data		*data;
+
+	if (!(data = init_data()))
+		return (0);
+	if (!work_with_file(data, filename))
+		return (0);
 	if (!make_tree(data))
 		return (free_and_return(data));
 	if (!parse_tree(data))
