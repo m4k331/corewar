@@ -25,6 +25,13 @@ const (
 const (
 	TypeMsgHandshakeHB = iota + 1
 	TypeMsgInitialGame
+	TypeMsgSendBot
+)
+
+const (
+	TypeMsgHandshakeASM = iota + 101
+	TypeMsgErrorASM
+	TypeMsgBinaryASM
 )
 
 func handleConnection(conn net.Conn, handler func(net.Conn) error) {

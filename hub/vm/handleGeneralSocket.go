@@ -28,6 +28,11 @@ func handleGeneralSocket(conn net.Conn) error {
 		if err = handleGameNotification(conn); err != nil {
 			return fmt.Errorf("Error handle game notification message: %v ", err)
 		}
+	case TypeMsgHandshakeASM:
+		fmt.Printf("Conn %v: Handling handshakeASM...\n", addr)
+		if err = handleHandshakeASM(conn); err != nil {
+			return fmt.Errorf("Error handle handshakeASM message: %v ", err)
+		}
 	}
 
 	return err
