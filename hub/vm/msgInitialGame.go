@@ -20,7 +20,7 @@ type InitialGame struct {
 
 func (sg InitialGame) Send(conn net.Conn) error {
 	var (
-		err error
+		err  error
 		buff = new(bytes.Buffer)
 	)
 
@@ -73,7 +73,7 @@ func tmpInitialGame(conn net.Conn, n uint8) {
 	if err != nil {
 		fmt.Printf("ERROR send BOTS %v\n", err)
 	}
-	fmt.Printf("SEND GAME " +
+	fmt.Printf("SEND GAME "+
 		"{type:%d, id:%d, len:%d, number:%d}\n",
 		msg.Type, msg.Id, msg.Len, msg.Number)
 	//fmt.Printf("%+v\n", msg)

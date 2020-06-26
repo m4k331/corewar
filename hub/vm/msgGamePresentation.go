@@ -1,6 +1,5 @@
 package main
 
-
 import (
 	"encoding/binary"
 	"fmt"
@@ -8,9 +7,9 @@ import (
 )
 
 type GamePresentation struct {
-	Type uint8
-	Id   uint32
-	Len  uint32
+	Type    uint8
+	Id      uint32
+	Len     uint32
 	Comment []byte
 }
 
@@ -34,8 +33,8 @@ func readGamePresentation(conn net.Conn) (*GamePresentation, error) {
 
 func handleGamePresentation(conn net.Conn) error {
 	var (
-		err error
-		msg *GamePresentation
+		err  error
+		msg  *GamePresentation
 		addr = conn.RemoteAddr().String()
 	)
 
@@ -46,10 +45,9 @@ func handleGamePresentation(conn net.Conn) error {
 	fmt.Printf("Hub received a game presentation msg from %s\n", addr)
 
 	// TODO: send game notification on web site
-	fmt.Printf("Hub send game presentation on web site " +
+	fmt.Printf("Hub send game presentation on web site "+
 		"{type: %d, id: %d, len: %d, msg: %s}\n",
 		msg.Type, msg.Id, msg.Len, string(msg.Comment))
 
 	return err
 }
-

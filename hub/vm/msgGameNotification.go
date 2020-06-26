@@ -7,10 +7,10 @@ import (
 )
 
 type GameNotification struct {
-	Type uint8
-	Id   uint32
-	Len  uint32
-	Socket  uint32
+	Type   uint8
+	Id     uint32
+	Len    uint32
+	Socket uint32
 }
 
 func readGameNotification(conn net.Conn) (*GameNotification, error) {
@@ -34,8 +34,8 @@ func readGameNotification(conn net.Conn) (*GameNotification, error) {
 
 func handleGameNotification(conn net.Conn) error {
 	var (
-		err error
-		msg *GameNotification
+		err  error
+		msg  *GameNotification
 		addr = conn.RemoteAddr().String()
 	)
 
@@ -46,7 +46,7 @@ func handleGameNotification(conn net.Conn) error {
 	fmt.Printf("Hub received a game notification msg from %s\n", addr)
 
 	// TODO: send game notification on web site
-	fmt.Printf("Hub send game notification on web site " +
+	fmt.Printf("Hub send game notification on web site "+
 		"{type: %d, id: %d, len: %d, socket: %d}\n",
 		msg.Type, msg.Id, msg.Len, msg.Socket)
 

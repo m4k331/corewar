@@ -10,7 +10,7 @@ import (
 
 type HandshakeASM struct {
 	Type uint8
-	Key uint32
+	Key  uint32
 }
 
 func (hba *HandshakeASM) Send(conn net.Conn) error {
@@ -44,8 +44,8 @@ func readHandshakeASM(conn net.Conn) (*HandshakeASM, error) {
 
 func handleHandshakeASM(conn net.Conn) error {
 	var (
-		err error
-		msg *HandshakeASM
+		err  error
+		msg  *HandshakeASM
 		addr = conn.RemoteAddr().String()
 	)
 
@@ -57,7 +57,9 @@ func handleHandshakeASM(conn net.Conn) error {
 
 	// TODO: need asm manager
 	ctx, _ := context.WithCancel(context.Background())
-	go handleASMWorker(ctx, conn)
+	m := make(chan *BotASM, 10)
+	go handleIncomingASM(ctx, conn)
+	go handleOutgoingASM(ctx, conn, m)
 	err = msg.Send(conn)
 	if err != nil {
 		return fmt.Errorf("Error sending handshake ASM: %v\n", err)

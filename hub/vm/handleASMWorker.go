@@ -6,7 +6,28 @@ import (
 	"net"
 )
 
-func handleASMWorker(ctx context.Context, conn net.Conn) {
+func handleOutgoingASM(ctx context.Context, conn net.Conn, m <-chan *BotASM) {
+	var (
+		addr = conn.RemoteAddr().String()
+		msg  *BotASM
+		err  error
+	)
+
+	for {
+		select {
+		case <-ctx.Done():
+			fmt.Printf("Disconnect ASM outgoing worker %s\n", addr)
+			return
+		default:
+			msg = <-m
+			if err = msg.Send(conn); err != nil {
+				fmt.Printf("Error conn %v sending bot source code %v\n", addr, err)
+			}
+		}
+	}
+}
+
+func handleIncomingASM(ctx context.Context, conn net.Conn) {
 	var (
 		addr    = conn.RemoteAddr().String()
 		typeMsg uint8
@@ -16,7 +37,7 @@ func handleASMWorker(ctx context.Context, conn net.Conn) {
 	for {
 		select {
 		case <-ctx.Done():
-			fmt.Printf("Disconnect ASM worker %s\n", addr)
+			fmt.Printf("Disconnect ASM incoming worker %s\n", addr)
 			return
 		default:
 			typeMsg, err = readTypeMsg(conn)

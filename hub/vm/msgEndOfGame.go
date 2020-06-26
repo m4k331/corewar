@@ -7,10 +7,10 @@ import (
 )
 
 type EndOfGame struct {
-	Type uint8
-	Id uint32
-	Len uint32
-	Winner uint8
+	Type    uint8
+	Id      uint32
+	Len     uint32
+	Winner  uint8
 	Message []byte
 }
 
@@ -41,19 +41,19 @@ func readEndOfGame(conn net.Conn) (*EndOfGame, error) {
 
 func handleEndOfGame(conn net.Conn) error {
 	var (
-		err error
-		msg *EndOfGame
+		err  error
+		msg  *EndOfGame
 		addr = conn.RemoteAddr().String()
 	)
 
 	msg, err = readEndOfGame(conn)
-	if err != nil  {
+	if err != nil {
 		return fmt.Errorf("Error reading msg: %v ", err)
 	}
 	fmt.Printf("Hub received an end of game msg from %s\n", addr)
 
 	// TODO: send end of game on web site
-	fmt.Printf("Hub send end of game on web site " +
+	fmt.Printf("Hub send end of game on web site "+
 		"{id: %d, len: %d, winner: %d}\n",
 		msg.Id, msg.Len, msg.Winner)
 

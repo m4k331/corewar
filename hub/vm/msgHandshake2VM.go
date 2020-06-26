@@ -16,7 +16,7 @@ type Handshake2VM struct {
 
 func (hb *Handshake2VM) Send(conn net.Conn) error {
 	var (
-		err error
+		err  error
 		buff = new(bytes.Buffer)
 	)
 
@@ -43,10 +43,10 @@ func launchWorkers(ctx context.Context) (uint32, error) {
 	if err != nil {
 		return 0, err
 	}
-	
+
 	addr := listener.Addr().String()
 	fmt.Printf("Launch new listener for worker %s\n", addr)
-	
+
 	go func() {
 		defer func() {
 			err = listener.Close()
@@ -80,7 +80,7 @@ func sendHandshake2VM(conn net.Conn, vm *HandshakeVM) error {
 	var (
 		err     error
 		i, port uint32
-		ports = make([]uint32, 0, vm.NumWorkers)
+		ports   = make([]uint32, 0, vm.NumWorkers)
 	)
 
 	ctx, interrupt := context.WithCancel(context.Background())

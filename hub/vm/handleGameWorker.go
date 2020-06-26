@@ -7,9 +7,9 @@ import (
 
 func handleGameWorker(conn net.Conn) error {
 	var (
-		addr = conn.RemoteAddr().String()
+		addr    = conn.RemoteAddr().String()
 		typeMsg uint8
-		err error
+		err     error
 	)
 
 	typeMsg, err = readTypeMsg(conn)

@@ -35,8 +35,8 @@ func readHandshakeVM(conn net.Conn) (*HandshakeVM, error) {
 
 func handleHandshakeVM(conn net.Conn) error {
 	var (
-		err error
-		msg *HandshakeVM
+		err  error
+		msg  *HandshakeVM
 		addr = conn.RemoteAddr().String()
 	)
 

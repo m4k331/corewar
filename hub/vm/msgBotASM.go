@@ -1,23 +1,46 @@
 package main
 
 import (
+	"bytes"
 	"encoding/binary"
 	"fmt"
 	"net"
 )
 
-type BinaryASM struct {
+type BotASM struct {
 	Type uint8
 	Id   uint32
 	Len  uint32
 	Bot  []byte
 }
 
-func readBinaryASM(conn net.Conn) (*BinaryASM, error) {
+func (basm *BotASM) Send(conn net.Conn) error {
+	var (
+		err  error
+		buff = new(bytes.Buffer)
+	)
+
+	if err = binary.Write(buff, binary.BigEndian, basm.Type); err != nil {
+		return err
+	}
+	if err = binary.Write(buff, binary.BigEndian, basm.Id); err != nil {
+		return err
+	}
+	if err = binary.Write(buff, binary.BigEndian, basm.Len); err != nil {
+		return err
+	}
+	if _, err = conn.Write(buff.Bytes()); err != nil {
+		return err
+	}
+
+	return err
+}
+
+func readBinaryASM(conn net.Conn) (*BotASM, error) {
 	var (
 		n int
 		e error
-		m = new(BinaryASM)
+		m = new(BotASM)
 	)
 
 	m.Type = TypeMsgBinaryASM
@@ -37,19 +60,19 @@ func readBinaryASM(conn net.Conn) (*BinaryASM, error) {
 
 func handleBinaryASM(conn net.Conn) error {
 	var (
-		err error
-		msg *BinaryASM
+		err  error
+		msg  *BotASM
 		addr = conn.RemoteAddr().String()
 	)
 
 	msg, err = readBinaryASM(conn)
-	if err != nil  {
+	if err != nil {
 		return fmt.Errorf("Error reading msg: %v ", err)
 	}
 	fmt.Printf("Hub received Binary ASM msg from %s\n", addr)
 
 	// TODO: send Binary ASM on web site
-	fmt.Printf("Hub send Binary ASM on web site " +
+	fmt.Printf("Hub send Binary ASM on web site "+
 		"{id: %d, len: %d, bot: [%v]}\n",
 		msg.Id, msg.Len, string(msg.Bot))
 

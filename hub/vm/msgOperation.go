@@ -7,10 +7,10 @@ import (
 )
 
 type Operation struct {
-	Type uint8
-	Id uint32
-	Len uint32
-	ProcId uint32
+	Type    uint8
+	Id      uint32
+	Len     uint32
+	ProcId  uint32
 	ProcPos uint16
 	Message []byte
 }
@@ -45,19 +45,19 @@ func readOperation(conn net.Conn) (*Operation, error) {
 
 func handleOperation(conn net.Conn) error {
 	var (
-		err error
-		msg *Operation
+		err  error
+		msg  *Operation
 		addr = conn.RemoteAddr().String()
 	)
 
 	msg, err = readOperation(conn)
-	if err != nil  {
+	if err != nil {
 		return fmt.Errorf("Error reading msg: %v ", err)
 	}
 	fmt.Printf("Hub received an operation msg from %s\n", addr)
 
 	// TODO: send operation on web site
-	fmt.Printf("Hub send operation on web site " +
+	fmt.Printf("Hub send operation on web site "+
 		"{id: %d, len: %d, procId: %d, procPos: %d}\n",
 		msg.Id, msg.Len, msg.ProcId, msg.ProcPos)
 

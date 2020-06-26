@@ -37,19 +37,19 @@ func readErrorASM(conn net.Conn) (*ErrorASM, error) {
 
 func handleErrorASM(conn net.Conn) error {
 	var (
-		err error
-		msg *ErrorASM
+		err  error
+		msg  *ErrorASM
 		addr = conn.RemoteAddr().String()
 	)
 
 	msg, err = readErrorASM(conn)
-	if err != nil  {
+	if err != nil {
 		return fmt.Errorf("Error reading msg: %v ", err)
 	}
 	fmt.Printf("Hub received error ASM msg from %s\n", addr)
 
 	// TODO: send error ASM on web site
-	fmt.Printf("Hub send error ASM on web site " +
+	fmt.Printf("Hub send error ASM on web site "+
 		"{id: %d, len: %d, msg: %v}\n",
 		msg.Id, msg.Len, string(msg.Message))
 

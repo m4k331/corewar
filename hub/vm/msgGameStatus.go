@@ -9,11 +9,11 @@ import (
 const ArenaSize = 4096
 
 type GameStatus struct {
-	Type uint8
-	Id   uint32
-	Len  uint32
-	CyclesOfDeath uint32
-	CyclesDone uint32
+	Type             uint8
+	Id               uint32
+	Len              uint32
+	CyclesOfDeath    uint32
+	CyclesDone       uint32
 	NumberOfLivesOps uint32
 	NumberOfChecks   uint32
 	LastLivedPlayer  uint8
@@ -70,8 +70,8 @@ func readGameStatus(conn net.Conn) (*GameStatus, error) {
 
 func handleGameStatus(conn net.Conn) error {
 	var (
-		err error
-		msg *GameStatus
+		err  error
+		msg  *GameStatus
 		addr = conn.RemoteAddr().String()
 	)
 
@@ -82,8 +82,8 @@ func handleGameStatus(conn net.Conn) error {
 	fmt.Printf("Hub received a game status msg from %s\n", addr)
 
 	// TODO: send game on web site
-	fmt.Printf("Hub send game on web site " +
-		"{id: %d, len: %d, death: %d, cycles: %d, " +
+	fmt.Printf("Hub send game on web site "+
+		"{id: %d, len: %d, death: %d, cycles: %d, "+
 		"livesOps: %d, checks: %d, llp: %d, procId: %d, procPos: %d}\n",
 		msg.Id,
 		msg.Len,

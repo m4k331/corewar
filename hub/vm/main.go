@@ -38,7 +38,7 @@ func handleConnection(conn net.Conn, handler func(net.Conn) error) {
 	defer conn.Close()
 
 	var (
-		err error
+		err  error
 		addr = conn.RemoteAddr().String()
 	)
 

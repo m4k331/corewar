@@ -7,9 +7,9 @@ import (
 )
 
 type StatusOfProcess struct {
-	Type uint8
-	Id uint32
-	Len uint32
+	Type    uint8
+	Id      uint32
+	Len     uint32
 	Message []byte
 }
 
@@ -36,8 +36,8 @@ func readStatusOfProcess(conn net.Conn) (*StatusOfProcess, error) {
 
 func handleStatusOfProcess(conn net.Conn) error {
 	var (
-		err error
-		msg *StatusOfProcess
+		err  error
+		msg  *StatusOfProcess
 		addr = conn.RemoteAddr().String()
 	)
 
@@ -48,7 +48,7 @@ func handleStatusOfProcess(conn net.Conn) error {
 	fmt.Printf("Hub received a status of process msg from %s\n", addr)
 
 	// TODO: send status of process on web site
-	fmt.Printf("Hub send status of process on web site " +
+	fmt.Printf("Hub send status of process on web site "+
 		"{id: %d, len: %d}\n",
 		msg.Id, msg.Len)
 

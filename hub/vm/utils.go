@@ -11,7 +11,7 @@ func readTypeMsg(conn net.Conn) (uint8, error) {
 	oneByte := make([]byte, 1)
 	n, err := conn.Read(oneByte)
 	if n != 1 {
-		err =  fmt.Errorf("%d bytes were read instead of 1", n)
+		err = fmt.Errorf("%d bytes were read instead of 1", n)
 	}
 	return oneByte[0], err
 }
