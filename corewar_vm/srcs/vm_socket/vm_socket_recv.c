@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_socket_recv.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:05:10 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:02:57 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:02:57 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,34 +71,31 @@ int					vm_socket_recv_timeout(int fd,
 }
 
 int					vm_socket_receive_data_wait(t_io_interface *io,
-					int32_t size_read_bytes)
+					int32_t size_to_read_bytes)
 {
 	int				total;
 	int				read;
-	int				left;
 	char			buf[MAXDATASIZE];
 
 	total = 0;
-	left = size_read_bytes;
 	vm_socket_unblock(io->sock_fd);
-	while (left > 0)
+	while (size_to_read_bytes > 0)
 	{
-		if ((read = vm_socket_recv_timeout(io->sock_fd, buf, left,
-				TIMEOUT_RECV)) < 0)
+		if ((read = vm_socket_recv_timeout(io->sock_fd, buf,
+				size_to_read_bytes, TIMEOUT_RECV)) < 0)
 		{
-			if (!(io->error_tolerate--)){
+			if (!(io->error_tolerate--))
 				vm_command_disconnect(io);
-			}
 			ft_printfd(io->err_fd, ERR_SOCK_RECV, total + read);
 			darr_remove_front(io->netbuf, io->netbuf->len);
 			return (0);
 		}
 		darr_join(io->netbuf, buf, read, sizeof(uint8_t));
 		total += read;
-		left -= read;
+		size_to_read_bytes -= read;
 	}
 	vm_socket_block(io->sock_fd);
-	if (size_read_bytes > 0)
+	if (total > 0)
 		ft_printfd(io->cout, MSG_SOCK_RECV, total, io->address, io->port);
 	return (total);
 }

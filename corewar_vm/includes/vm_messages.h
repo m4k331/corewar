@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_messages.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:55:04 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:23:42 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:23:45 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define CODE_MSG_HELP_LOG 0
 # define MSG_NO_ARGS0 "\t==================================================="
 # define MSG_NO_ARGS1 "=========\n"
-# define MSG_NO_ARGS2 "\tHello, this is corewar game engine.\n"
+# define MSG_NO_ARGS2 "\tHello, it is corewar game engine.\n"
 # define MSG_NO_ARGS3 "\tThere are two modes of using this engine:\n"
 # define MSG_NO_ARGS4 "\t1. Online mode: used with flag --server of -s\n"
 # define MSG_NO_ARGS5 "\t\tfor help in Online mode type help in game console\n"

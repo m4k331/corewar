@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_command_handshake.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 07:31:39 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:59 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 15:59:44 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 15:59:44 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int			vm_command_handshake_recv(t_io_interface *io)
 		ft_itoa(vm_socket_bytes_to_int(msg + 5 + i * 4, 4));
 	ft_printfd(io->cout, " from %s:%s received\n",
 			io->address, io->port);
-	//TODO: clear handshake msg
 	darr_remove_front(io->netbuf, io->netbuf->len);
 	return (0);
 }

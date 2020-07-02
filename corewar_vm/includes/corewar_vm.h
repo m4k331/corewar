@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   corewar_vm.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:48:27 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:23:35 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:23:35 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,10 @@
 ** As offline mode always plays only one game, its value is one.
 ** Value for online game is supposed to be number of threads minus one.
 */
+
 # define OFFLINE		-1
 # define ONLINE			3
+
 /*
 ** structure of head is following:
 ** 1 byte  -  message type
@@ -124,7 +126,7 @@ typedef struct			s_input
 	uint64_t			flag_server;
 	uint8_t				flag_log;
 	t_darr				*games_input_queue;
-	t_worker_manager	*worker_manager;
+	t_worker_manager	*worker_mngr;
 	int8_t				mode;
 	char				*champ_files[4];
 	char				**av;

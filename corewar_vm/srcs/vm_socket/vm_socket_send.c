@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_socket_send.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:04:59 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:03:02 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:03:02 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,8 +39,8 @@ int			vm_socket_send_buff(t_io_interface *io)
 
 	sended = vm_socket_send(io->sock_fd,
 		io->netbuf->start, io->netbuf->len_data);
-	// TODO: delete
-	ft_printf("Sended to %s:%s = %d bytes (fd:%d)\n", io->address, io->port, io->netbuf->len_data, io->sock_fd);
+	ft_printf("Sended to %s:%s = %d bytes (fd:%d)\n",
+			io->address, io->port, io->netbuf->len_data, io->sock_fd);
 	darr_remove_front(io->netbuf, io->netbuf->len);
 	return (sended);
 }

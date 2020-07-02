@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_command_disconnect.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 07:32:04 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:54 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 15:59:54 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 15:59:54 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static void	vm_disconnect_workers(t_input *input)
 	i = -1;
 	while (++i < ONLINE)
 	{
-		vm_socket_disconnect(input->worker_manager->workers[i]->io);
-		input->worker_manager->workers[i]->io->sock_fd = -1;
-		free(input->worker_manager->workers[i]->io->port);
-		vm_command_io_clean(input->worker_manager->workers[i]->io);
+		vm_socket_disconnect(input->worker_mngr->workers[i]->io);
+		input->worker_mngr->workers[i]->io->sock_fd = -1;
+		free(input->worker_mngr->workers[i]->io->port);
+		vm_command_io_clean(input->worker_mngr->workers[i]->io);
 	}
 }
 
@@ -39,7 +39,7 @@ int			vm_command_disconnect(t_io_interface *io)
 		ft_putstr_fd(ERR_SOCK_DISCONNECT, io->err_fd);
 		return (CODE_ERR_SOCK_DISCONNECT);
 	}
-	ft_printfd(io->cout,"Disconnection from hub %s:%s \n",
+	ft_printfd(io->cout, "Disconnection from hub %s:%s \n",
 			io->address, io->port);
 	vm_socket_disconnect(io);
 	vm_command_io_clean(io);

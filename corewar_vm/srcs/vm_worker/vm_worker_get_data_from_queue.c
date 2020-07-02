@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/06 16:54:53 by limry             #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:03:56 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:03:56 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ void			vm_worker_get_data_from_queue(t_worker *worker,
 		return ;
 	darr_pop_front_wo_mal(vm_input_queue, (void*)&game, 1);
 	vm_worker_init_game(worker, game);
-	ft_printf("LOADING GAME #%u (in worker %u)\n", game.game_id, worker->gameid);
+	ft_printf("LOADING GAME #%u (in worker %u)\n",
+			game.game_id, worker->gameid);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_socket_connection_process.c                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:06:36 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:02:33 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:02:33 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,14 @@ static int				vm_socket_connection_processing(
 	return (0);
 }
 
-static void				*get_in_addr(struct sockaddr *sa)
+static void				*get_in_addr(t_sockaddr *sa)
 {
 	if (sa->sa_family == AF_INET)
 		return (&(((struct sockaddr_in*)sa)->sin_addr));
 	return (&(((struct sockaddr_in6*)sa)->sin6_addr));
 }
-static in_port_t		get_in_port(struct sockaddr *sa)
+
+static in_port_t		get_in_port(t_sockaddr *sa)
 {
 	if (sa->sa_family == AF_INET)
 		return (((struct sockaddr_in*)sa)->sin_port);
@@ -67,7 +68,7 @@ static struct addrinfo	*vm_connection_getservinfo(t_io_interface *io,
 		return (NULL);
 	}
 	io->sock_fd = get_in_port((*servinfo)->ai_addr);
-	ft_printfd(io->err_fd,"Assigned port is %d\n",
+	ft_printfd(io->err_fd, "Assigned port is %d\n",
 			io->sock_fd);
 	return (*servinfo);
 }

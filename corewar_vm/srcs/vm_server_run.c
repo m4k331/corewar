@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/06 15:46:20 by limry             #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:07:02 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:07:02 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,26 +29,26 @@ uint32_t			vm_worker_get_id_of_free_worker(uint32_t reg_workers)
 
 void				vm_server_run(t_input *input, pthread_attr_t *tattr)
 {
-	uint32_t		id_of_free_wk;
+	uint32_t		free_wk;
 	int				flag;
 
 	while (input->mode != 0)
 	{
 		flag = vm_input_recieve_data(input);
-		if (flag && input->worker_manager->reg_workers != 0 &&
-		input->games_input_queue->len_data)
+		if (flag && input->worker_mngr->reg_workers != 0 &&
+			input->games_input_queue->len_data)
 		{
-			if (ONLINE != (id_of_free_wk = vm_worker_get_id_of_free_worker(
-			input->worker_manager->reg_workers)))
+			if (ONLINE != (free_wk = vm_worker_get_id_of_free_worker(
+			input->worker_mngr->reg_workers)))
 			{
-				input->worker_manager->reg_workers &= ~(1u << id_of_free_wk);
+				input->worker_mngr->reg_workers &= ~(1u << free_wk);
 				vm_worker_get_data_from_queue(
-				input->worker_manager->workers[id_of_free_wk],
+				input->worker_mngr->workers[free_wk],
 				input->games_input_queue);
-				vm_message_game_loaded(input->worker_manager->workers[id_of_free_wk], input);
-				pthread_create(&(input->threads[id_of_free_wk]), tattr,
-				vm_worker_run,
-				(void*)(input->worker_manager->workers[id_of_free_wk]));
+				vm_message_game_loaded(input->worker_mngr->workers[free_wk],
+						input);
+				pthread_create(&(input->threads[free_wk]), tattr,
+				vm_worker_run, (void*)(input->worker_mngr->workers[free_wk]));
 			}
 		}
 		if (input->mode == OFFLINE)

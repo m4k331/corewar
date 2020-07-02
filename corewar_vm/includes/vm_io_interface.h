@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_io_interface.h                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:50:39 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:33:23 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:33:23 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 # include "libft.h"
 # include "vm_messages.h"
 
-# define NON_LOOP_MODE			0
-# define LOOP_MODE				1
 # define MAGIC_TOKEN			0xC1C1
 # define TYPE_HANDSHAKE			1
 # define TYPE_GAME_COMING		2
@@ -67,6 +65,8 @@ typedef struct					s_io_interface
 	t_darr						*netbuf;
 	int8_t						error_tolerate;
 }								t_io_interface;
+
+typedef struct sockaddr			t_sockaddr;
 
 /*
 ** sockets part

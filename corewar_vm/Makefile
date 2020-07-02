@@ -1,4 +1,4 @@
-.PHONY: all clean fclean re directories libft
+.PHONY: all clean fclean re libft
 
 DIR_CAR = vm_car
 CAR =	$(DIR_CAR)/vm_car_get_types_and_step.c \
@@ -101,9 +101,8 @@ DIR_OBJ = obj/
 LIB = libft.a
 DIR_LIB = ./libft/
 
-HEADERS = corewar_vm.h op.h vm_game_input.h vm_server.h libft.h
+HEADERS = corewar_vm.h op.h vm_game_input.h vm_io_interface.h vm_messages.h vm_server.h libft.h
 
-FLAGS = -O2 -Wall -Wextra -Werror -pthread
 OBJ = $(SRC:%.c=%.o)
 DEP = $(OBJ:%.o=%.d)
 
@@ -132,6 +131,7 @@ DEPS = $(SRC:%.c=$(DIR_OBJ)%.d)
 MKDIR_P = mkdir -p
 
 COMPILER = gcc
+FLAGS = -O2 -Wall -Wextra -Werror -pthread
 
 all: $(NAME)
 
@@ -143,7 +143,8 @@ $(DIRS):
 
 $(DIR_OBJ)%.o: $(DIR_SRC)%.c
 	$(COMPILER) $(FLAGS) -MD -o $@ -c $< $(DIR_INC)
--include $(wildcard *.d)
+
+-include $(DEPS)
 
 libft:
 	$(MAKE) -C $(DIR_LIB)

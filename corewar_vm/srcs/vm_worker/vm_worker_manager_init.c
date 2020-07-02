@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_worker_manager_init.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:29:54 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:04:05 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:04:05 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -268,7 +268,7 @@ void						vm_worker_create(t_input *input, uint32_t id_wk)
 		worker_new->id_worker = id_wk;
 		worker_new->carrs = darr_init(STRT_CARR_NUM, 0, sizeof(t_car), NULL);
 		worker_new->dump = input->flag_dump;
-		worker_new->reg_workers = &(input->worker_manager->reg_workers);
+		worker_new->reg_workers = &(input->worker_mngr->reg_workers);
 		worker_new->flag_log = input->flag_log;
 		worker_new->lib_ops = g_op_tab;
 		worker_new->last_lived = 0;
@@ -276,7 +276,7 @@ void						vm_worker_create(t_input *input, uint32_t id_wk)
 		worker_new->cur_ctd = 0;
 		vm_worker_clean(worker_new);
 		vm_worker_set_interface(worker_new, input, id_wk);
-		input->worker_manager->workers[id_wk] = worker_new;
+		input->worker_mngr->workers[id_wk] = worker_new;
 	}
 }
 
@@ -287,13 +287,13 @@ void						vm_worker_manager_init(t_input *input)
 
 	if (!(new_manager = malloc(sizeof(t_worker_manager))))
 		vm_error("Error: can't create manager server\n", input);
-	input->worker_manager = new_manager;
+	input->worker_mngr = new_manager;
 	reg_workers = input->mode < 0 ? -input->mode : input->mode;
-	input->worker_manager->reg_workers = 0;
+	input->worker_mngr->reg_workers = 0;
 	while (reg_workers--)
-		input->worker_manager->reg_workers |= (1u << reg_workers);
+		input->worker_mngr->reg_workers |= (1u << reg_workers);
 	reg_workers = input->mode < 0 ? -input->mode : input->mode;
-	if (!(input->worker_manager->workers =
+	if (!(input->worker_mngr->workers =
 				(t_worker**)malloc(sizeof(t_worker*) * reg_workers)))
 		vm_error("Error: can't create workers for server\n", input);
 	while (reg_workers--)

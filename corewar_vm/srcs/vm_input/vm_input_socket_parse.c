@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_input_socket_parse.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 07:48:44 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:00:29 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:00:29 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int						vm_input_socket_parse_game(t_input *input, int game_id)
 {
 	t_gminput			new_game;
-	int					champ_id;
+	int					id_chmp;
 	uint8_t				*data_start;
 	int					err_no;
 
@@ -24,19 +24,16 @@ int						vm_input_socket_parse_game(t_input *input, int game_id)
 	data_start = (uint8_t*)input->io->netbuf->start;
 	if (4 < (new_game.num_players = *data_start))
 		return (vm_nofity_err(input->io->err_fd, ER_MO_CHMPS, CD_ER_MO_CHMPS));
-	champ_id = -1;
+	id_chmp = -1;
 	data_start += 1;
-	while (++champ_id < new_game.num_players)
+	while (++id_chmp < new_game.num_players)
 	{
-		if ((err_no = vm_input_parse_champ_online(&(new_game.players[champ_id]),
+		if ((err_no = vm_input_parse_champ_online(&(new_game.players[id_chmp]),
 			data_start, input->io->err_fd)))
 			break ;
-		new_game.players[champ_id].id = champ_id + 1;
-		//TODO: delett
-		ft_printf("Player %s is on board\n", new_game.players[champ_id].name);
-		//
-		data_start += new_game.players[champ_id].code_size +
-				sizeof(t_header_new);
+		new_game.players[id_chmp].id = id_chmp + 1;
+		data_start += new_game.players[id_chmp].code_size +
+					sizeof(t_header_new);
 	}
 	if (!err_no)
 		darr_join(input->games_input_queue, &(new_game),
@@ -54,23 +51,13 @@ int						vm_input_socket_receive_header(t_input *input,
 		ft_printfd(input->io->err_fd, "Error: can't read head data\n");
 		return (0);
 	}
-
 	msg = input->io->netbuf->start;
-//	// TODO: delete
-//	ft_printf("MSG_BY_BYTES:\n");
-//	for (int i = 0; i < 9; i++) {
-//		ft_printf("%d ",msg[i]);
-//	}
-//	ft_printf("\n");
-//	//
 	head->msg_type = *msg;
 	head->game_id = vm_socket_bytes_to_int(msg + 1, 4);
 	head->msg_len = vm_socket_bytes_to_int(msg + 5, 4);
 	darr_remove_front(input->io->netbuf, input->io->netbuf->len);
-	// TODO: delete
 	ft_printf("MSG_TYPE: %d, GAME_ID: %u, MSG_LEN: %u\n",
 	head->msg_type, head->game_id, head->msg_len);
-	//
 	return (head->msg_type);
 }
 
@@ -104,7 +91,8 @@ int						vm_input_socket_message_receive(t_input *input)
 
 /*
 ** This function parse game from hub and if there is no errors
-**  then one game was loaded, so we return 1. Otherwise, return 0 - no new games.
+**  then one game was loaded, so we return 1.
+** Otherwise, return 0 - no new games.
 */
 
 int						vm_input_socket_is_game_received(t_input *input)

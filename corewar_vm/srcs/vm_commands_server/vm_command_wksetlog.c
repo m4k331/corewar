@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_command_wksetlog.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 07:30:35 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:59 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 15:59:09 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 15:59:09 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ static int			vm_wksetlog_parse_logmode(int *log_mode, char *log_str,
 
 static int			vm_wksetlog_check_wkmanager(t_input *input)
 {
-	if (!input->worker_manager)
+	if (!input->worker_mngr)
 	{
 		ft_printfd(input->io->err_fd, ERR_YET_NO_WORKERS);
 		return (CODE_ERR_YET_NO_WORKERS);
@@ -112,7 +112,7 @@ int					vm_command_wksetlog(char *args, t_io_interface *io)
 	args = ft_strchr(log_str, ' ');
 	if ((err_num = vm_wksetlog_parse_logmode(&log_mode, log_str, io, args)))
 		return (err_num);
-	((t_input*)io->superior)->worker_manager->workers[wk_id - 1]->flag_log =
+	((t_input*)io->superior)->worker_mngr->workers[wk_id - 1]->flag_log =
 			log_mode;
 	ft_printfd(io->cout, MSG_WORKER_LOG_SET, wk_id, log_mode);
 	return (0);

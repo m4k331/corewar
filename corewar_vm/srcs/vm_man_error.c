@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/03/06 19:45:36 by limry             #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:06:48 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:06:48 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void		vm_remove_all(t_input *g)
 {
-	if (g->worker_manager)
+	if (g->worker_mngr)
 		vm_worker_manager_remove(g);
 	if (g->io)
 		vm_socket_io_destroy(g->io);

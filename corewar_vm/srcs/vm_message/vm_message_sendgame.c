@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_message_sendgame.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:02:08 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:01:31 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:01:31 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void			vm_message_sendgame(t_worker *wk)
 	vm_socket_int_to_bytes(buf, wk->num_checks, 4);
 	darr_join(wk->io->netbuf, (uint8_t*)buf, 4, sizeof(uint8_t));
 	vm_socket_int_to_bytes(buf, wk->last_lived, 4);
-	darr_join(wk->io->netbuf,(uint8_t*)buf, 1, sizeof(uint8_t));
+	darr_join(wk->io->netbuf, (uint8_t*)buf, 1, sizeof(uint8_t));
 	darr_join(wk->io->netbuf,
 			wk->map, MEM_SIZE, sizeof(uint8_t));
 	darr_join(wk->io->netbuf,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   vm_worker_manager_remove.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kona <kona@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/10 08:30:36 by kona              #+#    #+#             */
-/*   Updated: 2020/06/06 19:02:58 by kona             ###   ########.fr       */
+/*   Created: 2020/07/02 16:04:11 by limry             #+#    #+#             */
+/*   Updated: 2020/07/02 16:04:11 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void		vm_worker_manager_remove(t_input *input)
 
 	reg = input->mode < 0 ? -input->mode : input->mode;
 	while (reg--)
-		vm_worker_remove(input->worker_manager->workers[reg]);
-	free(input->worker_manager->workers);
-	free(input->worker_manager);
+		vm_worker_remove(input->worker_mngr->workers[reg]);
+	free(input->worker_mngr->workers);
+	free(input->worker_mngr);
 }
