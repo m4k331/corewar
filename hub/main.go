@@ -3,10 +3,10 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
 	"strings"
-	"html/template"
 )
 
 var mainPage = []byte(`
@@ -29,7 +29,6 @@ func root(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	t.
 	t.ExecuteTemplate(w, "signin", nil)
 	fmt.Printf("root: %+v\n", t)
 }
@@ -140,12 +139,31 @@ func oauth(w http.ResponseWriter, r *http.Request) {
 	fmt.Printf("OPS: %+v\n", user)
 }
 
+type Client struct {
+	AccessToken string
+}
+
+func (cl *Client) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "GET" {
+		sUrl := strings.Trim(r.URL.String(), "/")
+		switch sUrl {
+		case "", "signin":
+
+		}
+	}
+}
+
 func main() {
-	mainMux := http.NewServeMux()
-	mainMux.HandleFunc("/", root)
-	mainMux.HandleFunc("/oauth", oauth)
-	mainMux.HandleFunc("/main", mmain)
-	fmt.Println("Start server")
-	http.ListenAndServe(":4221", mainMux)
-	fmt.Println("Stop server")
+	var (
+		client = new(Client)
+	)
+
+	http.ListenAndServe(":8081", client)
+	//mainMux := http.NewServeMux()
+	//mainMux.HandleFunc("/", root)
+	//mainMux.HandleFunc("/oauth", oauth)
+	//mainMux.HandleFunc("/main", mmain)
+	//fmt.Println("Start server")
+	//http.ListenAndServe(":4221", mainMux)
+	//fmt.Println("Stop server")
 }

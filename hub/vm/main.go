@@ -66,7 +66,7 @@ func main() {
 		go handleConnection(conn, handleGeneralSocket)
 		// TODO: delete
 		go func() {
-			timer := time.NewTimer(time.Second * 10)
+			timer := time.NewTimer(time.Second * 5)
 			<-timer.C
 			tmpInitialGame(conn, 3) // n - number champs
 		}()
