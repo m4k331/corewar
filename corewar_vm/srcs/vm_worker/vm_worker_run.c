@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:04:15 by limry             #+#    #+#             */
-/*   Updated: 2020/07/02 16:04:15 by limry            ###   ########.fr       */
+/*   Updated: 2020/07/02 22:54:20 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ int				vm_worker_run_cycle(t_worker *worker)
 				break ;
 			car = (t_car*)worker->carrs->data + car->next;
 		}
+
 		if (worker->dump == worker->cur_ctd)
 			return (vm_worker_show_map(worker, 32));
 	}

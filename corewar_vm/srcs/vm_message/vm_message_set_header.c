@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:01:22 by limry             #+#    #+#             */
-/*   Updated: 2020/07/02 16:01:22 by limry            ###   ########.fr       */
+/*   Updated: 2020/07/02 23:47:53 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void		vm_message_set_header(uint8_t type,
 	uint8_t	buf[4];
 
 	darr_remove_back(buffer, buffer->len);
-	darr_join(buffer, (uint8_t*)&type, 1, sizeof(uint8_t));
+	darr_join(buffer, &type, 1, sizeof(uint8_t));
 	ft_bzero(&buf, 4);
 	vm_socket_int_to_bytes(buf, game_id, 4);
 	darr_join(buffer, (uint8_t*)buf, 4, sizeof(uint8_t));
