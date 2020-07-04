@@ -12,9 +12,9 @@
 
 #include "vm_io_interface.h"
 
-void				vm_socket_fill(struct addrinfo *hints)
+void				vm_socket_fill(t_addrinfo *hints)
 {
-	ft_bzero(hints, sizeof(struct addrinfo));
+	ft_bzero(hints, sizeof(t_addrinfo));
 	hints->ai_family = AF_UNSPEC;
 	hints->ai_socktype = SOCK_STREAM;
 	hints->ai_flags = AI_PASSIVE;

@@ -6,14 +6,14 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:02:33 by limry             #+#    #+#             */
-/*   Updated: 2020/07/02 16:02:33 by limry            ###   ########.fr       */
+/*   Updated: 2020/07/04 14:59:01 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "vm_io_interface.h"
 
 static int				vm_socket_connection_processing(
-						struct addrinfo *servinfo, t_io_interface *io)
+						t_addrinfo *servinfo, t_io_interface *io)
 {
 	int					sockfd;
 
@@ -25,9 +25,10 @@ static int				vm_socket_connection_processing(
 		if ((sockfd = socket(servinfo->ai_family, servinfo->ai_socktype,
 				servinfo->ai_protocol)) == -1)
 			ft_printfd(io->err_fd, "Error: can't get socket\n");
-		else if (vm_socket_connect_wait(sockfd, servinfo->ai_addr,
-				servinfo->ai_addrlen, TIMEOUT_CONNECT) != -1)
+		else if (!vm_socket_connect_wait(sockfd, servinfo->ai_addr,
+				servinfo->ai_addrlen, TIMEOUT_CONNECT)) {
 			break ;
+		}
 		if (sockfd != -1)
 		{
 			ft_printfd(io->err_fd, "Error: can't connect sock %d\n", sockfd);
@@ -55,8 +56,8 @@ static in_port_t		get_in_port(t_sockaddr *sa)
 	return (((struct sockaddr_in6*)sa)->sin6_port);
 }
 
-static struct addrinfo	*vm_connection_getservinfo(t_io_interface *io,
-						struct addrinfo	**servinfo)
+static t_addrinfo		*vm_connection_getservinfo(t_io_interface *io,
+						t_addrinfo	**servinfo)
 {
 	int					rv;
 
@@ -75,7 +76,7 @@ static struct addrinfo	*vm_connection_getservinfo(t_io_interface *io,
 
 int						vm_socket_connect(t_io_interface *io)
 {
-	struct addrinfo		*servinfo;
+	t_addrinfo			*servinfo;
 	char				s[INET6_ADDRSTRLEN];
 
 	if (!vm_connection_getservinfo(io, &servinfo))

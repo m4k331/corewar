@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:03:56 by limry             #+#    #+#             */
-/*   Updated: 2020/07/02 16:03:56 by limry            ###   ########.fr       */
+/*   Updated: 2020/07/04 16:00:31 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void		vm_worker_prep_for_init_data(int *i, int *j, t_car *car,
 	ft_bzero(car, sizeof(t_car));
 	vm_worker_clean(worker);
 }
-
+//connect 192.168.22.54 2142
 void			vm_worker_init_game(t_worker *worker, t_gminput input)
 {
 	int			i;
@@ -42,7 +42,7 @@ void			vm_worker_init_game(t_worker *worker, t_gminput input)
 
 	vm_worker_prep_for_init_data(&i, &j, &car, worker);
 	zone = MEM_SIZE / input.num_players;
-	while (++i < MAX_PLAYERS)
+	while (++i < input.num_players)
 		if (input.players[i].id != 0 && ++j + 1)
 		{
 			vm_worker_add_player_id(&worker, i, input, j);

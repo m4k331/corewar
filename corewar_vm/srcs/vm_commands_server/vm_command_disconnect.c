@@ -12,7 +12,7 @@
 
 #include "vm_server.h"
 
-static void	vm_diconnect_socket(t_io_interface *io)
+static void	vm_diconnect_socket_fds(t_io_interface *io)
 {
 	vm_socket_block(io->sock_fd);
 	((t_input*)io->superior)->fds[1].fd = 0;
@@ -44,7 +44,7 @@ int			vm_command_disconnect(t_io_interface *io)
 	vm_socket_disconnect(io);
 	vm_command_io_clean(io);
 	vm_disconnect_workers((t_input*)io->superior);
-	vm_diconnect_socket(io);
+	vm_diconnect_socket_fds(io);
 	ft_putstr_fd("Disconnection completed\n", io->cout);
 	return (0);
 }

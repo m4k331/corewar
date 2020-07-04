@@ -67,6 +67,7 @@ typedef struct					s_io_interface
 }								t_io_interface;
 
 typedef struct sockaddr			t_sockaddr;
+typedef struct addrinfo			t_addrinfo;
 
 /*
 ** sockets part

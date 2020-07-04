@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:04:05 by limry             #+#    #+#             */
-/*   Updated: 2020/07/02 16:04:05 by limry            ###   ########.fr       */
+/*   Updated: 2020/07/04 15:30:18 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,7 +229,7 @@ void						vm_worker_fill_io_interface(t_io_interface *io,
 {
 	io->address = input->io->address;
 	io->port = input->wk_sockets[id_wk];
-	vm_socket_fill(&(input->io->hints));
+	vm_socket_fill(&(io->hints));
 }
 
 void						vm_worker_set_interface(t_worker *worker,
