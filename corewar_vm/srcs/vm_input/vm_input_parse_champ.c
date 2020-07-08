@@ -43,7 +43,7 @@ int					vm_input_parse_champ_offline(int fd, t_champ *champ,
 
 	ft_bzero(buf, CHAMP_MAX_SIZE);
 	if ((int)sizeof(t_header_new) > read(fd, &head, sizeof(t_header_new)))
-		vm_error("Error: champ file has too short header", input);
+		vm_error("Error: champ file has too short header. OUI", input);
 	else if (vm_parse_byte_to_32int(&head.magic, 4) != COREWAR_EXEC_MAGIC)
 		vm_error("Error: champ file has wrong magic header", input);
 	else if (head.null_name != 0)
@@ -72,9 +72,12 @@ int					vm_input_parse_champ_online(t_champ *champ,
 
 	ft_memset(buf, 0, CHAMP_MAX_SIZE);
 	head = (t_header_new*)raw_data;
-	if (vm_parse_byte_to_32int(&(head->magic), 4) != COREWAR_EXEC_MAGIC)
+	int r;
+	if ((r = vm_parse_byte_to_32int(&(head->magic), 4)) != COREWAR_EXEC_MAGIC) {
+		printf("MAGIS IS %x and I GOT %x", COREWAR_EXEC_MAGIC, r);
 		return (vm_nofity_err(err_fd,
-			ERR_PARSE_MSG_WRONG_MAGIC, CODE_ERR_PARSE_MSG_WRONG_MAGIC));
+							  ERR_PARSE_MSG_WRONG_MAGIC, CODE_ERR_PARSE_MSG_WRONG_MAGIC));
+	}
 	else if (head->null_name != 0)
 		return (vm_nofity_err(err_fd,
 			ERR_PARSE_MSG_NO_NULL_NAME, CODE_ERR_PARSE_MSG_NO_NULL_NAME));

@@ -42,5 +42,6 @@ int			vm_socket_send_buff(t_io_interface *io)
 	ft_printf("Sended to %s:%s = %d bytes (fd:%d)\n",
 			io->address, io->port, io->netbuf->len_data, io->sock_fd);
 	darr_remove_front(io->netbuf, io->netbuf->len);
+	usleep(SLEEPTIME);
 	return (sended);
 }

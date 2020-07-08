@@ -54,4 +54,5 @@ void			vm_message_sendgame(t_worker *wk)
 	vm_socket_int_to_bytes((uint8_t*)(wk->io->netbuf->start) + 5,
 						   (int)(wk->io->netbuf->len_data - 9L), 4);
 	vm_socket_send_buff(wk->io);
+//	sleep(1);
 }

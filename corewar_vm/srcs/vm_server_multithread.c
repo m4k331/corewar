@@ -11,6 +11,13 @@
 /* ************************************************************************** */
 
 #include "vm_server.h"
+#include <signal.h>
+
+void		sigpipe_handler(void)
+{
+	printf("sleep for sec\n");
+	sleep(1);
+}
 
 void		vm_server_thread_attr_set(pthread_attr_t *tattr, int mode)
 {
@@ -45,4 +52,6 @@ void		vm_server_mode_multithread(t_input *input)
 	input->threads = malloc(sizeof(pthread_t) * reg);
 	if (!(input->threads))
 		vm_exit("Error: no multithread mode\n", input);
+//	sigaction(SIGPIPE, &(struct sigaction){sigpipe_handler}, NULL);
+//	signal(SIGPIPE, MSG_NOSIGNAL);
 }

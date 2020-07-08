@@ -44,6 +44,7 @@
 # define MAXDATASIZE			1024 * 10
 # define NETBUF_INITLEN			4096
 # define ERROR_TOLERATE			5
+# define SLEEPTIME 100000
 
 typedef struct					s_message_header
 {

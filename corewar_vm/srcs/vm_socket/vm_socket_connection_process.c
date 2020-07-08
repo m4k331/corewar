@@ -82,7 +82,7 @@ int						vm_socket_connect(t_io_interface *io)
 	if (!vm_connection_getservinfo(io, &servinfo))
 	{
 		ft_printfd(io->err_fd, ERR_CONNECTION);
-		freeaddrinfo(servinfo);
+//		freeaddrinfo(servinfo);
 		return (CODE_ERR_CONNECTION);
 	}
 	if ((vm_socket_connection_processing(servinfo, io)))
