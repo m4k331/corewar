@@ -32,7 +32,7 @@ func readEndOfGame(conn net.Conn) (*EndOfGame, error) {
 		return m, e
 	}
 	m.Message = make([]byte, m.Len)
-	if n, e = conn.Read(m.Message); n != int(m.Len) || e != nil {
+	if n, e = conn.Read(m.Message); n != int(m.Len)-1 || e != nil {
 		return m, fmt.Errorf("Error reading Message field (%d/%d): %v ", n, m.Len, e)
 	}
 

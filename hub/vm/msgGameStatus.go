@@ -10,8 +10,8 @@ import (
 const ArenaSize = 4096
 
 type Carriage struct {
-	ProcId           uint32
-	ProcPos          uint16
+	ProcId  uint32
+	ProcPos uint16
 }
 
 type GameStatus struct {
@@ -25,7 +25,7 @@ type GameStatus struct {
 	LastLivedPlayer  uint8
 	Arena            [ArenaSize]byte
 	Setting          [ArenaSize]byte
-	Cars			 []Carriage
+	Cars             []Carriage
 }
 
 func readGameStatus(conn net.Conn) (*GameStatus, error) {
@@ -34,7 +34,6 @@ func readGameStatus(conn net.Conn) (*GameStatus, error) {
 		e error
 		m = new(GameStatus)
 	)
-
 	m.Cars = make([]Carriage, 0)
 	m.Type = TypeMsgGameStatus
 	if e = binary.Read(conn, binary.BigEndian, &m.Id); e != nil {
@@ -43,6 +42,10 @@ func readGameStatus(conn net.Conn) (*GameStatus, error) {
 	if e = binary.Read(conn, binary.BigEndian, &m.Len); e != nil {
 		return m, e
 	}
+
+	numberOfCarriages := (m.Len - 8209) / 6
+	println("Len is ", m.Len, "Number of carriages is", numberOfCarriages)
+
 	if e = binary.Read(conn, binary.BigEndian, &m.CyclesOfDeath); e != nil {
 		return m, e
 	}
@@ -64,9 +67,6 @@ func readGameStatus(conn net.Conn) (*GameStatus, error) {
 	if n, e = conn.Read(m.Setting[:]); n != ArenaSize || e != nil {
 		return m, fmt.Errorf("Error reading setting field (%d/%d): %v ", n, ArenaSize, e)
 	}
-	numberOfCarriages := (m.Len - 8209) / 6
-	println("Number of carriages is", numberOfCarriages);
-
 	for i := uint32(0); i < numberOfCarriages; i++ {
 		c := Carriage{uint32(0), uint16(0)}
 		if e = binary.Read(conn, binary.BigEndian, &c.ProcId); e != nil {
@@ -79,7 +79,6 @@ func readGameStatus(conn net.Conn) (*GameStatus, error) {
 	}
 	return m, e
 }
-
 
 func ExpandCars(cars []Carriage) string {
 	var str strings.Builder
