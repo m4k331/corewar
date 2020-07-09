@@ -17,7 +17,7 @@ void			vm_message_sendgame_carriages(t_worker *wk)
 	t_car		*tmp;
 	uint8_t		buf[4];
 
-	tmp = (t_car*)wk->carrs->start + wk->live_head;
+	tmp = (t_car*)wk->carrs->data + wk->live_head;
 	while (tmp)
 	{
 		vm_socket_int_to_bytes(buf, tmp->id, 4);
@@ -26,7 +26,7 @@ void			vm_message_sendgame_carriages(t_worker *wk)
 		darr_join(wk->io->netbuf, buf, 2, sizeof(uint8_t));
 		if (tmp->next == -1)
 			break ;
-		tmp = (t_car*)wk->carrs->start + tmp->next;
+		tmp = (t_car*)wk->carrs->data + tmp->next;
 	}
 }
 

@@ -67,17 +67,13 @@ int					vm_input_parse_champ_offline(int fd, t_champ *champ,
 int					vm_input_parse_champ_online(t_champ *champ,
 					uint8_t *raw_data, int err_fd)
 {
-	uint8_t			buf[CHAMP_MAX_SIZE];
 	t_header_new	*head;
 
-	ft_memset(buf, 0, CHAMP_MAX_SIZE);
 	head = (t_header_new*)raw_data;
 	int r;
-	if ((r = vm_parse_byte_to_32int(&(head->magic), 4)) != COREWAR_EXEC_MAGIC) {
-		printf("MAGIS IS %x and I GOT %x", COREWAR_EXEC_MAGIC, r);
+	if ((r = vm_parse_byte_to_32int(&(head->magic), 4)) != COREWAR_EXEC_MAGIC)
 		return (vm_nofity_err(err_fd,
-							  ERR_PARSE_MSG_WRONG_MAGIC, CODE_ERR_PARSE_MSG_WRONG_MAGIC));
-	}
+			ERR_PARSE_MSG_WRONG_MAGIC, CODE_ERR_PARSE_MSG_WRONG_MAGIC));
 	else if (head->null_name != 0)
 		return (vm_nofity_err(err_fd,
 			ERR_PARSE_MSG_NO_NULL_NAME, CODE_ERR_PARSE_MSG_NO_NULL_NAME));
@@ -91,6 +87,6 @@ int					vm_input_parse_champ_online(t_champ *champ,
 			ERR_PARSE_MSG_NO_NULL_COM, CODE_ERR_PARSE_MSG_NO_NULL_COM));
 	else
 		ft_memcpy(champ->comment, head->comment, COMMENT_LENGTH);
-	ft_memcpy(champ->code, buf, champ->code_size);
+	ft_memcpy(champ->code, raw_data + sizeof(t_header_new), champ->code_size);
 	return (0);
 }
