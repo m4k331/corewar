@@ -35,8 +35,8 @@ func readOperation(conn net.Conn) (*Operation, error) {
 	if e = binary.Read(conn, binary.BigEndian, &m.ProcPos); e != nil {
 		return m, e
 	}
-	m.Message = make([]byte, m.Len)
-	if n, e = conn.Read(m.Message); n != int(m.Len) || e != nil {
+	m.Message = make([]byte, m.Len-6)
+	if n, e = conn.Read(m.Message); n != int(m.Len)-6 || e != nil {
 		return m, fmt.Errorf("Error reading Message field (%d/%d): %v ", n, m.Len, e)
 	}
 

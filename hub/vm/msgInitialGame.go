@@ -55,18 +55,19 @@ func tmpInitialGame(conn net.Conn, n uint8) {
 
 	msg.Type = TypeMsgInitialGame
 	//msg.Type = 2
+	sz := 2768
 	msg.Id = rand.Uint32()
 	msg.Number = n
 	fmt.Println("GO INIT GAME")
-	size := 2215 * int(n)
+	size := sz * int(n)
 	msg.Len = uint32(size + 1)
 	msg.Champs = make([]byte, size)
 	for i := 0; i < int(n); i++ {
-		file, err := os.Open("champs/ex.cor")
+		file, err := os.Open("champs/slider2.cor")
 		if err != nil {
 			log.Fatal(err)
 		}
-		file.Read(msg.Champs[i*2215:])
+		file.Read(msg.Champs[i*sz:])
 		file.Close()
 	}
 	err = msg.Send(conn)
