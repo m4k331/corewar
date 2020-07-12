@@ -67,7 +67,7 @@ func launchWorkers(ctx context.Context) (uint32, error) {
 		select {
 		case conn := <-chanConn:
 			fmt.Printf("Accept worker conn %v\n", conn.RemoteAddr().String())
-			go handleConnection(conn, handleGameWorker)
+			go handleConnection(conn, nil, handleGameWorker)
 		case <-ctx.Done():
 			break
 		}

@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"go.uber.org/zap"
 	"net"
 )
 
-func handleGeneralSocket(conn net.Conn) error {
+func handleGeneralSocket(conn net.Conn, connLog *zap.Logger) error {
 	var (
 		addr    = conn.RemoteAddr().String()
 		typeMsg uint8

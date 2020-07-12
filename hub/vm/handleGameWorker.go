@@ -2,10 +2,11 @@ package main
 
 import (
 	"fmt"
+	"go.uber.org/zap"
 	"net"
 )
 
-func handleGameWorker(conn net.Conn) error {
+func handleGameWorker(conn net.Conn, workLog *zap.Logger) error {
 	var (
 		addr    = conn.RemoteAddr().String()
 		typeMsg uint8

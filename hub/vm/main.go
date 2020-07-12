@@ -1,10 +1,8 @@
 package main
 
 import (
-	"fmt"
 	"go.uber.org/zap"
 	"net"
-	"time"
 )
 
 const (
@@ -34,18 +32,16 @@ const (
 	TypeMsgBinaryASM
 )
 
-func handleConnection(conn net.Conn, handler func(net.Conn) error) {
-	defer conn.Close()
-
-	var (
-		err  error
-		addr = conn.RemoteAddr().String()
-	)
+func handleConnection(conn net.Conn, connLog *zap.Logger, handler func(net.Conn, *zap.Logger) error) {
+	defer connClose(conn, connLog)
+	defer connLog.Sync()
 
 	for {
-		err = handler(conn)
-		if err != nil {
-			fmt.Printf("Abort conn: %s error: %v\n", addr, err)
+		if err := handler(conn, connLog); err != nil {
+			connLog.Error("Abort connection",
+				zap.String("addr", conn.RemoteAddr().String()),
+				zap.Error(err),
+			)
 			return
 		}
 	}
@@ -69,19 +65,31 @@ func main() {
 	for {
 		conn, err := general.Accept()
 		if err != nil {
-			genLog.Info("General socket accept failed",
+			genLog.Error("General socket accept failed",
 				zap.Error(err),
 			)
+			continue
 		}
+
 		genLog.Info("Service connected to hub server",
 			zap.String("addr", conn.RemoteAddr().String()),
 		)
-		go handleConnection(conn, handleGeneralSocket)
+
+		connLog, err := zap.NewProduction()
+		if err != nil {
+			genLog.Error("Connection logger created failed",
+				zap.Error(err),
+			)
+			connClose(conn, genLog)
+			continue
+		}
+
+		go handleConnection(conn, connLog, handleGeneralSocket)
 		// TODO: delete
-		go func() {
-			timer := time.NewTimer(time.Second * 5)
-			<-timer.C
-			tmpInitialGame(conn, 1) // n - number champs
-		}()
+		//go func() {
+		//	timer := time.NewTimer(time.Second * 5)
+		//	<-timer.C
+		//	tmpInitialGame(conn, 1) // n - number champs
+		//}()
 	}
 }
