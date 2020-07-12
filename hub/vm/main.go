@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"log"
+	"go.uber.org/zap"
 	"net"
 	"time"
 )
@@ -52,17 +52,30 @@ func handleConnection(conn net.Conn, handler func(net.Conn) error) {
 }
 
 func main() {
+	genLog, err := zap.NewProduction()
+	if err != nil {
+		panic(err)
+	}
+	defer genLog.Sync()
+
 	general, err := net.Listen("tcp", GeneralPort)
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
-	fmt.Printf("START HUB: %+v\n", general.Addr().String())
+	genLog.Info("Start hub server",
+		zap.String("addr", general.Addr().String()),
+	)
+
 	for {
 		conn, err := general.Accept()
 		if err != nil {
-			log.Fatal(err)
+			genLog.Info("General socket accept failed",
+				zap.Error(err),
+			)
 		}
-		fmt.Printf("Connect to hub %+v\n", conn.RemoteAddr().String())
+		genLog.Info("Service connected to hub server",
+			zap.String("addr", conn.RemoteAddr().String()),
+		)
 		go handleConnection(conn, handleGeneralSocket)
 		// TODO: delete
 		go func() {
