@@ -1,17 +1,19 @@
 package main
 
 import (
-	"fmt"
 	"net"
 	"strconv"
 	"strings"
 )
 
 func readTypeMsg(conn net.Conn) (uint8, error) {
-	oneByte := make([]byte, 1)
-	n, err := conn.Read(oneByte)
-	if n != 1 {
-		err = fmt.Errorf("%d bytes were read instead of 1", n)
+	var (
+		oneByte = make([]byte, 1)
+		err     error
+		n       int
+	)
+	for n == 0 {
+		n, err = conn.Read(oneByte)
 	}
 	return oneByte[0], err
 }
