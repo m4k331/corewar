@@ -14,6 +14,7 @@
 # define VM_VM_SERVER_H
 
 # include <sys/socket.h>
+# include <netinet/tcp.h>
 # include <sys/ioctl.h>
 # include "corewar_vm.h"
 
@@ -26,6 +27,11 @@
 # define LOG_DEATH		8u
 # define LOG_MOVE		16u
 # define LOG_MAP		32u
+
+# define KEEPALIVE_ON	1
+# define KEEPALIVE_IDLE	1
+# define KEEPALIVE_INTL	1
+# define KEEPALIVE_MAXP	10
 
 void					vm_server_start(t_input *input);
 void					vm_server_run(t_input *input, pthread_attr_t *tattr);

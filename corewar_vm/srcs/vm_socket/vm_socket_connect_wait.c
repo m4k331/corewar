@@ -12,6 +12,22 @@
 
 #include "vm_server.h"
 
+static int			socket_setkeepalive(int sockfd) {
+	int				yes;
+	int				idle;
+	int				interval;
+	int				maxpkt;
+
+	yes = KEEPALIVE_ON;
+	idle = KEEPALIVE_IDLE;
+	interval = KEEPALIVE_INTL;
+	maxpkt = KEEPALIVE_MAXP;
+	return (setsockopt(sockfd, SOL_SOCKET, SO_KEEPALIVE, &yes, sizeof(int)) ||
+	setsockopt(sockfd, IPPROTO_TCP, TCP_KEEPIDLE, &idle, sizeof(int)) ||
+	setsockopt(sockfd, IPPROTO_TCP, TCP_KEEPINTVL, &interval, sizeof(int)) ||
+	setsockopt(sockfd, IPPROTO_TCP, TCP_KEEPCNT, &maxpkt, sizeof(int)));
+}
+
 int					vm_socket_connect_wait(int sockfd,
 					t_sockaddr *ai_addr, socklen_t ai_addrlen,
 					int timeout)
@@ -39,5 +55,5 @@ int					vm_socket_connect_wait(int sockfd,
 	}
 	else if (vm_socket_block(sockfd) < 0)
 		return (-1);
-	return (0);
+	return (socket_setkeepalive(sockfd));
 }
