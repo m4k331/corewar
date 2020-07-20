@@ -17,7 +17,7 @@ static int		vm_get_free_index_in_names(t_input *input)
 	int			i;
 
 	i = 0;
-	while (input->champ_files[i] != NULL)
+	while (input->champ_files[i] != NULL && i < MAX_PLAYERS)
 		i++;
 	if (i > 3)
 		vm_error("Too many champions!\n", input);
@@ -33,17 +33,19 @@ static int		vm_set_name_of_champ_for_offline(t_input *input,
 	free_index = vm_get_free_index_in_names(input);
 	if (to_parse_n)
 	{
+		if (av_index >= input->ac)
+			vm_error("No arguments after n flag\n", input);
 		n = ft_atoli(input->av[av_index]);
-		if (n > 4 || n < 1)
+		if (n > MAX_PLAYERS || n < 1)
 			vm_error("Error: set index of player between 1 and 4\n", input);
-		else if (input->champ_files[n - 1] == NULL)
-			input->champ_files[n - 1] = input->av[av_index + 1];
-		else if (input->champ_files[n - 1] != NULL)
-		{
+		if (input->champ_files[n - 1] != NULL)
 			input->champ_files[free_index] = input->champ_files[n - 1];
-			input->champ_files[n - 1] = input->av[av_index + 1];
-		}
+		if (av_index + 1 >= input->ac)
+			vm_error("No arguments after position definition\n", input);
+		input->champ_files[n - 1] = input->av[av_index + 1];
 	}
+	else if (av_index >= input->ac)
+		vm_error("Wrong argument of champ file\n", input);
 	else
 		input->champ_files[free_index] = input->av[av_index];
 	return (1);
@@ -68,7 +70,8 @@ static void		vm_parse_flag_setting(int *av_index, t_input *input,
 	if (*flag_type == 1)
 	{
 		*num_champs += 1;
-		vm_set_name_of_champ_for_offline(input, *(++av_index), 1);
+		vm_set_name_of_champ_for_offline(input, ++(*(av_index)), 1);
+		++(*(av_index));
 	}
 	else if (*flag_type == 4)
 		input->flag_server = TRUE;
@@ -77,7 +80,7 @@ static void		vm_parse_flag_setting(int *av_index, t_input *input,
 	else if (*flag_type == 6 && ++(*av_index) < input->ac)
 		input->flag_log = ft_atoli(input->av[*(av_index)]);
 	else if (*flag_type < 0)
-		vm_error("Error: found inappropriate flag\n", input);
+		vm_error("Error: found irrelevant flag\n", input);
 }
 
 void			vm_input_define(t_input *input)
@@ -94,7 +97,7 @@ void			vm_input_define(t_input *input)
 		if (input->av[av_index][0] == '-' &&
 		(flag_type = vm_parse_flag(input->av[av_index])))
 			vm_parse_flag_setting(&av_index, input, &flag_type, &num_champs);
-		else if (++num_champs < 5)
+		else if (++num_champs < MAX_PLAYERS + 1)
 			vm_set_name_of_champ_for_offline(input, av_index, 0);
 		else
 			vm_error("Error: too many champions!\n", input);

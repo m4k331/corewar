@@ -32,7 +32,7 @@ static void		vm_worker_prep_for_init_data(int *i, int *j, t_car *car,
 	ft_bzero(car, sizeof(t_car));
 	vm_worker_clean(worker);
 }
-//connect 192.168.22.54 2142
+
 void			vm_worker_init_game(t_worker *worker, t_gminput input)
 {
 	int			i;
@@ -42,7 +42,7 @@ void			vm_worker_init_game(t_worker *worker, t_gminput input)
 
 	vm_worker_prep_for_init_data(&i, &j, &car, worker);
 	zone = MEM_SIZE / input.num_players;
-	while (++i < input.num_players)
+	while (++i < MAX_PLAYERS)
 		if (input.players[i].id != 0 && ++j + 1)
 		{
 			vm_worker_add_player_id(&worker, i, input, j);
@@ -70,6 +70,7 @@ void			vm_worker_get_data_from_queue(t_worker *worker,
 		return ;
 	darr_pop_front_wo_mal(vm_input_queue, (void*)&game, 1);
 	vm_worker_init_game(worker, game);
-	ft_printf("LOADING GAME #%u (in worker %u)\n",
+	if (game.game_id > 0)
+		ft_printf("LOADING GAME #%u (in worker %u)\n",
 			game.game_id, worker->gameid);
 }

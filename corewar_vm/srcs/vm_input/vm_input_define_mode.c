@@ -14,8 +14,8 @@
 
 void		vm_input_define_mode(t_input *input, int num_champs)
 {
-	if (input->flag_server != 0 && input->flag_dump > 0)
-		vm_error("Error: choose server mode or dump flag", input);
+	if (input->flag_server != 0 && (input->flag_dump > 0 || num_champs > 0))
+		vm_error("Error: choose server mode or dump flag. No champs.", input);
 	else if (input->flag_server != 0)
 		input->mode = ONLINE;
 	else

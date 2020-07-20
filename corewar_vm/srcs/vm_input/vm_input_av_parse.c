@@ -13,7 +13,7 @@
 #include "vm_server.h"
 #include "vm_game_input.h"
 
-static int			vm_check_file_name(char *file_name)
+static int			vm_check_file_name(char *file_name, t_input *input)
 {
 	size_t			len_name;
 
@@ -21,7 +21,11 @@ static int			vm_check_file_name(char *file_name)
 		return (0);
 	len_name = ft_strlen(file_name);
 	if (len_name < 5 || ft_strcmp(file_name + len_name - 4, ".cor"))
-		return (0);
+	{
+		ft_printfd(input->io->err_fd, "ERROR: can't read file %s\n",
+				file_name);
+		vm_error("VM is closed.\n", input);
+	}
 	return (1);
 }
 
@@ -35,8 +39,8 @@ t_gminput			*vm_input_av_parse(t_input *input)
 	i = -1;
 	if (input->num_champs == 0)
 		vm_error("Error: no champions\n", input);
-	while (++i < 4)
-		if (vm_check_file_name(input->champ_files[i]))
+	while (++i < MAX_PLAYERS)
+		if (vm_check_file_name(input->champ_files[i], input))
 		{
 			if ((fd = open(input->champ_files[i], O_RDONLY)) < 0)
 				vm_error("Error: the champ file cannot be opened\n", input);
