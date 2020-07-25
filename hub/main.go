@@ -158,7 +158,7 @@ func main() {
 		client = new(Client)
 	)
 
-	http.ListenAndServe(":8081", client)
+	//http.ListenAndServe(":8081", client)
 	//mainMux := http.NewServeMux()
 	//mainMux.HandleFuncLoop("/", root)
 	//mainMux.HandleFuncLoop("/oauth", oauth)
