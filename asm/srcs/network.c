@@ -240,8 +240,8 @@ int parse_hub_msg_struct(t_hub_msg **msg, char *buff, ssize_t buff_len)
 			return (-2 | free_msg(*msg));
 		printf("Line: %d\n", __LINE__);
 		if (create_asm_msg_struct((t_asm_msg **)&((*msg)->content),
-				*(uint32_t *)(buff + ASM_BOT_ID_OFFSET),
-				buff + ASM_MSG_HEADER_LEN,
+				htonl(*(uint32_t *)(buff + ASM_BOT_ID_OFFSET)),
+				buff + ASM_BODY_OFFSET,
 				htonl(*(uint32_t *)(buff + ASM_MSG_LEN_OFFSET))) < 0)
 			return (-1 | free_msg(*msg));
 		printf("Line: %d\n", __LINE__);
@@ -451,13 +451,13 @@ int network(t_options *opt)
 			thread_data[thread].data = msg;
 			thread_data[thread].thread_in_use = 1;
 			printf("Creating thread\n");
-			// if (pthread_create(threads_pool + thread, NULL, &asm_thread, thread_data + thread) != 0)
-			// {
-			// 	free_msg(thread_data[thread].data);
-			// 	break ;
-			// }
-			asm_thread(thread_data + thread);
-			exit(0);
+			if (pthread_create(threads_pool + thread, NULL, &asm_thread, thread_data + thread) != 0)
+			{
+				free_msg(thread_data[thread].data);
+				break ;
+			}
+			// asm_thread(thread_data + thread);
+			// exit(0);
 			printf("Thread created\n");
 		}
 	}
@@ -513,9 +513,9 @@ int			get_tokens_from_line(t_data *data, char *line);
 
 int			lexer_for_net(t_data *data, char *buff, size_t buff_size)
 {
-	char	*line;
+	// char	*line;
     char	*delim;
-	int		gnl_result;
+	// int		gnl_result;
 	int		i;
 	int     ln;
 	char   *newline;
