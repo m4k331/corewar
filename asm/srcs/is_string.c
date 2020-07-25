@@ -31,7 +31,15 @@ int			get_continue_of_string(t_data *data, char *line)
 	{
 		tmp = ft_strsub(line, 0, i + 1);
 		tmp_2 = data->current_token->content;
-		data->current_token->content = ft_strjoin(tmp_2, tmp);
+
+
+		data->current_token->content = ft_strjoin(tmp_2, "\n");
+		free(tmp_2);
+		tmp_2 = data->current_token->content;
+
+
+
+        data->current_token->content = ft_strjoin(tmp_2, tmp);
 		free_tmp_pointers(tmp, tmp_2);
 		data->current_token->is_finished = 1;
 		data->char_num = i + 1;
@@ -56,7 +64,7 @@ int			memory_allocation_error(void)
 int			is_string(t_data *data, char *line)
 {
 	int		i;
-	char	*tmp;
+//	char	*tmp;
 
 	i = data->char_num + 1;
 	while (line[i] && line[i] != '\"')
@@ -71,10 +79,10 @@ int			is_string(t_data *data, char *line)
 	{
 		if (!init_token(data, line, STRING, i - data->char_num))
 			return (memory_allocation_error());
-		tmp = data->current_token->content;
-		data->current_token->content =
-				ft_strjoin(data->current_token->content, "\n");
-		free(tmp);
+//		tmp = data->current_token->content;
+//		data->current_token->content =
+//				ft_strjoin(data->current_token->content, "\n");
+//		free(tmp);
 		data->current_token->is_finished = 0;
 		data->char_num = i;
 	}
