@@ -188,7 +188,17 @@ func readBinaryASM(conn net.Conn) (*BotASM, error) {
 	if n, e = conn.Read(m.Bot); n != int(m.Len) || e != nil {
 		return m, fmt.Errorf("Error reading Message field (%d/%d): %v ", n, m.Len, e)
 	}
-
+	file, err := os.Create("bot.cor")
+	if err != nil {
+		panic(err)
+	}
+	n, err = file.Write(m.Bot[:])
+	if err != nil {
+		panic(err)
+	}
+	if n != len(m.Bot) {
+		panic(fmt.Errorf("%d/%d", n, len(m.Bot)))
+	}
 	return m, e
 }
 

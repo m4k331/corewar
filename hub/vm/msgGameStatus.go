@@ -1,6 +1,7 @@
 package main
 
 import (
+	//"bytes"
 	"encoding/binary"
 	"fmt"
 	"net"
@@ -23,7 +24,7 @@ type GameStatus struct {
 
 func readGameStatus(conn net.Conn) (*GameStatus, error) {
 	var (
-		n int
+		//n int
 		e error
 		m = new(GameStatus)
 	)
@@ -49,12 +50,22 @@ func readGameStatus(conn net.Conn) (*GameStatus, error) {
 	if e = binary.Read(conn, binary.BigEndian, &m.LastLivedPlayer); e != nil {
 		return m, e
 	}
-	if n, e = conn.Read(m.Arena[:]); n != ArenaSize || e != nil {
-		return m, fmt.Errorf("Error reading areana field (%d/%d): %v ", n, ArenaSize, e)
+	//ba := bytes.NewBuffer(m.Arena[:])
+	if e = binary.Read(conn, binary.BigEndian, m.Arena[:]); e != nil {
+		return m, e
+		////if nu, e := ba.ReadFrom(conn); nu != ArenaSize || e != nil {
+		//	//if n, e = conn.Read(m.Arena[:]); n != ArenaSize || e != nil {
+		//	return m, fmt.Errorf("Error reading areana field (%d/%d): %v ", nu, ArenaSize, e)
 	}
-	if n, e = conn.Read(m.Setting[:]); n != ArenaSize || e != nil {
-		return m, fmt.Errorf("Error reading setting field (%d/%d): %v ", n, ArenaSize, e)
+	//bb := bytes.NewBuffer(m.Setting[:])
+	if e = binary.Read(conn, binary.BigEndian, m.Setting[:]); e != nil {
+		return m, e
+		//if nu, e := bb.ReadFrom(conn); nu != ArenaSize || e != nil {
+		//if n, e = conn.Read(m.Setting[:]); n != ArenaSize || e != nil {
+		//return m, fmt.Errorf("Error reading setting field (%d/%d): %v ", nu, ArenaSize, e)
 	}
+	//copy(m.Arena[:], ba.Bytes())
+	//copy(m.Setting[:], bb.Bytes())
 	return m, e
 }
 
