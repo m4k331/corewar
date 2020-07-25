@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"log"
 	"net"
-	"time"
 )
 
 const (
@@ -65,10 +64,10 @@ func main() {
 		fmt.Printf("Connect to hub %+v\n", conn.RemoteAddr().String())
 		go handleConnection(conn, handleGeneralSocket)
 		// TODO: delete
-		go func() {
-			timer := time.NewTimer(time.Second * 5)
-			<-timer.C
-			tmpInitialGame(conn, 1) // n - number champs
-		}()
+		//go func() {
+		//	timer := time.NewTimer(time.Second * 5)
+		//	<-timer.C
+		//	tmpInitialGame(conn, 1) // n - number champs
+		//}()
 	}
 }

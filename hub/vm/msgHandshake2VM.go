@@ -2,9 +2,9 @@ package main
 
 import (
 	"bytes"
+	"context"
 	"encoding/binary"
 	"fmt"
-	"golang.org/x/net/context"
 	"net"
 )
 
@@ -39,7 +39,7 @@ func (hb *Handshake2VM) Send(conn net.Conn) error {
 }
 
 func launchWorkers(ctx context.Context) (uint32, error) {
-	listener, err := net.Listen("tcp", ":0")
+	listener, err := net.ListenTCP("tcp", nil)
 	if err != nil {
 		return 0, err
 	}
@@ -55,10 +55,13 @@ func launchWorkers(ctx context.Context) (uint32, error) {
 		chanConn := make(chan net.Conn)
 		go func() {
 			for {
-				accept, err := listener.Accept()
+				accept, err := listener.AcceptTCP()
 				if err != nil {
 					fmt.Printf("Listener %s fail accept :c\n", addr)
 					continue
+				}
+				if err := accept.SetReadBuffer(1024 * 1024); err != nil {
+					fmt.Printf("Error accept.setReadBuffer %s %v\n", addr, err)
 				}
 				chanConn <- accept
 				break
