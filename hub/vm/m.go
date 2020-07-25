@@ -1,13 +1,14 @@
 package main
 
-import "fmt"
-
-const CP = "/home/ahugh/go/cw/hub/vm/config/config.yaml"
+import (
+	"fmt"
+	"os"
+)
 
 func main() {
-	config, err := NewConfig(CP)
+	config, err := NewConfig(os.Args[1])
 	if err != nil {
 		panic(err)
 	}
-	fmt.Printf("%v\v", config)
+	fmt.Printf("%v\n", config)
 }

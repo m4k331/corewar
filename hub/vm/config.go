@@ -10,10 +10,10 @@ import (
 
 // TODO: DELETE!!!
 // For local testing...
-//const (
-//	ServiceTypeVM  = 1
-//	ServiceTypeASM = 2
-//)
+const (
+	ServiceTypeVM  = 1
+	ServiceTypeASM = 2
+)
 
 type Config struct {
 	ServiceManage struct {
@@ -31,6 +31,18 @@ type TCPSettings struct {
 	Deadline        *time.Time
 	KeepAlive       bool
 	KeepAlivePeriod time.Duration
+}
+
+func (set *TCPSettings) FillSettings(raw RawTCPSettings) {
+	set.KeepAlive = raw.KeepAlive
+	if raw.KeepAlivePeriodSecond > 0 {
+		set.KeepAlivePeriod = time.Second * time.Duration(raw.KeepAlivePeriodSecond)
+	}
+	if raw.DeadlineSecond > 0 {
+		t := time.Now()
+		t.Add(time.Second * time.Duration(raw.DeadlineSecond))
+		set.Deadline = &t
+	}
 }
 
 func (set TCPSettings) ApplyToListener(listen *net.TCPListener) (e error) {
@@ -85,28 +97,17 @@ func MappingRawToConfig(raw *RawConfig) (c *Config, e error) {
 	c.Service = make(map[int]ServiceConf, 2)
 
 	// Service Manage
-	// TODO: SET DEADLINE
-	t := time.Now()
-	t.Add()
-	c.ServiceManage.Deadline = time.Second * time.Duration(raw.ServiceManage.DeadlineSecond)
-	c.ServiceManage.KeepAlive = raw.ServiceManage.KeepAlive
-	c.ServiceManage.KeepAlivePeriod = time.Second * time.Duration(raw.ServiceManage.KeepAlivePeriodSecond)
+	c.ServiceManage.FillSettings(raw.ServiceManage.RawTCPSettings)
 
 	// Service VM
-	c.Service[ServiceTypeVM] = ServiceConf{
-		TCPSettings{
-			Deadline:        time.Second * time.Duration(raw.ServiceVM.DeadlineSecond),
-			KeepAlive:       raw.ServiceVM.KeepAlive,
-			KeepAlivePeriod: time.Second * time.Duration(raw.ServiceVM.KeepAlivePeriodSecond),
-		},
-	}
+	settings := TCPSettings{}
+	settings.FillSettings(raw.ServiceVM.RawTCPSettings)
+	c.Service[ServiceTypeVM] = ServiceConf{settings}
 
 	// Service ASM
-	c.Service[ServiceTypeASM] = ServiceConf{TCPSettings{
-		Deadline:        time.Second * time.Duration(raw.ServiceASM.DeadlineSecond),
-		KeepAlive:       raw.ServiceASM.KeepAlive,
-		KeepAlivePeriod: time.Second * time.Duration(raw.ServiceASM.KeepAlivePeriodSecond),
-	}}
+	settings = TCPSettings{}
+	settings.FillSettings(raw.ServiceASM.RawTCPSettings)
+	c.Service[ServiceTypeASM] = ServiceConf{settings}
 
 	return c, e
 }
