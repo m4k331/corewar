@@ -139,7 +139,7 @@ int main(int argc, char **argv)
 		return (1 | usage(2, argv[0]));
 	print_opt(&opt);
 	// return (0);
-	if (opt.filename)
+	if (!opt.filename)
 		return (network(&opt));
 	if ((data = compile(argv[1])) == NULL)
 		return (1);
