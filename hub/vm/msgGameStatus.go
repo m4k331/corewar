@@ -101,8 +101,8 @@ func handleGameStatus(conn net.Conn) error {
 	}
 	fmt.Printf("Hub received a game status msg from %s\n", addr)
 
-	// TODO: send game on web site
-	fmt.Printf("Hub send game on web site "+
+	// TODO: Write game on web site
+	fmt.Printf("Hub Write game on web site "+
 		"{id: %d; len: %d, death: %d, cycles: %d, "+
 		"livesOps: %d, checks: %d, llp: %d,procs:[%s]}\n",
 		msg.Id,

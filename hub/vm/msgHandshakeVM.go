@@ -1,8 +1,11 @@
 package main
 
 import (
+	"bytes"
+	"context"
 	"encoding/binary"
 	"fmt"
+	"io"
 	"net"
 )
 
@@ -12,45 +15,68 @@ type HandshakeVM struct {
 	Type       uint8
 	Key        uint32
 	NumWorkers uint32
+	Ports      []uint32
 }
 
-func readHandshakeVM(conn net.Conn) (*HandshakeVM, error) {
-	var (
-		e error
-		m = new(HandshakeVM)
-	)
-
+func (m *HandshakeVM) Read(r io.Reader) (e error) {
 	m.Type = TypeMsgHandshakeVM
-	if e = binary.Read(conn, binary.BigEndian, &m.Key); e != nil {
-		return m, e
+	if e = binary.Read(r, binary.BigEndian, &m.Key); e != nil {
+		return e
 	}
-	if e = binary.Read(conn, binary.BigEndian, &m.NumWorkers); e != nil {
-		return m, e
+	if e = binary.Read(r, binary.BigEndian, &m.NumWorkers); e != nil {
+		return e
 	}
 	if m.NumWorkers > MaxNumWorkers {
-		return m, fmt.Errorf("Maximum number of workers exceeded (%d/%d) ", m.NumWorkers, MaxNumWorkers)
+		return fmt.Errorf("Maximum number of workers exceeded (%d/%d) ", m.NumWorkers, MaxNumWorkers)
 	}
-	return m, e
+	return e
 }
 
-func handleHandshakeVM(conn net.Conn) error {
+func (m *HandshakeVM) Write(w io.Writer) (e error) {
+	buff := new(bytes.Buffer)
+	if e = binary.Write(buff, binary.BigEndian, m.Type); e != nil {
+		return e
+	}
+	if e = binary.Write(buff, binary.BigEndian, m.Key); e != nil {
+		return e
+	}
+	for i := range m.Ports {
+		if e = binary.Write(buff, binary.BigEndian, m.Ports[i]); e != nil {
+			return e
+		}
+	}
+	if _, e = w.Write(buff.Bytes()); e != nil {
+		return e
+	}
+	return e
+}
+
+func launchWorkers(ctx context.Context) (uint32, error) {
+
+}
+
+func sendHandshakeVM(conn net.Conn, vm *HandshakeVM) error {
 	var (
-		err  error
-		msg  *HandshakeVM
-		addr = conn.RemoteAddr().String()
+		err     error
+		i, port uint32
+		ports   = make([]uint32, 0, vm.NumWorkers)
 	)
 
-	msg, err = readHandshakeVM(conn)
-	if err != nil {
-		return fmt.Errorf("Error reading msg: %v ", err)
+	ctx, interrupt := context.WithCancel(context.Background())
+	for i = 0; i < vm.NumWorkers; i++ {
+		port, err = launchWorkers(ctx)
+		if err != nil {
+			interrupt()
+			return fmt.Errorf("Error launching worker: %v ", err)
+		}
+		ports = append(ports, port)
 	}
-	fmt.Printf("Hub received a handshakeVM msg from %s\n", addr)
 
-	err = sendHandshake2VM(conn, msg)
-	if err != nil {
-		return fmt.Errorf("Error sending handshake: %v\n", err)
+	msg := Handshake2VM{
+		Type:  TypeMsgHandshakeHB,
+		Key:   vm.Key,
+		Ports: ports,
 	}
-	fmt.Printf("Hub send handshake to %s\n", addr)
 
-	return err
+	return msg.Send(conn)
 }

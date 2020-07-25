@@ -47,8 +47,8 @@ func handleStatusOfProcess(conn net.Conn) error {
 	}
 	fmt.Printf("Hub received a status of process msg from %s\n", addr)
 
-	// TODO: send status of process on web site
-	fmt.Printf("Hub send status of process on web site "+
+	// TODO: Write status of process on web site
+	fmt.Printf("Hub Write status of process on web site "+
 		"{id: %d, len: %d}\n",
 		msg.Id, msg.Len)
 

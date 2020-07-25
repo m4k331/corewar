@@ -64,7 +64,7 @@ func handleHandshakeASM(conn net.Conn) error {
 	if err != nil {
 		return fmt.Errorf("Error sending handshake ASM: %v\n", err)
 	}
-	fmt.Printf("Hub send handshake ASM to %s\n", addr)
+	fmt.Printf("Hub Write handshake ASM to %s\n", addr)
 
 	return err
 }

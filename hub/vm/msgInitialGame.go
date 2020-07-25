@@ -72,7 +72,7 @@ func tmpInitialGame(conn net.Conn, n uint8) {
 	}
 	err = msg.Send(conn)
 	if err != nil {
-		fmt.Printf("ERROR send BOTS %v\n", err)
+		fmt.Printf("ERROR Write BOTS %v\n", err)
 	}
 	fmt.Printf("SEND GAME "+
 		"{type:%d, id:%d, len:%d, number:%d}\n",

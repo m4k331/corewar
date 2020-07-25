@@ -44,8 +44,8 @@ func handleGamePresentation(conn net.Conn) error {
 	}
 	fmt.Printf("Hub received a game presentation msg from %s\n", addr)
 
-	// TODO: send game notification on web site
-	fmt.Printf("Hub send game presentation on web site "+
+	// TODO: Write game notification on web site
+	fmt.Printf("Hub Write game presentation on web site "+
 		"{type: %d, id: %d, len: %d, msg: %s}\n",
 		msg.Type, msg.Id, msg.Len, string(msg.Comment))
 

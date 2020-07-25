@@ -52,8 +52,8 @@ func handleEndOfGame(conn net.Conn) error {
 	}
 	fmt.Printf("Hub received an end of game msg from %s\n", addr)
 
-	// TODO: send end of game on web site
-	fmt.Printf("Hub send end of game on web site "+
+	// TODO: Write end of game on web site
+	fmt.Printf("Hub Write end of game on web site "+
 		"{id: %d, len: %d, winner: %d}\n",
 		msg.Id, msg.Len, msg.Winner)
 

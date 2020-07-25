@@ -40,7 +40,7 @@ func handleIncomingASM(ctx context.Context, conn net.Conn) {
 			fmt.Printf("Disconnect ASM incoming worker %s\n", addr)
 			return
 		default:
-			typeMsg, err = readTypeMsg(conn)
+			typeMsg, err = ReadTypeMsg(conn)
 			if err != nil {
 				fmt.Printf("Error reading type msg in ASM worker (%v) : %v ", addr, err)
 			}

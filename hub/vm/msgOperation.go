@@ -56,8 +56,8 @@ func handleOperation(conn net.Conn) error {
 	}
 	fmt.Printf("Hub received an operation msg from %s\n", addr)
 
-	// TODO: send operation on web site
-	fmt.Printf("Hub send operation on web site "+
+	// TODO: Write operation on web site
+	fmt.Printf("Hub Write operation on web site "+
 		"{id: %d, len: %d, procId: %d, procPos: %d}\n",
 		msg.Id, msg.Len, msg.ProcId, msg.ProcPos)
 

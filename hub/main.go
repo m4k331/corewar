@@ -160,9 +160,9 @@ func main() {
 
 	http.ListenAndServe(":8081", client)
 	//mainMux := http.NewServeMux()
-	//mainMux.HandleFunc("/", root)
-	//mainMux.HandleFunc("/oauth", oauth)
-	//mainMux.HandleFunc("/main", mmain)
+	//mainMux.HandleFuncLoop("/", root)
+	//mainMux.HandleFuncLoop("/oauth", oauth)
+	//mainMux.HandleFuncLoop("/main", mmain)
 	//fmt.Println("Start server")
 	//http.ListenAndServe(":4221", mainMux)
 	//fmt.Println("Stop server")

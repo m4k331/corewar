@@ -48,8 +48,8 @@ func handleErrorASM(conn net.Conn) error {
 	}
 	fmt.Printf("Hub received error ASM msg from %s\n", addr)
 
-	// TODO: send error ASM on web site
-	fmt.Printf("Hub send error ASM on web site "+
+	// TODO: Write error ASM on web site
+	fmt.Printf("Hub Write error ASM on web site "+
 		"{id: %d, len: %d, msg: %v}\n",
 		msg.Id, msg.Len, string(msg.Message))
 

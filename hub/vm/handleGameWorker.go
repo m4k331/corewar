@@ -13,7 +13,7 @@ func handleGameWorker(conn net.Conn, workLog *zap.Logger) error {
 		err     error
 	)
 
-	typeMsg, err = readTypeMsg(conn)
+	typeMsg, err = ReadTypeMsg(conn)
 	fmt.Println("game worker", typeMsg, err)
 	if err != nil {
 		return fmt.Errorf("Error reading type msg: %v ", err)

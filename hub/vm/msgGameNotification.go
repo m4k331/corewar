@@ -45,8 +45,8 @@ func handleGameNotification(conn net.Conn) error {
 	}
 	fmt.Printf("Hub received a game notification msg from %s\n", addr)
 
-	// TODO: send game notification on web site
-	fmt.Printf("Hub send game notification on web site "+
+	// TODO: Write game notification on web site
+	fmt.Printf("Hub Write game notification on web site "+
 		"{type: %d, id: %d, len: %d, socket: %d}\n",
 		msg.Type, msg.Id, msg.Len, msg.Socket)
 

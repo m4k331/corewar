@@ -71,8 +71,8 @@ func handleBinaryASM(conn net.Conn) error {
 	}
 	fmt.Printf("Hub received Binary ASM msg from %s\n", addr)
 
-	// TODO: send Binary ASM on web site
-	fmt.Printf("Hub send Binary ASM on web site "+
+	// TODO: Write Binary ASM on web site
+	fmt.Printf("Hub Write Binary ASM on web site "+
 		"{id: %d, len: %d, bot: [%v]}\n",
 		msg.Id, msg.Len, string(msg.Bot))
 
