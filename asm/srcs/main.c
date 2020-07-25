@@ -137,7 +137,7 @@ int main(int argc, char **argv)
 
 	if (checks(&opt, argc, argv))
 		return (1 | usage(2, argv[0]));
-	print_opt(&opt);
+//	print_opt(&opt);
 	// return (0);
 	if (!opt.filename)
 		return (network(&opt));

@@ -25,6 +25,7 @@
 #include <stdio.h>
 #include <arpa/inet.h>
 
+
 // int create_socket(uint16_t port)
 // {
 // 	int					listen_fd;
@@ -80,10 +81,20 @@ void *asm_thread(void *param) //FIXME: free()
 	if (!lexer_for_net(data, amsg->body, amsg->len_msg))
 		return (NULL);
 
+
+   t_token *tmp = data->token;
+    while (tmp) {
+        printf("{%s}, [%s]\n", tmp->type, tmp->content);
+        tmp = tmp->next;
+    }
+
+
 	init_token(data, "(null)", 13, 6);
 
+	printf("%d\n", __LINE__);
 	if (!make_tree(data))
 		return (NULL);
+	printf("%d\n", __LINE__);
 	if (!parse_tree(data))
 		return (NULL);
 	calc_sizes(data);
@@ -273,7 +284,7 @@ int recv_command(t_hub_msg **msg, int fd)
 		buff = tmp;
 		ft_memmove(buff + buff_len, recv_buff, recv_len);
 		buff_len += recv_len;
-		printf("Recieved: %zd\n", buff_len);
+//		printf("Recieved: %zd\n", buff_len);
 	}
 	write(1, "\'", 1);
 	write(1, buff, buff_len);
@@ -503,27 +514,40 @@ int			get_tokens_from_line(t_data *data, char *line);
 int			lexer_for_net(t_data *data, char *buff, size_t buff_size)
 {
 	char	*line;
+    char	*delim;
 	int		gnl_result;
 	int		i;
+	int     ln;
+	char   *newline;
 
 	i = 0;
-	while ((gnl_result = get_line_from_buffer(&line, buff, buff_size, i)))
+	while (buff_size > 0)
 	{
-		printf("LINE_FROM_BUFFER: <%s>\n", line);
+	    delim = memchr(buff, '\n', buff_size);
+	    if (delim == NULL) {
+	        delim = buff + buff_size;
+	    }
+	    ln = delim - buff + 1;
+	    newline = calloc(ln, 1);
+	    memcpy(newline, buff, ln-1);
+	    buff = delim + 1;
+	    buff_size -= ln;
+		printf("LINE_FROM_BUFFER: <%s>\n", newline);
 		i++;
-		if (gnl_result == -1)
-			return (gnl_error("net buffer corrupted"));
 		data->line_num++;
 		data->char_num = 0;
-		if (!get_tokens_from_line(data, line))
+
+		//line = ft_strdup(line);
+
+		if (!get_tokens_from_line(data, newline))
 		{
-			free(line);
+			//free(line);
 			return (0);
 		}
-		free(line);
+		//free(line);
 	}
 	printf("%d\n", __LINE__);
-	free(line);
+//	free(line);
 	if (i == 0)
 		return (empty_file());
 	printf("%d\n", __LINE__);

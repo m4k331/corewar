@@ -70,7 +70,11 @@ t_token		*init_token(t_data *data, char *line, int type, int len)
 	}
 	token->char_num = data->char_num;
 	token->line_num = data->line_num;
-	token->type = ft_strdup(g_name_of_type[type]);
+
+    if (!(token->type = ft_strdup(g_name_of_type[type])))
+        ft_putstr("\n\n\n!!!!!!!!\n\n\n");
+
+
 	token->content = ft_strsub(line, data->char_num, len);
 	token->is_finished = 1;
 	add_zeros(token);

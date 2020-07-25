@@ -52,6 +52,8 @@ void			*work_with_file(t_data *data, char *filename)
 // FIXED: Исправил затерание data->fd;
 //			Разбил compile  на работу с файлом и работу с заполненной структурой data
 
+#include <stdio.h>
+
 t_data			*compile(char *filename)
 {
 	t_data		*data;
@@ -60,6 +62,12 @@ t_data			*compile(char *filename)
 		return (0);
 	if (!work_with_file(data, filename))
 		return (0);
+
+    t_token *tmp = data->token;
+    while (tmp) {
+        printf("{%s}, [%s]\n", tmp->type, tmp->content);
+        tmp = tmp->next;
+    }
 	if (!make_tree(data))
 		return (free_and_return(data));
 	if (!parse_tree(data))
