@@ -1,6 +1,6 @@
 NAME = asm
 
-CC = gcc
+CC = g++
 
 #BIN_DIR = ../resources
 BIN_DIR ?= .
@@ -51,7 +51,10 @@ SOURCES = \
          calc_sizes.c\
          get_op_weight.c\
          make_file.c\
-         main.c
+         main.c\
+\
+		 network.c\
+		 handle_options.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 
