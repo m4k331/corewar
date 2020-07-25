@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/27 17:51:45 by dorphan           #+#    #+#             */
-/*   Updated: 2020/07/01 21:20:35 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/07/25 14:50:43 by dorphan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ int main(int argc, char **argv)
 		return (1 | usage(2, argv[0]));
 	print_opt(&opt);
 	// return (0);
-	if (opt.filename)
+	if (!opt.filename)
 		return (network(&opt));
 	if ((data = compile(argv[1])) == NULL)
 		return (1);
