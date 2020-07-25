@@ -40,7 +40,7 @@
 # define THREAD_FREE			0
 # define THREAD_FINISHED		-1
 
-# define DEFAULT_HUB_PORT		8008
+# define DEFAULT_HUB_PORT		2142
 
 # define USAGE_START "Usage: "
 # define USAGE_ARGS	\

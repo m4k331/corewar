@@ -48,6 +48,12 @@
 int free_msg(t_hub_msg *msg);
 int send_msg(int fd, t_hub_msg *msg);
 
+int print_error(char *err_msg)
+{
+	write(2, err_msg, ft_strlen(err_msg));
+	return (-1);
+}
+
 void set_thread_dead(void *param)
 {
 	printf("cleanup\n");
@@ -68,11 +74,14 @@ void *asm_thread(void *param) //FIXME: free()
 	if ((data = init_data()) == NULL)
 		return (NULL); // TODO: create_error
 	amsg = ((t_hub_msg *)((t_net_thread_param *)param)->data)->content;
+	write(2, amsg->body, amsg->len_msg);
 	if (amsg->body[amsg->len_msg - 1] != '\n')
 		return (NULL); // TODO: create_error
-	if (lexer_for_net(data, amsg->body, amsg->len_msg))
+	if (!lexer_for_net(data, amsg->body, amsg->len_msg))
 		return (NULL);
+
 	init_token(data, "(null)", 13, 6);
+
 	if (!make_tree(data))
 		return (NULL);
 	if (!parse_tree(data))
@@ -80,13 +89,19 @@ void *asm_thread(void *param) //FIXME: free()
 	calc_sizes(data);
 	if (!make_hex_buffer(data))
 		return (NULL);
+	printf("Thread:: %d\n", __LINE__);
 	free(amsg->body);
 	amsg->len_msg = data->buffer_len - 1;
+	printf("Thread:: %d\n", __LINE__);
 	if ((amsg->body = (char *)malloc(amsg->len_msg)) == NULL)
 		return (NULL);
+	printf("Thread:: %d\n", __LINE__);
 	ft_memmove(amsg->body, data->buffer, amsg->len_msg);
+	printf("Thread:: %d\n", __LINE__);
 	((t_hub_msg *)((t_net_thread_param *)param)->data)->msg_type = ASM_COMMAND_BINARY;
+	printf("Thread:: %d\n", __LINE__);
 	send_msg(fd, ((t_net_thread_param *)param)->data);
+	printf("msg sended\n");
 	pthread_cleanup_pop(1);
 	return NULL;
 }
@@ -133,6 +148,7 @@ int create_keep_alive_socket(char *ip, short port)
 
 int recv_needed(char *msg, ssize_t msg_len)
 {
+	printf("test recv needed\n");
 	if (msg_len == 0)
 		return (1);
 	if (*msg == HUB_COMMAND_HANDSHAKE)
@@ -144,6 +160,7 @@ int recv_needed(char *msg, ssize_t msg_len)
 	{
 		if (msg_len < ASM_MSG_LEN_OFFSET)
 			return (1);
+		printf("data_len: %d\n", htonl(*(uint32_t *)(msg + ASM_MSG_LEN_OFFSET)));
 		if (msg_len < ASM_MSG_HEADER_LEN + htonl(*(uint32_t *)(msg + ASM_MSG_LEN_OFFSET)))
 			return (1);
 	}
@@ -182,28 +199,41 @@ int parse_hub_msg_struct(t_hub_msg **msg, char *buff, ssize_t buff_len)
 		return (-2);
 	if ((*msg = (t_hub_msg *)malloc(sizeof(t_hub_msg))) == NULL)
 		return (-1);
-	ft_memset(msg, 0, sizeof(t_hub_msg));
+	printf("Line: %d\n", __LINE__);
+	ft_memset(*msg, 0, sizeof(t_hub_msg));
+	printf("Line: %d\n", __LINE__);
 	(*msg)->msg_type = *buff;
+	printf("Line: %d\n", __LINE__);
+	printf("msg type: %hhd\n", (*msg)->msg_type);
 	if ((*msg)->msg_type == HUB_COMMAND_HANDSHAKE)
 	{
+		printf("Line: %d\n", __LINE__);
 		if (buff_len != HANDSHAKE_MSG_LEN)
 			return (-2 | free_msg(*msg));
+		printf("Line: %d\n", __LINE__);
 		if (((*msg)->content = malloc(sizeof(uint32_t))) == NULL)
 			return (-1 | free_msg(*msg));
+		printf("Line: %d\n", __LINE__);
 		*((uint32_t *)(*msg)->content) = htonl(*(uint32_t *)(buff + HANDSHAKE_MAGIC_OFFSET));
+		printf("Line: %d\n", __LINE__);
 		if (*((uint32_t *)(*msg)->content) != HANDSHAKE_MAGIC)
 			return (-1 | free_msg(*msg));
+		printf("Line: %d\n", __LINE__);
 	}
 	else if ((*msg)->msg_type == HUB_COMMAND_SEND_BOT)
 	{
+		printf("Line: %d\n", __LINE__);
+		printf("Full len: %u\n", htonl(*(uint32_t *)(buff + ASM_MSG_LEN_OFFSET)));
 		if (buff_len < ASM_MSG_HEADER_LEN ||
-			buff_len != ASM_MSG_HEADER_LEN + *(uint32_t *)(buff + ASM_MSG_LEN_OFFSET))
+			buff_len != ASM_MSG_HEADER_LEN + htonl(*(uint32_t *)(buff + ASM_MSG_LEN_OFFSET)))
 			return (-2 | free_msg(*msg));
+		printf("Line: %d\n", __LINE__);
 		if (create_asm_msg_struct((t_asm_msg **)&((*msg)->content),
 				*(uint32_t *)(buff + ASM_BOT_ID_OFFSET),
 				buff + ASM_MSG_HEADER_LEN,
-				*(uint32_t *)(buff + ASM_MSG_LEN_OFFSET)) < 0)
+				htonl(*(uint32_t *)(buff + ASM_MSG_LEN_OFFSET))) < 0)
 			return (-1 | free_msg(*msg));
+		printf("Line: %d\n", __LINE__);
 		// if (((*msg)->content = malloc(sizeof(t_asm_msg))) == NULL)
 		// 	return (-1 | free_msg(msg));
 		// ((t_asm_msg *)(*msg)->content)->len_msg = *(uint32_t *)(buff + ASM_MSG_LEN_OFFSET);
@@ -227,6 +257,7 @@ int recv_command(t_hub_msg **msg, int fd)
 
 	buff_len = 0;
 	buff = NULL;
+	printf("recv_command\n");
 	while (recv_needed(buff, buff_len))
 	{
 		if ((recv_len = recv(fd, recv_buff, RECV_BUFF_SIZE, 0)) <= 0)
@@ -242,12 +273,18 @@ int recv_command(t_hub_msg **msg, int fd)
 		buff = tmp;
 		ft_memmove(buff + buff_len, recv_buff, recv_len);
 		buff_len += recv_len;
+		printf("Recieved: %zd\n", buff_len);
 	}
+	write(1, "\'", 1);
+	write(1, buff, buff_len);
+	write(1, "\'\n", 2);
+	printf("parse_hub_msg\n");
 	if (parse_hub_msg_struct(msg, buff, buff_len) < 0)
 	{
 		free(buff);
 		return (-1); // FIXME: 
 	}
+	printf("OK!\n");
 	free(buff);
 	return (0);
 }
@@ -257,6 +294,7 @@ int find_unused_thread(t_net_thread_param *threads_data, int threads_num)
 	int i;
 
 	i = 0;
+	printf("Finding unused thread\n");
 	while (i < threads_num)
 	{
 		if (threads_data[i].thread_in_use == THREAD_FREE)
@@ -303,6 +341,7 @@ int handle_finished_threads(pthread_t *threads_pool, t_net_thread_param *threads
 	void	*thread_return;
 
 	i = 0;
+	printf("Handling finihed thread\n");
 	while (i < threads_cnt)
 	{
 		if (threads_data[i].thread_in_use == THREAD_FINISHED)
@@ -337,15 +376,33 @@ int wait_threads_finish(pthread_t *threads_pool, t_net_thread_param *threads_dat
 	return (0);
 }
 
+int create_handshake_msg(t_hub_msg **msg)
+{
+	if ((*msg = (t_hub_msg *)calloc(sizeof(t_hub_msg), 1)) == NULL)
+		return (-1);
+	(*msg)->msg_type = ASM_COMMAND_HANDSHAKE;
+	if (((*msg)->content = calloc(sizeof(uint32_t), 1)) == 0)
+		return (-1 | free_msg(*msg));
+	*((uint32_t *)(*msg)->content) = HANDSHAKE_MAGIC;
+	return (0);
+}
+
 int handshake(int fd)
 {
 	t_hub_msg	*msg;
 
+	printf("Creating handshake msg\n");
+	if (create_handshake_msg(&msg) < 0)
+		return (-1); // TODO: error handle
+	printf("Sending handshake msg\n");
+	if (send_msg(fd, msg) < 0)
+		return (-1 | free_msg(msg));
+	free_msg(msg);
+	printf("Recieving handshake\n");
 	if (recv_command(&msg, fd) < 0)
 		return (-1);
+	printf("Recieved handshake\n");
 	if (msg->msg_type != HUB_COMMAND_HANDSHAKE)
-		return (-1 | free_msg(msg));
-	if (send_msg(fd, msg) < 0)
 		return (-1 | free_msg(msg));
 	free_msg(msg);
 	return (0);
@@ -364,14 +421,17 @@ int network(t_options *opt)
 	if (handshake(fd) < 0)
 		return (-1); // TODO: handle
 	ft_memset(thread_data, 0, sizeof(thread_data));
+	printf("Main while starts\n");
 	while (1)
 	{
 		if (handle_finished_threads(threads_pool, thread_data, THREADS) < 0)
 			break ;
 		if ((thread = find_unused_thread(thread_data, THREADS)) < 0)
 			continue ;
+		printf("Unused thread found\n");
 		if (recv_command(&msg, fd) < 0) // FIXME: обработка ошибок
 			continue ;
+		printf("Command received\n");
 		if (msg->msg_type == HUB_COMMAND_HANDSHAKE)
 			free_msg(msg);
 		if (msg->msg_type == HUB_COMMAND_SEND_BOT)
@@ -379,15 +439,21 @@ int network(t_options *opt)
 			thread_data[thread].fd = fd;
 			thread_data[thread].data = msg;
 			thread_data[thread].thread_in_use = 1;
-			if (pthread_create(threads_pool + thread, NULL, &asm_thread, thread_data + thread) != 0)
-			{
-				free_msg(thread_data[thread].data);
-				break ;
-			}
+			printf("Creating thread\n");
+			// if (pthread_create(threads_pool + thread, NULL, &asm_thread, thread_data + thread) != 0)
+			// {
+			// 	free_msg(thread_data[thread].data);
+			// 	break ;
+			// }
+			asm_thread(thread_data + thread);
+			exit(0);
+			printf("Thread created\n");
 		}
 	}
+	printf("While ended, waiting for threads finish\n");
 	if (wait_threads_finish(threads_pool, thread_data, THREADS) < 0)
 		return (-1 | close(fd));
+	printf("Threads finished\n");
 	return (0 | close(fd));
 }
 
@@ -411,7 +477,7 @@ int get_line_from_buffer(char **line, char *buff, size_t buff_len, int line_n)
 		return (-1);
 	i = 0;
 	j = 0;
-	while (i < line_n - 1 && j < buff_len)
+	while (i < line_n && j < buff_len)
 	{
 		if (buff[j] == '\n' || buff[j] == '\0')
 			i++;
@@ -425,7 +491,7 @@ int get_line_from_buffer(char **line, char *buff, size_t buff_len, int line_n)
 		((line_len + j == buff_len) ? 1 : 0))) == NULL)
 		return (-1);
 	ft_memmove(*line, buff + j, line_len);
-	(*line)[line_len - (line_len + j == buff_len ? 0 : 1)] = '\0';
+	(*line)[line_len - ((line_len + j == buff_len) ? -1 : 0)] = '\0';
 	return (1);
 }
 
@@ -443,6 +509,7 @@ int			lexer_for_net(t_data *data, char *buff, size_t buff_size)
 	i = 0;
 	while ((gnl_result = get_line_from_buffer(&line, buff, buff_size, i)))
 	{
+		printf("LINE_FROM_BUFFER: <%s>\n", line);
 		i++;
 		if (gnl_result == -1)
 			return (gnl_error("net buffer corrupted"));
@@ -455,10 +522,13 @@ int			lexer_for_net(t_data *data, char *buff, size_t buff_size)
 		}
 		free(line);
 	}
+	printf("%d\n", __LINE__);
 	free(line);
 	if (i == 0)
 		return (empty_file());
+	printf("%d\n", __LINE__);
 	data->line_num++;
 	data->char_num = 0;
+	printf("%d\n", __LINE__);
 	return (1);
 }
