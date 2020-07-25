@@ -1,6 +1,6 @@
 NAME = asm
 
-CC = g++
+CC = gcc
 
 #BIN_DIR = ../resources
 BIN_DIR ?= .
