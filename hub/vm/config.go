@@ -28,9 +28,7 @@ func NewConfig(path string) (*Config, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer func() {
-		_ = file.Close()
-	}()
+	defer func() { _ = file.Close() }()
 
 	data := new(bytes.Buffer)
 	_, err = data.ReadFrom(file)
@@ -51,40 +49,40 @@ type TCPSettings struct {
 	KeepAlive       bool `yaml:"keep_alive"`
 }
 
-func (set TCPSettings) ApplyDeadlineToListener(listen *net.TCPListener) (e error) {
-	if set.Deadline > 0 {
+func (tcpSet TCPSettings) ApplyDeadlineToListener(listen *net.TCPListener) (e error) {
+	if tcpSet.Deadline > 0 {
 		t := time.Now()
-		t.Add(time.Second * time.Duration(set.Deadline))
+		t.Add(time.Second * time.Duration(tcpSet.Deadline))
 		e = listen.SetDeadline(t)
 	}
 	return e
 }
 
-func (set TCPSettings) ApplyReadDeadlineToConnection(conn *net.TCPConn) (e error) {
-	if set.ReadDeadline > 0 {
+func (tcpSet TCPSettings) ApplyReadDeadlineToConnection(conn *net.TCPConn) (e error) {
+	if tcpSet.ReadDeadline > 0 {
 		t := time.Now()
-		t.Add(time.Second * time.Duration(set.ReadDeadline))
+		t.Add(time.Second * time.Duration(tcpSet.ReadDeadline))
 		e = conn.SetReadDeadline(t)
 	}
 	return e
 }
 
-func (set TCPSettings) ApplyWriteDeadlineToConnection(conn *net.TCPConn) (e error) {
-	if set.ReadDeadline > 0 {
+func (tcpSet TCPSettings) ApplyWriteDeadlineToConnection(conn *net.TCPConn) (e error) {
+	if tcpSet.ReadDeadline > 0 {
 		t := time.Now()
-		t.Add(time.Second * time.Duration(set.WriteDeadline))
+		t.Add(time.Second * time.Duration(tcpSet.WriteDeadline))
 		e = conn.SetWriteDeadline(t)
 	}
 	return e
 }
 
-func (set TCPSettings) ApplyToConnection(conn *net.TCPConn) (e error) {
-	if set.KeepAlive {
+func (tcpSet TCPSettings) ApplyToConnection(conn *net.TCPConn) (e error) {
+	if tcpSet.KeepAlive {
 		if e = conn.SetKeepAlive(true); e != nil {
 			return e
 		}
-		if set.KeepAlivePeriod > 0 {
-			if e = conn.SetKeepAlivePeriod(time.Second * time.Duration(set.KeepAlivePeriod)); e != nil {
+		if tcpSet.KeepAlivePeriod > 0 {
+			if e = conn.SetKeepAlivePeriod(time.Second * time.Duration(tcpSet.KeepAlivePeriod)); e != nil {
 				return e
 			}
 		}
