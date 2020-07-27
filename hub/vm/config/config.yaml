@@ -1,18 +1,23 @@
 service_manage:
   address: ":2142"
   tcp_settings:
-    deadline_second: 300
+    read_deadline_second: 3
+    write_deadline_second: 3
     keep_alive: true
     keep_alive_period_second: 60
 
 service_vm:
   tcp_settings:
+    read_deadline_second: 3
+    write_deadline_second: 3
     deadline_second: 300
     keep_alive: true
     keep_alive_period_second: 300
 
 service_asm:
   tcp_settings:
+    read_deadline_second: 3
+    write_deadline_second: 3
     deadline_second: 300
     keep_alive: true
     keep_alive_period_second: 300

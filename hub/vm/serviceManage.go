@@ -16,6 +16,15 @@ type ServiceManage struct {
 	services map[string]*Service
 }
 
+func (sm *ServiceManage) Listen() (e error) {
+	addr, e := net.ResolveTCPAddr("tcp", sm.Conf.ServiceManage.Addr)
+	if e != nil {
+		return e
+	}
+	sm.listen, e = net.ListenTCP("tcp", addr)
+	return e
+}
+
 // TODO: implement ServiceManage STOP()
 
 func NewServiceManage(config *Config) (*ServiceManage, error) {
@@ -29,12 +38,10 @@ func NewServiceManage(config *Config) (*ServiceManage, error) {
 		return nil, err
 	}
 
-	sm.listen, err = net.ListenTCP("tcp", config.ServiceManage.AddrTCP)
-	if err != nil {
+	if err = sm.Listen(); err != nil {
 		_ = sm.Log.Sync()
 		return nil, err
 	}
-
 	sm.Addr = sm.listen.Addr().String()
 	sm.Conf = config
 	sm.ctx, sm.cancel = context.WithCancel(context.Background())
@@ -49,8 +56,8 @@ func (sm *ServiceManage) ConnectNewService() (*Service, error) {
 		return nil, err
 	}
 
-	// keep_alive connection setup
-	if err = sm.Conf.ServiceManage.ApplyToConnection(conn); err != nil {
+	// settings connection setup
+	if err = sm.Conf.ServiceManage.TCPSettings.ApplyToConnection(conn); err != nil {
 		_ = conn.Close()
 		return nil, err
 	}

@@ -33,7 +33,7 @@ func handleService(srv *Service) {
 
 		// service registration
 		srv.Type = ServiceTypeVM
-		srv.conf = srv.parent.Conf.Service[ServiceTypeVM]
+		srv.conf = srv.parent.Conf.ServiceVM
 
 		// TODO: implement handler
 		if err = srv.RunWorkers(int(msg.NumWorkers), nil); err != nil {
