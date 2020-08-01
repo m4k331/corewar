@@ -1,16 +1,24 @@
 service_manage:
   address: ":2142"
   tcp_settings:
-    read_deadline_second: 3
+    write_buffer_bytes: 1048576 # 1 Mb
     write_deadline_second: 3
+    read_deadline_second: 3
     keep_alive: true
     keep_alive_period_second: 60
 
 service_vm:
+  worker:
+    tcp_settings:
+      write_buffer_bytes: 1048576 # 1 Mb
+      write_deadline_second: 3
+      read_deadline_second: 3
+      keep_alive: true
+      keep_alive_period_second: 300
   tcp_settings:
-    read_deadline_second: 3
-    write_deadline_second: 3
     deadline_second: 300
+    write_deadline_second: 3
+    read_deadline_second: 3
     keep_alive: true
     keep_alive_period_second: 300
 
@@ -18,7 +26,5 @@ service_asm:
   tcp_settings:
     read_deadline_second: 3
     write_deadline_second: 3
-    deadline_second: 300
     keep_alive: true
     keep_alive_period_second: 300
-

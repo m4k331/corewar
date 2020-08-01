@@ -9,82 +9,86 @@ import (
 )
 
 type Config struct {
-	ServiceManage struct {
-		Addr        string `yaml:"address"`
-		TCPSettings `yaml:"tcp_settings"`
-	} `yaml:"service_manage"`
+	ServiceManage ServiceConf `yaml:"service_manage"`
+	ServiceVM     ServiceConf `yaml:"service_vm"`
+	ServiceASM    ServiceConf `yaml:"service_asm"`
+}
 
-	ServiceVM struct {
-		TCPSettings `yaml:"tcp_settings"`
-	} `yaml:"service_vm"`
+type ServiceConf struct {
+	Addr        string `yaml:"address,omitempty"`
+	TCPSettings `yaml:"tcp_settings,omitempty"`
+	WorkerConf  `yaml:"worker,omitempty"`
+}
 
-	ServiceASM struct {
-		TCPSettings `yaml:"tcp_settings"`
-	} `yaml:"service_asm"`
+type WorkerConf struct {
+	TCPSettings `yaml:"tcp_settings,omitempty"`
+}
+
+type TCPSettings struct {
+	WriteBuffer     int  `yaml:"write_buffer_bytes,omitempty"`
+	WriteDeadline   int  `yaml:"write_deadline_second,omitempty"`
+	ReadDeadline    int  `yaml:"read_deadline_second,omitempty"`
+	KeepAlivePeriod int  `yaml:"keep_alive_period_second,omitempty"`
+	Deadline        int  `yaml:"deadline_second,omitempty"`
+	KeepAlive       bool `yaml:"keep_alive,omitempty"`
 }
 
 func NewConfig(path string) (*Config, error) {
-	file, err := os.Open(path)
-	if err != nil {
-		return nil, err
+	file, e := os.Open(path)
+	if e != nil {
+		return nil, e
 	}
 	defer func() { _ = file.Close() }()
 
 	data := new(bytes.Buffer)
-	_, err = data.ReadFrom(file)
-	if err != nil {
-		return nil, err
+	if _, e = data.ReadFrom(file); e != nil {
+		return nil, e
 	}
 
 	conf := new(Config)
-	err = yaml.Unmarshal(data.Bytes(), conf)
-	return conf, err
+	e = yaml.Unmarshal(data.Bytes(), conf)
+	return conf, e
 }
 
-type TCPSettings struct {
-	ReadDeadline    int  `yaml:"read_deadline_second"`
-	WriteDeadline   int  `yaml:"write_deadline_second"`
-	Deadline        int  `yaml:"deadline_second"`
-	KeepAlivePeriod int  `yaml:"keep_alive_period_second"`
-	KeepAlive       bool `yaml:"keep_alive"`
-}
-
-func (tcpSet TCPSettings) ApplyDeadlineToListener(listen *net.TCPListener) (e error) {
-	if tcpSet.Deadline > 0 {
+func (settings TCPSettings) ApplyToListener(listener *net.TCPListener) (e error) {
+	if settings.Deadline > 0 {
 		t := time.Now()
-		t.Add(time.Second * time.Duration(tcpSet.Deadline))
-		e = listen.SetDeadline(t)
+		t.Add(time.Second * time.Duration(settings.Deadline))
+		if e = listener.SetDeadline(t); e != nil {
+			return e
+		}
 	}
 	return e
 }
 
-func (tcpSet TCPSettings) ApplyReadDeadlineToConnection(conn *net.TCPConn) (e error) {
-	if tcpSet.ReadDeadline > 0 {
-		t := time.Now()
-		t.Add(time.Second * time.Duration(tcpSet.ReadDeadline))
-		e = conn.SetReadDeadline(t)
-	}
-	return e
-}
-
-func (tcpSet TCPSettings) ApplyWriteDeadlineToConnection(conn *net.TCPConn) (e error) {
-	if tcpSet.ReadDeadline > 0 {
-		t := time.Now()
-		t.Add(time.Second * time.Duration(tcpSet.WriteDeadline))
-		e = conn.SetWriteDeadline(t)
-	}
-	return e
-}
-
-func (tcpSet TCPSettings) ApplyToConnection(conn *net.TCPConn) (e error) {
-	if tcpSet.KeepAlive {
+func (settings TCPSettings) ApplyToConnection(conn *net.TCPConn) (e error) {
+	if settings.KeepAlive {
 		if e = conn.SetKeepAlive(true); e != nil {
 			return e
 		}
-		if tcpSet.KeepAlivePeriod > 0 {
-			if e = conn.SetKeepAlivePeriod(time.Second * time.Duration(tcpSet.KeepAlivePeriod)); e != nil {
+		if settings.KeepAlivePeriod > 0 {
+			if e = conn.SetKeepAlivePeriod(time.Second * time.Duration(settings.KeepAlivePeriod)); e != nil {
 				return e
 			}
+		}
+	}
+	if settings.WriteBuffer > 0 {
+		if e = conn.SetWriteBuffer(settings.WriteBuffer); e != nil {
+			return e
+		}
+	}
+	if settings.WriteDeadline > 0 {
+		t := time.Now()
+		t.Add(time.Second * time.Duration(settings.WriteDeadline))
+		if e = conn.SetWriteDeadline(t); e != nil {
+			return e
+		}
+	}
+	if settings.ReadDeadline > 0 {
+		t := time.Now()
+		t.Add(time.Second * time.Duration(settings.ReadDeadline))
+		if e = conn.SetReadDeadline(t); e != nil {
+			return e
 		}
 	}
 	return e
