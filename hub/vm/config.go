@@ -16,6 +16,7 @@ type Config struct {
 
 type ServiceConf struct {
 	Addr        string `yaml:"address,omitempty"`
+	MaxServices int    `yaml:"max_services,omitempty"`
 	TCPSettings `yaml:"tcp_settings,omitempty"`
 	WorkerConf  `yaml:"worker,omitempty"`
 }
@@ -52,9 +53,7 @@ func NewConfig(path string) (*Config, error) {
 
 func (settings TCPSettings) ApplyToListener(listener *net.TCPListener) (e error) {
 	if settings.Deadline > 0 {
-		t := time.Now()
-		t.Add(time.Second * time.Duration(settings.Deadline))
-		if e = listener.SetDeadline(t); e != nil {
+		if e = listener.SetDeadline(GetTimeFromNSecond(settings.Deadline)); e != nil {
 			return e
 		}
 	}
@@ -78,16 +77,12 @@ func (settings TCPSettings) ApplyToConnection(conn *net.TCPConn) (e error) {
 		}
 	}
 	if settings.WriteDeadline > 0 {
-		t := time.Now()
-		t.Add(time.Second * time.Duration(settings.WriteDeadline))
-		if e = conn.SetWriteDeadline(t); e != nil {
+		if e = conn.SetWriteDeadline(GetTimeFromNSecond(settings.WriteDeadline)); e != nil {
 			return e
 		}
 	}
 	if settings.ReadDeadline > 0 {
-		t := time.Now()
-		t.Add(time.Second * time.Duration(settings.ReadDeadline))
-		if e = conn.SetReadDeadline(t); e != nil {
+		if e = conn.SetReadDeadline(GetTimeFromNSecond(settings.ReadDeadline)); e != nil {
 			return e
 		}
 	}

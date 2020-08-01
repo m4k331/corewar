@@ -1,5 +1,6 @@
 service_manage:
   address: ":2142"
+  max_services: 24 # important option
   tcp_settings:
     write_buffer_bytes: 1048576 # 1 Mb
     write_deadline_second: 3
