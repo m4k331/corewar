@@ -6,14 +6,60 @@ import (
 	"net"
 )
 
+const (
+	failedCreateNewConn = "Failed to create a new connection"
+	failedApplySettings = "Failed to apply settings"
+	connSrvInterrupted  = "The connection to the new service was interrupted"
+	smAddedNewService   = "ServiceManage has successfully added a new service"
+	smStopped           = "Stopped ServiceManage"
+	initSizeServiceList = 8
+)
+
 type ServiceManage struct {
 	Addr     string
 	Conf     *Config
+	Services *ServicesList
 	Log      *zap.Logger
+	stopped  chan string
 	listen   *net.TCPListener
 	ctx      context.Context
 	cancel   context.CancelFunc
-	services map[string]*Service
+}
+
+func NewServiceManage(config *Config) (*ServiceManage, error) {
+	var (
+		e  error
+		sm = new(ServiceManage)
+	)
+
+	sm.Log, e = zap.NewProduction()
+	if e != nil {
+		return nil, e
+	}
+	if e = sm.Listen(); e != nil {
+		_ = sm.Log.Sync()
+		return nil, e
+	}
+
+	sm.Addr = sm.listen.Addr().String()
+	sm.Conf = config
+	sm.Services = NewServiceList(initSizeServiceList)
+	sm.stopped = make(chan string, config.ServiceManage.MaxServices)
+	sm.ctx, sm.cancel = context.WithCancel(context.Background())
+
+	// a handler that clears the service list of stopped services
+	go func() {
+		for {
+			select {
+			case <-sm.ctx.Done():
+				return
+			case addr := <-sm.stopped:
+				sm.Services.Delete(addr)
+			}
+		}
+	}()
+
+	return sm, e
 }
 
 func (sm *ServiceManage) Listen() (e error) {
@@ -25,62 +71,26 @@ func (sm *ServiceManage) Listen() (e error) {
 	return e
 }
 
-// TODO: implement ServiceManage STOP()
-
-func NewServiceManage(config *Config) (*ServiceManage, error) {
-	var (
-		err error
-		sm  = new(ServiceManage)
-	)
-
-	sm.Log, err = zap.NewProduction()
-	if err != nil {
-		return nil, err
-	}
-
-	if err = sm.Listen(); err != nil {
-		_ = sm.Log.Sync()
-		return nil, err
-	}
-	sm.Addr = sm.listen.Addr().String()
-	sm.Conf = config
-	sm.ctx, sm.cancel = context.WithCancel(context.Background())
-	sm.services = make(map[string]*Service, 8)
-
-	return sm, err
+func (sm *ServiceManage) Stop() {
+	sm.Log.Info(smStopped, zap.String("addr", sm.Addr))
+	sm.cancel()
+	_ = sm.listen.Close()
+	_ = sm.Log.Sync()
 }
 
 func (sm *ServiceManage) ConnectNewService() (*Service, error) {
-	conn, err := sm.listen.AcceptTCP()
-	if err != nil {
-		return nil, err
+	conn, e := sm.listen.AcceptTCP()
+	if e != nil {
+		return nil, CloseErrorConnection(conn, sm.Log, failedCreateNewConn, e)
 	}
-
-	// settings connection setup
-	if err = sm.Conf.ServiceManage.TCPSettings.ApplyToConnection(conn); err != nil {
-		_ = conn.Close()
-		return nil, err
+	if e = sm.Conf.ServiceManage.TCPSettings.ApplyToConnection(conn); e != nil {
+		return nil, CloseErrorConnection(conn, sm.Log, failedApplySettings, e)
 	}
-
-	// create new service
-	srv := &Service{
-		Type:    ServiceTypeUndefined,
-		Addr:    conn.RemoteAddr().String(),
-		conn:    conn,
-		parent:  sm,
-		pctx:    sm.ctx,
-		kill:    make(chan struct{}, 1),
-		workers: make([]*Worker, 0, 8),
+	srv, e := NewService(sm, conn)
+	if e != nil {
+		return nil, CloseErrorConnection(conn, sm.Log, connSrvInterrupted, e)
 	}
-	srv.Log, err = zap.NewProduction()
-	if err != nil {
-		_ = conn.Close()
-		return nil, err
-	}
-	srv.ctx, srv.cancel = context.WithCancel(context.Background())
-
-	// add new service
-	sm.services[srv.Addr] = srv
-
-	return srv, err
+	sm.Services.Store(srv.Addr, srv)
+	sm.Log.Info(smAddedNewService, zap.String("addr", srv.Addr))
+	return srv, e
 }
