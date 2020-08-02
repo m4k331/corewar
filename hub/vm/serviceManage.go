@@ -18,7 +18,7 @@ const (
 type ServiceManage struct {
 	Addr     string
 	Conf     *Config
-	Services *ServicesList
+	Services *SyncMap
 	Log      *zap.Logger
 	stopped  chan string
 	listen   *net.TCPListener
@@ -43,7 +43,7 @@ func NewServiceManage(config *Config) (*ServiceManage, error) {
 
 	sm.Addr = sm.listen.Addr().String()
 	sm.Conf = config
-	sm.Services = NewServiceList(initSizeServiceList)
+	sm.Services = NewSyncMap(initSizeServiceList)
 	sm.stopped = make(chan string, config.ServiceManage.MaxServices)
 	sm.ctx, sm.cancel = context.WithCancel(context.Background())
 
