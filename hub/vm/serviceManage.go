@@ -12,7 +12,7 @@ const (
 	connSrvInterrupted  = "The connection to the new service was interrupted"
 	smAddedNewService   = "ServiceManage has successfully added a new service"
 	smStopped           = "Stopped ServiceManage"
-	initSizeServiceList = 8
+	initSizeServicesMap = 8
 )
 
 type ServiceManage struct {
@@ -43,8 +43,8 @@ func NewServiceManage(config *Config) (*ServiceManage, error) {
 
 	sm.Addr = sm.listen.Addr().String()
 	sm.Conf = config
-	sm.Services = NewSyncMap(initSizeServiceList)
-	sm.stopped = make(chan string, config.ServiceManage.MaxServices)
+	sm.Services = NewSyncMap(initSizeServicesMap)
+	sm.stopped = make(chan string, config.ServiceManage.MaxNumChild)
 	sm.ctx, sm.cancel = context.WithCancel(context.Background())
 
 	// a handler that clears the service list of stopped services
@@ -68,27 +68,35 @@ func (sm *ServiceManage) Listen() (e error) {
 		return e
 	}
 	sm.listen, e = net.ListenTCP("tcp", addr)
+	if e != nil {
+		return e
+	}
+	e = sm.Conf.ServiceManage.TCPSettings.ApplyToListener(sm.listen)
 	return e
 }
 
 func (sm *ServiceManage) Stop() {
-	sm.Log.Info(smStopped, zap.String("addr", sm.Addr))
+	if sm.Log != nil {
+		sm.Log.Info(smStopped, zap.String("addr", sm.Addr))
+		_ = sm.Log.Sync()
+	}
+	if sm.listen != nil {
+		_ = sm.listen.Close()
+	}
 	sm.cancel()
-	_ = sm.listen.Close()
-	_ = sm.Log.Sync()
 }
 
 func (sm *ServiceManage) ConnectNewService() (*Service, error) {
 	conn, e := sm.listen.AcceptTCP()
 	if e != nil {
-		return nil, CloseErrorConnection(conn, sm.Log, failedCreateNewConn, e)
+		return nil, CloseFailedConnection(conn, sm.Log, failedCreateNewConn, e)
 	}
 	if e = sm.Conf.ServiceManage.TCPSettings.ApplyToConnection(conn); e != nil {
-		return nil, CloseErrorConnection(conn, sm.Log, failedApplySettings, e)
+		return nil, CloseFailedConnection(conn, sm.Log, failedApplySettings, e)
 	}
-	srv, e := NewService(sm, conn)
+	srv, e := NewUndefinedService(sm, conn)
 	if e != nil {
-		return nil, CloseErrorConnection(conn, sm.Log, connSrvInterrupted, e)
+		return nil, CloseFailedConnection(conn, sm.Log, connSrvInterrupted, e)
 	}
 	sm.Services.Store(srv.Addr, srv)
 	sm.Log.Info(smAddedNewService, zap.String("addr", srv.Addr))

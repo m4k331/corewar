@@ -8,16 +8,19 @@ import (
 	"time"
 )
 
-func ReadTypeMsg(conn net.Conn) (uint8, error) {
+func ReadTypeMsg(conn *net.TCPConn) (uint8, error) {
 	var (
 		oneByte = make([]byte, 1)
-		err     error
+		e       error
 		n       int
 	)
 	for n == 0 {
-		n, err = conn.Read(oneByte)
+		n, e = conn.Read(oneByte)
+		if e != nil {
+			break
+		}
 	}
-	return oneByte[0], err
+	return oneByte[0], e
 }
 
 func ExtractPort(addr string) uint32 {
@@ -25,12 +28,14 @@ func ExtractPort(addr string) uint32 {
 	return uint32(port)
 }
 
-func CloseErrorConnection(conn *net.TCPConn, logger *zap.Logger, msg string, err error) error {
+func CloseFailedConnection(conn *net.TCPConn, log *zap.Logger, msg string, e error) error {
 	if conn != nil {
 		_ = conn.Close()
 	}
-	logger.Error(msg, zap.Error(err))
-	return err
+	if log != nil {
+		log.Error(msg, zap.Error(e))
+	}
+	return e
 }
 
 func GetTimeFromNSecond(n int) time.Time {
