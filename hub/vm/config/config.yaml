@@ -1,6 +1,6 @@
 service_manage:
   address: ":2142"
-  max_services: 24 # important option
+  max_num_child: 24 # maximum number of services
   tcp_settings:
     write_buffer_bytes: 1048576 # 1 Mb
     write_deadline_second: 3

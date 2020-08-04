@@ -16,7 +16,7 @@ type Config struct {
 
 type ServiceConf struct {
 	Addr        string `yaml:"address,omitempty"`
-	MaxServices int    `yaml:"max_services,omitempty"`
+	MaxNumChild int    `yaml:"max_num_child,omitempty"`
 	TCPSettings `yaml:"tcp_settings,omitempty"`
 	WorkerConf  `yaml:"worker,omitempty"`
 }
