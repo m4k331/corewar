@@ -8,8 +8,12 @@ type BufferMessage struct {
 	buff []byte
 }
 
-func NewBufferMessage(size int) *BufferMessage {
-	return &BufferMessage{buff: make([]byte, size)}
+func NewBufferMessage(capacity int) *BufferMessage {
+	return &BufferMessage{buff: make([]byte, 0, capacity)}
+}
+
+func (b *BufferMessage) Reset() {
+	b.Resize(0)
 }
 
 func (b *BufferMessage) Resize(n int) {
@@ -24,12 +28,13 @@ func (b *BufferMessage) Resize(n int) {
 	}
 }
 
-func (b *BufferMessage) ReadN(r io.Reader, n int) error {
+func (b *BufferMessage) ReadN(r io.Reader, n int) (e error) {
 	var (
-		e          error
-		offset, rb int
+		rb     int
+		offset = len(b.buff)
 	)
 
+	n += offset
 	b.Resize(n)
 	for offset < n {
 		rb, e = r.Read(b.buff[offset:])
@@ -38,6 +43,23 @@ func (b *BufferMessage) ReadN(r io.Reader, n int) error {
 			break
 		}
 		offset += rb
+	}
+	return e
+}
+
+func (b *BufferMessage) WriteN(w io.Writer, n int) (e error) {
+	if n > len(b.buff) {
+		n = len(b.buff)
+	}
+
+	var offset, wb int
+
+	for offset < n {
+		wb, e = w.Write(b.buff[:n-offset])
+		if e != nil {
+			break
+		}
+		offset += wb
 	}
 	return e
 }
