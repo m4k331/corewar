@@ -14,12 +14,13 @@
 
 int			vm_command_handshake_send(t_io_interface *io)
 {
-	uint8_t	msg[9];
+	uint8_t	msg[13];
 
 	msg[0] = TYPE_HANDSHAKE;
+	ft_bzero(&msg, 13);
 	vm_socket_int_to_bytes(msg + 1, MAGIC_TOKEN, 4);
 	vm_socket_int_to_bytes(msg + 5, ONLINE, 4);
-	if ((9 != vm_socket_send(io->sock_fd, (void*)msg, 9)))
+	if ((13 != vm_socket_send(io->sock_fd, (void*)msg, 13)))
 	{
 		ft_putstr_fd(ERR_CANT_SEND_HANDSHAKE, io->err_fd);
 		return (CODE_ERR_CANT_SEND_HANDSHAKE);
