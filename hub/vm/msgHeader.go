@@ -14,6 +14,10 @@ type Header struct {
 	buff *BufferMessage
 }
 
+func NewHeader(buff *BufferMessage) *Header {
+	return &Header{buff: buff}
+}
+
 func (m *Header) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, sizeHeader); e != nil {
