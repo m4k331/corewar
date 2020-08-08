@@ -19,7 +19,8 @@ int			vm_command_handshake_send(t_io_interface *io)
 	ft_bzero(&msg, 13);
 	msg[0] = TYPE_HANDSHAKE;
 	vm_socket_int_to_bytes(msg + 1, MAGIC_TOKEN, 4);
-	vm_socket_int_to_bytes(msg + 5, ONLINE, 4);
+	vm_socket_int_to_bytes(msg + 5, 4, 4);
+	vm_socket_int_to_bytes(msg + 9, ONLINE, 4);
 	if ((13 != vm_socket_send(io->sock_fd, (void*)msg, 13)))
 	{
 		ft_putstr_fd(ERR_CANT_SEND_HANDSHAKE, io->err_fd);
@@ -34,7 +35,7 @@ int			vm_command_handshake_recv(t_io_interface *io)
 	uint8_t	*msg;
 	int		i;
 
-	if (vm_socket_receive_data_wait(io, 5 + 4 * ONLINE) != 5 + 4 * ONLINE)
+	if (vm_socket_receive_data_wait(io, 9 + 4 * ONLINE) != 9 + 4 * ONLINE)
 		return (vm_nofity_err(io->err_fd, ERR_SZ_HNDSHK, CD_ERR_SZ_HNDSHK));
 	msg = (uint8_t*)io->netbuf->start;
 	if (msg[0] != TYPE_HANDSHAKE)
@@ -44,7 +45,7 @@ int			vm_command_handshake_recv(t_io_interface *io)
 	i = -1;
 	while (++i < ONLINE)
 		((t_input*)io->superior)->wk_sockets[i] =
-		ft_itoa(vm_socket_bytes_to_int(msg + 5 + i * 4, 4));
+		ft_itoa(vm_socket_bytes_to_int(msg + 9 + i * 4, 4));
 	ft_printfd(io->cout, " from %s:%s received\n",
 			io->address, io->port);
 	darr_remove_front(io->netbuf, io->netbuf->len);
