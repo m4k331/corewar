@@ -7,7 +7,7 @@ import (
 	"testing"
 )
 
-func TestHandshakeVM(t *testing.T) {
+func TestHandshake(t *testing.T) {
 	a := []byte{1, 0, 0, 0, 2, 0, 0, 0, 0} // DON'T EDIT!!!!!!!1111
 	ba := bytes.NewBuffer(a)
 	h := NewHeader(NewBufferMessage(sizeHeader))
@@ -21,18 +21,18 @@ func TestHandshakeVM(t *testing.T) {
 	m.SetHeader(h)
 	e = m.Read(ba)
 	if e != nil {
-		t.Errorf("Fail Read HandshakeVM (body empty):%v\n", e)
+		t.Errorf("Fail Read Handshake (body empty):%v\n", e)
 	}
 	if h.Type != m.Header.Type || h.Key != m.Header.Key || h.Len != m.Header.Len {
-		t.Errorf("Wrong answer: Read HandshakeVM (body empty)\ngot:%v\nexp:%v\n", m.Header, h)
+		t.Errorf("Wrong answer: Read Handshake (body empty)\ngot:%v\nexp:%v\n", m.Header, h)
 	}
 
 	e = m.Write(ba)
 	if e != nil {
-		t.Errorf("Fail Write HandshakeVM (body empty):%v\n", e)
+		t.Errorf("Fail Write Handshake (body empty):%v\n", e)
 	}
 	if !reflect.DeepEqual(a, ba.Bytes()) {
-		t.Errorf("Wrong anwer: Write HandshakeVM (body empty)\ngot:%v\nexp:%v\n", ba.Bytes(), a)
+		t.Errorf("Wrong anwer: Write Handshake (body empty)\ngot:%v\nexp:%v\n", ba.Bytes(), a)
 	}
 
 	ports := []uint32{9, 8, 7, 6}
@@ -46,19 +46,19 @@ func TestHandshakeVM(t *testing.T) {
 	m.Len = 4 * 4
 	e = m.Read(ba)
 	if e != nil {
-		t.Errorf("Fail Read HandshakeVM (full):%v\n", e)
+		t.Errorf("Fail Read Handshake (full):%v\n", e)
 	}
 	if !reflect.DeepEqual(ports, m.Ports) {
-		t.Errorf("Wrong answer: Read HandshakeVM (full)\ngot:%v\nexp:%v\n", m.Ports, ports)
+		t.Errorf("Wrong answer: Read Handshake (full)\ngot:%v\nexp:%v\n", m.Ports, ports)
 	}
 
 	a = []byte{1, 0, 0, 0, 2, 0, 0, 0, 16, 0, 0, 0, 9, 0, 0, 0, 8, 0, 0, 0, 7, 0, 0, 0, 6} // DON'T EDIT!!!!!!!1111
 	ba.Reset()
 	e = m.Write(ba)
 	if e != nil {
-		t.Errorf("Fail Write HandshakeVM (full):%v\n", e)
+		t.Errorf("Fail Write Handshake (full):%v\n", e)
 	}
 	if !reflect.DeepEqual(a, ba.Bytes()) {
-		t.Errorf("Wrong answer: Write HandshakeVM (full)\ngot:%v\nexp:%v\n", ba.Bytes(), a)
+		t.Errorf("Wrong answer: Write Handshake (full)\ngot:%v\nexp:%v\n", ba.Bytes(), a)
 	}
 }

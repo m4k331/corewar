@@ -1,57 +1,47 @@
 package main
 
 import (
-	"encoding/binary"
-	"fmt"
-	"net"
+	"io"
 )
 
 type ErrorASM struct {
-	Type    uint8
-	Id      uint32
-	Len     uint32
+	Header
 	Message []byte
+	buff    *BufferMessage
 }
 
-func readErrorASM(conn net.Conn) (*ErrorASM, error) {
-	var (
-		n int
-		e error
-		m = new(ErrorASM)
-	)
-
-	m.Type = TypeMsgErrorASM
-	if e = binary.Read(conn, binary.BigEndian, &m.Id); e != nil {
-		return m, e
+func NewErrorASM(buff *BufferMessage) *ErrorASM {
+	return &ErrorASM{
+		Header: *NewHeader(NewBufferMessage(sizeHeader)),
+		buff:   buff,
 	}
-	if e = binary.Read(conn, binary.BigEndian, &m.Len); e != nil {
-		return m, e
-	}
-	m.Message = make([]byte, m.Len)
-	if n, e = conn.Read(m.Message); n != int(m.Len) || e != nil {
-		return m, fmt.Errorf("Error reading Message field (%d/%d): %v ", n, m.Len, e)
-	}
-
-	return m, e
 }
 
-func handleErrorASM(conn net.Conn) error {
-	var (
-		err  error
-		msg  *ErrorASM
-		addr = conn.RemoteAddr().String()
-	)
+func (m *ErrorASM) SetHeader(h *Header) {
+	m.Header.SetHeader(h)
+}
 
-	msg, err = readErrorASM(conn)
-	if err != nil {
-		return fmt.Errorf("Error reading msg: %v ", err)
+func (m *ErrorASM) Read(r io.Reader) (e error) {
+	m.buff.Reset()
+	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
+		return e
 	}
-	fmt.Printf("Hub received error ASM msg from %s\n", addr)
 
-	// TODO: Write error ASM on web site
-	fmt.Printf("Hub Write error ASM on web site "+
-		"{id: %d, len: %d, msg: %v}\n",
-		msg.Id, msg.Len, string(msg.Message))
+	if cap(m.Message) < int(m.Len) {
+		m.Message = make([]byte, m.Len)
+	}
 
-	return err
+	_, e = m.buff.Read(m.Message[:m.Len])
+	return e
+}
+
+func (m *ErrorASM) Write(w io.Writer) (e error) {
+	m.buff.Reset()
+	if e = m.Header.Write(m.buff); e != nil {
+		return e
+	}
+	if _, e = m.buff.Write(m.Message); e != nil {
+		return e
+	}
+	return m.buff.WriteN(w, m.buff.Len())
 }
