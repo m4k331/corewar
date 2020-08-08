@@ -16,8 +16,8 @@ int			vm_command_handshake_send(t_io_interface *io)
 {
 	uint8_t	msg[13];
 
-	msg[0] = TYPE_HANDSHAKE;
 	ft_bzero(&msg, 13);
+	msg[0] = TYPE_HANDSHAKE;
 	vm_socket_int_to_bytes(msg + 1, MAGIC_TOKEN, 4);
 	vm_socket_int_to_bytes(msg + 5, ONLINE, 4);
 	if ((13 != vm_socket_send(io->sock_fd, (void*)msg, 13)))
