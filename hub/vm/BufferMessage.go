@@ -16,6 +16,14 @@ func (b *BufferMessage) Bytes() []byte {
 	return b.buff
 }
 
+func (b *BufferMessage) Len() int {
+	return len(b.buff)
+}
+
+func (b *BufferMessage) Cap() int {
+	return cap(b.buff)
+}
+
 func (b *BufferMessage) Reset() {
 	b.Resize(0)
 }

@@ -14,39 +14,36 @@ type Header struct {
 	buff *BufferMessage
 }
 
-func (h *Header) Read(r io.Reader) (e error) {
-	h.buff.Reset()
-	if e = h.buff.ReadN(r, sizeHeader); e != nil {
+func (m *Header) Read(r io.Reader) (e error) {
+	m.buff.Reset()
+	if e = m.buff.ReadN(r, sizeHeader); e != nil {
 		return e
 	}
-	if e = binary.Read(h.buff, binary.BigEndian, &h.Type); e != nil {
+	if e = binary.Read(m.buff, binary.BigEndian, &m.Type); e != nil {
 		return e
 	}
-	if e = binary.Read(h.buff, binary.BigEndian, &h.Key); e != nil {
+	if e = binary.Read(m.buff, binary.BigEndian, &m.Key); e != nil {
 		return e
 	}
-	return binary.Read(h.buff, binary.BigEndian, &h.Len)
+	return binary.Read(m.buff, binary.BigEndian, &m.Len)
 }
 
-func (h *Header) Write(w io.Writer) (e error) {
-	h.buff.Reset()
-	if e = binary.Write(h.buff, binary.BigEndian, &h.Type); e != nil {
+func (m *Header) Write(w io.Writer) (e error) {
+	m.buff.Reset()
+	if e = binary.Write(m.buff, binary.BigEndian, &m.Type); e != nil {
 		return e
 	}
-	if e = binary.Write(h.buff, binary.BigEndian, &h.Key); e != nil {
+	if e = binary.Write(m.buff, binary.BigEndian, &m.Key); e != nil {
 		return e
 	}
-	if e = binary.Write(h.buff, binary.BigEndian, &h.Len); e != nil {
+	if e = binary.Write(m.buff, binary.BigEndian, &m.Len); e != nil {
 		return e
 	}
-	return h.buff.WriteN(w, sizeHeader)
+	return m.buff.WriteN(w, sizeHeader)
 }
 
-func (h *Header) SetHeader(header *Header) {
-	h.Type = header.Type
-	h.Key = header.Key
-	h.Len = header.Len
-	if header.buff != nil {
-		h.buff = header.buff
-	}
+func (m *Header) SetHeader(h *Header) {
+	m.Type = h.Type
+	m.Key = h.Key
+	m.Len = h.Len
 }
