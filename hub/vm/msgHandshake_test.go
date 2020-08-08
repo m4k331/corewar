@@ -8,7 +8,7 @@ import (
 )
 
 func TestHandshakeVM(t *testing.T) {
-	a := []byte{1, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0} // DON'T EDIT!!!!!!!1111
+	a := []byte{1, 0, 0, 0, 2, 0, 0, 0, 0} // DON'T EDIT!!!!!!!1111
 	ba := bytes.NewBuffer(a)
 	h := NewHeader(NewBufferMessage(sizeHeader))
 
@@ -43,6 +43,7 @@ func TestHandshakeVM(t *testing.T) {
 		}
 	}
 
+	m.Len = 4 * 4
 	e = m.Read(ba)
 	if e != nil {
 		t.Errorf("Fail Read HandshakeVM (full):%v\n", e)
@@ -51,7 +52,7 @@ func TestHandshakeVM(t *testing.T) {
 		t.Errorf("Wrong answer: Read HandshakeVM (full)\ngot:%v\nexp:%v\n", m.Ports, ports)
 	}
 
-	a = []byte{1, 0, 0, 0, 2, 0, 0, 0, 4, 0, 0, 0, 9, 0, 0, 0, 8, 0, 0, 0, 7, 0, 0, 0, 6} // DON'T EDIT!!!!!!!1111
+	a = []byte{1, 0, 0, 0, 2, 0, 0, 0, 16, 0, 0, 0, 9, 0, 0, 0, 8, 0, 0, 0, 7, 0, 0, 0, 6} // DON'T EDIT!!!!!!!1111
 	ba.Reset()
 	e = m.Write(ba)
 	if e != nil {

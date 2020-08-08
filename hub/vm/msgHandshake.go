@@ -24,7 +24,7 @@ func (m *Handshake) SetHeader(h *Header) {
 
 func (m *Handshake) Read(r io.Reader) (e error) {
 	m.buff.Reset()
-	if e = m.buff.ReadN(r, int(m.Len*4)); e != nil {
+	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
 		return e
 	}
 
@@ -39,7 +39,7 @@ func (m *Handshake) Read(r io.Reader) (e error) {
 			break
 		}
 		m.Ports = append(m.Ports, port)
-		k++
+		k += 4
 	}
 	return e
 }
