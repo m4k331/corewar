@@ -23,7 +23,7 @@ const (
 const (
 	TypeMsgHandshakeASM = iota + 101
 	TypeMsgErrorASM
-	TypeMsgBinaryASM
+	TypeMsgBotASM
 )
 
 type Message interface {
