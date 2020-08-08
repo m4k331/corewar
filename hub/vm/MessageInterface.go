@@ -17,7 +17,6 @@ const (
 const (
 	TypeMsgHandshakeHB = iota + 1
 	TypeMsgInitialGame
-	TypeMsgSendBot
 )
 
 const (
