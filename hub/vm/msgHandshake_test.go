@@ -17,7 +17,7 @@ func TestHandshakeVM(t *testing.T) {
 		t.Errorf("Fail read Header: %v\n", e)
 	}
 
-	m := NewHandshakeVM(NewBufferMessage(0))
+	m := NewHandshake(NewBufferMessage(0))
 	m.SetHeader(h)
 	e = m.Read(ba)
 	if e != nil {

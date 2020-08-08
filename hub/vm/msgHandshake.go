@@ -5,24 +5,24 @@ import (
 	"io"
 )
 
-type HandshakeVM struct {
+type Handshake struct {
 	Header
 	Ports []uint32
 	buff  *BufferMessage
 }
 
-func NewHandshakeVM(buff *BufferMessage) *HandshakeVM {
-	return &HandshakeVM{
+func NewHandshake(buff *BufferMessage) *Handshake {
+	return &Handshake{
 		Header: *NewHeader(NewBufferMessage(sizeHeader)),
 		buff:   buff,
 	}
 }
 
-func (m *HandshakeVM) SetHeader(h *Header) {
+func (m *Handshake) SetHeader(h *Header) {
 	m.Header.SetHeader(h)
 }
 
-func (m *HandshakeVM) Read(r io.Reader) (e error) {
+func (m *Handshake) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len*4)); e != nil {
 		return e
@@ -44,7 +44,7 @@ func (m *HandshakeVM) Read(r io.Reader) (e error) {
 	return e
 }
 
-func (m *HandshakeVM) Write(w io.Writer) (e error) {
+func (m *Handshake) Write(w io.Writer) (e error) {
 	m.buff.Reset()
 	if e = m.Header.Write(m.buff); e != nil {
 		return e
