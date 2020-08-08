@@ -2,61 +2,58 @@ package main
 
 import "go.uber.org/zap"
 
+const (
+	errorReadHeader      = "Error reading header"
+	errorSendHandshakeVM = "Error sending handshakeVM message"
+	errorRunWorker       = "Error running worker"
+	receivedHandshakeVM  = "Received a handshakeVM message"
+	sentHandshakeVM      = "Sent a handshakeVM message"
+)
+
 func handleService(srv *Service) {
 	var (
-		typeMsg uint8
-		err     error
+		h *Header
+		e error
 	)
 
-	typeMsg, err = ReadTypeMsg(srv.conn)
-	if err != nil {
-		srv.Log.Error("Error reading type message",
-			zap.String("addr", srv.Addr),
-			zap.Error(err),
-		)
+	h = headerPool.Get().(*Header)
+	if e = h.Read(srv.conn); e != nil {
+		srv.Log.Error(errorReadHeader, zap.String("addr", srv.Addr), zap.Error(e))
 		return
 	}
 
-	switch typeMsg {
+	switch h.Type {
 	case TypeMsgHandshakeVM:
-		msg := new(HandshakeVM)
-		if err := msg.Read(srv.conn); err != nil {
-			srv.Log.Error("Error reading handshakeVM message",
-				zap.String("addr", srv.Addr),
-				zap.Error(err),
-			)
-			return
-		}
-		srv.Log.Info("Received a handshakeVM message",
-			zap.String("addr", srv.Addr),
-		)
+		msg := handshakeVMPool.Get().(*HandshakeVM)
+		msg.SetHeader(h)
+		srv.Log.Info(receivedHandshakeVM, zap.String("addr", srv.Addr))
 
 		// service registration
 		srv.Type = ServiceTypeVM
-		srv.conf = srv.parent.Conf.ServiceVM
+		srv.Conf = srv.parent.Conf.ServiceVM
 
 		// TODO: implement handler
-		if err = srv.RunWorkers(int(msg.NumWorkers), nil); err != nil {
-			srv.Log.Error("Error sending handshakeVM message",
+		if e = srv.RunWorkers(int(msg.NumWorkers), nil); e != nil {
+			srv.Log.Error(errorRunWorker,
 				zap.String("addr", srv.Addr),
 				zap.Int("type", srv.Type),
-				zap.Error(err),
+				zap.Error(e),
 			)
 			return
 		}
 
-		if err = msg.Write(srv.conn); err != nil {
-			srv.Log.Error("Error sending handshakeVM message",
+		if e = msg.Write(srv.conn); e != nil {
+			srv.Log.Error(errorSendHandshakeVM,
 				zap.String("addr", srv.Addr),
 				zap.Int("type", srv.Type),
-				zap.Error(err),
+				zap.Error(e),
 			)
 			return
 		}
-		srv.Log.Info("Sent a handshakeVM message",
+		srv.Log.Info(sentHandshakeVM,
 			zap.String("addr", srv.Addr),
 			zap.Int("type", srv.Type),
-			zap.Error(err),
+			zap.Error(e),
 		)
 	case TypeMsgGameNotification:
 		// TODO: handleGameNotification(srv)

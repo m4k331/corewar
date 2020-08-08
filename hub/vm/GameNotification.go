@@ -2,9 +2,10 @@ package main
 
 import (
 	"encoding/binary"
-	"errors"
 	"io"
 )
+
+const GameNotificationPayloadSize = 4
 
 type GameNotification struct {
 	Header
@@ -24,9 +25,6 @@ func (m *GameNotification) SetHeader(h *Header) {
 }
 
 func (m *GameNotification) Read(r io.Reader) (e error) {
-	if m.Len != 4 {
-		return errors.New("bad payload size")
-	}
 	return binary.Read(r, binary.BigEndian, &m.Socket)
 }
 
