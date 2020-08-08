@@ -3,7 +3,8 @@ package main
 import "io"
 
 const (
-	TypeMsgHandshakeVM = iota + 1
+	TypeMsgHeader = iota
+	TypeMsgHandshakeVM
 	_
 	TypeMsgGameNotification
 	TypeMsgGameStatus

@@ -12,6 +12,10 @@ func NewBufferMessage(capacity int) *BufferMessage {
 	return &BufferMessage{buff: make([]byte, 0, capacity)}
 }
 
+func (b *BufferMessage) Bytes() []byte {
+	return b.buff
+}
+
 func (b *BufferMessage) Reset() {
 	b.Resize(0)
 }
@@ -26,6 +30,19 @@ func (b *BufferMessage) Resize(n int) {
 	default:
 		b.buff = b.buff[:n]
 	}
+}
+
+func (b *BufferMessage) Read(p []byte) (n int, e error) {
+	switch {
+	case len(p) > len(b.buff):
+		n = len(b.buff)
+		e = io.EOF
+	default:
+		n = len(p)
+	}
+	copy(p, b.buff[:n])
+	b.buff = b.buff[n:]
+	return n, e
 }
 
 func (b *BufferMessage) ReadN(r io.Reader, n int) (e error) {
@@ -47,6 +64,14 @@ func (b *BufferMessage) ReadN(r io.Reader, n int) (e error) {
 	return e
 }
 
+func (b *BufferMessage) Write(p []byte) (n int, e error) {
+	n = len(p)
+	offset := len(b.buff)
+	b.Resize(offset + n)
+	copy(b.buff[offset:], p)
+	return n, e
+}
+
 func (b *BufferMessage) WriteN(w io.Writer, n int) (e error) {
 	if n > len(b.buff) {
 		n = len(b.buff)
@@ -62,25 +87,4 @@ func (b *BufferMessage) WriteN(w io.Writer, n int) (e error) {
 		offset += wb
 	}
 	return e
-}
-
-func (b *BufferMessage) Read(p []byte) (n int, e error) {
-	n = len(p)
-	offset := len(b.buff)
-	b.Resize(offset + n)
-	copy(b.buff[offset:], p)
-	return n, e
-}
-
-func (b *BufferMessage) Write(p []byte) (n int, e error) {
-	switch {
-	case len(p) > len(b.buff):
-		n = len(b.buff)
-		e = io.EOF
-	default:
-		n = len(p)
-	}
-	copy(p, b.buff[:n])
-	b.buff = b.buff[n:]
-	return n, e
 }

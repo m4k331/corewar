@@ -41,3 +41,12 @@ func (h *Header) Write(w io.Writer) (e error) {
 	}
 	return h.buff.WriteN(w, sizeHeader)
 }
+
+func (h *Header) SetHeader(header *Header) {
+	h.Type = header.Type
+	h.Key = header.Key
+	h.Len = header.Len
+	if header.buff != nil {
+		h.buff = header.buff
+	}
+}
