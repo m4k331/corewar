@@ -5,6 +5,7 @@ import (
 	"sync/atomic"
 )
 
+// TODO: change interface{} to ServiceInterface
 // it's fast if not a cache contention else use sync.Map
 type SyncMap struct {
 	mx sync.RWMutex
@@ -33,7 +34,7 @@ func (syncm *SyncMap) Load(key string) (value interface{}, ok bool) {
 	return value, ok
 }
 
-func (syncm *SyncMap) Store(key string, value *Service) {
+func (syncm *SyncMap) Store(key string, value interface{}) {
 	syncm.mx.Lock()
 	syncm.m[key] = value
 	atomic.AddInt32(syncm.n, 1)

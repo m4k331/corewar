@@ -13,8 +13,11 @@ const (
 )
 
 const (
-	srvStopped         = "Stopped Service"
-	initSizeWorkersMap = 8
+	srvStopped          = "Stopped Service"
+	failCreateNewWorker = "Failed to create Worker"
+	failApplyTCPSetting = "Failed to Apply TCPSettings to Worker"
+	launchNewWorker     = "Launched the new worker"
+	initSizeWorkersMap  = 8
 )
 
 type Service struct {
@@ -91,6 +94,74 @@ func (srv *Service) HandleFuncLoop(handler func(s *Service)) {
 	}()
 }
 
+func (srv *Service) RegisterServiceTypeVM() {
+	srv.Type = ServiceTypeVM
+	srv.Conf = srv.parent.Conf.ServiceVM
+	srv.pool = NewPoolMessages(ServiceTypeVM)
+}
+
+func (srv *Service) RegisterServiceTypeASM() {
+	srv.Type = ServiceTypeASM
+	srv.Conf = srv.parent.Conf.ServiceASM
+	srv.pool = NewPoolMessages(ServiceTypeASM)
+}
+
+func (srv *Service) RunWorkers(n int, handler func(wrk *Worker)) {
+	for n > 0 {
+		// Create New Worker
+		listener, e := net.ListenTCP("tcp", nil)
+		if e != nil {
+			srv.Log.Error(failCreateNewWorker,
+				zap.String("addr", srv.Addr),
+				zap.Int("type", srv.Type),
+				zap.Error(e),
+			)
+			n--
+			continue
+		}
+		if e = srv.Conf.WorkerConf.ApplyToListener(listener); e != nil {
+			srv.Log.Error(failApplyTCPSetting,
+				zap.String("addr", srv.Addr),
+				zap.Int("type", srv.Type),
+			)
+		}
+
+		log, e := zap.NewProduction()
+		if e != nil {
+			srv.Log.Error(failCreateNewWorker,
+				zap.String("addr", srv.Addr),
+				zap.Int("type", srv.Type),
+				zap.Error(e),
+			)
+			_ = listener.Close()
+			n--
+			continue
+		}
+
+		ctx, cancel := context.WithCancel(context.Background())
+
+		worker := &Worker{
+			addr:     listener.Addr().String(),
+			listener: listener,
+			conf:     srv.Conf.WorkerConf,
+			log:      log,
+			pctx:     srv.ctx,
+			ctx:      ctx,
+			cancel:   cancel,
+			parent:   srv,
+			handler:  handler,
+			pool:     NewPoolMessages(srv.Type),
+		}
+
+		worker.Run()
+		srv.Workers.Store(worker.addr, worker)
+		srv.Log.Info(launchNewWorker,
+			zap.String("addr", worker.addr),
+		)
+		n--
+	}
+}
+
 //func handleExecutor(wrk *Worker) {
 //	go func() {
 //		defer func() {
@@ -118,49 +189,5 @@ func (srv *Service) HandleFuncLoop(handler func(s *Service)) {
 ////				break
 //}
 //}()
-//}
-//
-//func (srv *Service) RunWorkers(n int, handler func(wrk *Worker)) error {
-//	var (
-//		err  error
-//		fail int
-//	)
-//
-//	for n > 0 {
-//		worker := &Worker{
-//			parent: srv,
-//			pctx:   srv.ctx,
-//			execs:  make([]*Executor, 0, 8),
-//		}
-//
-//		worker.listener, err = net.ListenTCP("tcp", nil)
-////		worker.parent.conf.
-//if err != nil {
-//	srv.Log.Error("Failed to create worker",
-//		zap.String("addr", srv.Addr),
-//		zap.Int("type", srv.Type),
-//		zap.Error(err),
-//	)
-//	fail++
-//	n--
-//	continue
-//}
-//
-//worker.addr = worker.listener.Addr().String()
-//worker.ctx, worker.cancel = context.WithCancel(context.Background())
-//
-//srv.Log.Info("Launched the new worker",
-//	zap.String("addr", worker.addr),
-//)
-//
-//handler(worker)
-//
-//n--
-//}
-//
-//if fail > 0 {
-//	err = fmt.Errorf("Failed to launch workers %d/%d ", fail, n)
-//}
-//return err
 //}
 //
