@@ -17,10 +17,6 @@ func NewErrorASM(buff *BufferMessage) *ErrorASM {
 	}
 }
 
-func (m *ErrorASM) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *ErrorASM) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
@@ -44,4 +40,20 @@ func (m *ErrorASM) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *ErrorASM) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *ErrorASM) GetType() uint8 {
+	return m.Type
+}
+
+func (m *ErrorASM) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *ErrorASM) GetLen() uint32 {
+	return m.Len
 }

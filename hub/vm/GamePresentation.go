@@ -15,10 +15,6 @@ func NewGamePresentation(buff *BufferMessage) *GamePresentation {
 	}
 }
 
-func (m *GamePresentation) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *GamePresentation) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
@@ -42,4 +38,20 @@ func (m *GamePresentation) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *GamePresentation) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *GamePresentation) GetType() uint8 {
+	return m.Type
+}
+
+func (m *GamePresentation) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *GamePresentation) GetLen() uint32 {
+	return m.Len
 }

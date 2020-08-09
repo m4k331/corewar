@@ -15,10 +15,6 @@ func NewBotASM(buff *BufferMessage) *BotASM {
 	}
 }
 
-func (m *BotASM) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *BotASM) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
@@ -42,4 +38,20 @@ func (m *BotASM) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *BotASM) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *BotASM) GetType() uint8 {
+	return m.Type
+}
+
+func (m *BotASM) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *BotASM) GetLen() uint32 {
+	return m.Len
 }

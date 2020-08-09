@@ -46,8 +46,20 @@ func (m *Header) Write(w io.Writer) (e error) {
 	return m.buff.WriteN(w, sizeHeader)
 }
 
-func (m *Header) SetHeader(h *Header) {
-	m.Type = h.Type
-	m.Key = h.Key
-	m.Len = h.Len
+func (m *Header) SetHeader(h Message) {
+	m.Type = h.GetType()
+	m.Key = h.GetKey()
+	m.Len = h.GetLen()
+}
+
+func (m *Header) GetType() uint8 {
+	return m.Type
+}
+
+func (m *Header) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *Header) GetLen() uint32 {
+	return m.Len
 }

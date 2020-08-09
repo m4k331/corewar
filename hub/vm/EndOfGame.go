@@ -19,10 +19,6 @@ func NewEndOfGame(buff *BufferMessage) *EndOfGame {
 	}
 }
 
-func (m *EndOfGame) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *EndOfGame) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
@@ -52,4 +48,20 @@ func (m *EndOfGame) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *EndOfGame) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *EndOfGame) GetType() uint8 {
+	return m.Type
+}
+
+func (m *EndOfGame) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *EndOfGame) GetLen() uint32 {
+	return m.Len
 }

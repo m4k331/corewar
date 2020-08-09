@@ -20,10 +20,6 @@ func NewOperation(buff *BufferMessage) *Operation {
 	}
 }
 
-func (m *Operation) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *Operation) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
@@ -59,4 +55,20 @@ func (m *Operation) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *Operation) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *Operation) GetType() uint8 {
+	return m.Type
+}
+
+func (m *Operation) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *Operation) GetLen() uint32 {
+	return m.Len
 }

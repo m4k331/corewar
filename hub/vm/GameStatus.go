@@ -29,10 +29,6 @@ func NewGameStatus(buff *BufferMessage) *GameStatus {
 	}
 }
 
-func (m *GameStatus) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *GameStatus) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
@@ -87,4 +83,20 @@ func (m *GameStatus) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *GameStatus) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *GameStatus) GetType() uint8 {
+	return m.Type
+}
+
+func (m *GameStatus) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *GameStatus) GetLen() uint32 {
+	return m.Len
 }

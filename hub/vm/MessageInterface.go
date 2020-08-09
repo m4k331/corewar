@@ -26,7 +26,10 @@ const (
 )
 
 type Message interface {
-	SetHeader(h *Header)
+	SetHeader(h Message)
 	Read(r io.Reader) error
 	Write(w io.Writer) error
+	GetType() uint8
+	GetKey() uint32
+	GetLen() uint32
 }

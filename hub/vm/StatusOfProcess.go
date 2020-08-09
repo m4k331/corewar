@@ -16,9 +16,6 @@ func NewStatusOfProcess(buff *BufferMessage) *StatusOfProcess {
 		buff:   buff,
 	}
 }
-func (m *StatusOfProcess) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
 
 func (m *StatusOfProcess) Read(r io.Reader) (e error) {
 	m.buff.Reset()
@@ -43,4 +40,20 @@ func (m *StatusOfProcess) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *StatusOfProcess) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *StatusOfProcess) GetType() uint8 {
+	return m.Type
+}
+
+func (m *StatusOfProcess) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *StatusOfProcess) GetLen() uint32 {
+	return m.Len
 }

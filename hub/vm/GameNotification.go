@@ -20,10 +20,6 @@ func NewGameNotification(buff *BufferMessage) *GameNotification {
 	}
 }
 
-func (m *GameNotification) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *GameNotification) Read(r io.Reader) (e error) {
 	return binary.Read(r, binary.BigEndian, &m.Socket)
 }
@@ -37,4 +33,20 @@ func (m *GameNotification) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *GameNotification) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *GameNotification) GetType() uint8 {
+	return m.Type
+}
+
+func (m *GameNotification) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *GameNotification) GetLen() uint32 {
+	return m.Len
 }

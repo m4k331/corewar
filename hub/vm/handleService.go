@@ -11,23 +11,23 @@ const (
 
 // TODO: подумать над тем как реагировать если сообщение пришло не валидное
 func handleService(srv *Service) {
-	h := srv.pool.Get(TypeMsgHeader).(*Header)
+	h := srv.pool.Get(TypeMsgHeader)
 	e := h.Read(srv.conn)
 	if e != nil {
 		srv.Log.Error(errorReadHeader, zap.String("addr", srv.Addr), zap.Error(e))
 		return
 	}
 
-	switch h.Type {
+	switch h.GetType() {
 	case TypeMsgHandshakeVM:
-		msg := srv.pool.Get(TypeMsgHandshakeVM).(*Handshake)
+		msg := srv.pool.Get(TypeMsgHandshakeVM)
 		msg.SetHeader(h)
 		srv.Log.Info(receivedHandshakeVM, zap.String("addr", srv.Addr))
 
 		srv.RegisterServiceTypeVM()
 
 		// TODO: implement handler
-		srv.RunWorkers(int(msg.Len), nil)
+		srv.RunWorkers(int(msg.GetLen()), nil)
 
 		// TODO: impl prepare ports for msg
 		if e = msg.Write(srv.conn); e != nil {

@@ -19,10 +19,6 @@ func NewInitialGame(buff *BufferMessage) *InitialGame {
 	}
 }
 
-func (m *InitialGame) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *InitialGame) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
@@ -52,4 +48,20 @@ func (m *InitialGame) Write(w io.Writer) (e error) {
 		return e
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *InitialGame) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *InitialGame) GetType() uint8 {
+	return m.Type
+}
+
+func (m *InitialGame) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *InitialGame) GetLen() uint32 {
+	return m.Len
 }

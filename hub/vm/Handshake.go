@@ -18,10 +18,6 @@ func NewHandshake(buff *BufferMessage) *Handshake {
 	}
 }
 
-func (m *Handshake) SetHeader(h *Header) {
-	m.Header.SetHeader(h)
-}
-
 func (m *Handshake) Read(r io.Reader) (e error) {
 	m.buff.Reset()
 	if e = m.buff.ReadN(r, int(m.Len)); e != nil {
@@ -55,6 +51,22 @@ func (m *Handshake) Write(w io.Writer) (e error) {
 		}
 	}
 	return m.buff.WriteN(w, m.buff.Len())
+}
+
+func (m *Handshake) SetHeader(h Message) {
+	m.Header.SetHeader(h)
+}
+
+func (m *Handshake) GetType() uint8 {
+	return m.Type
+}
+
+func (m *Handshake) GetKey() uint32 {
+	return m.Key
+}
+
+func (m *Handshake) GetLen() uint32 {
+	return m.Len
 }
 
 //func sendHandshakeVM(conn *net.TCPConn, vm *HandshakeVM) error {
