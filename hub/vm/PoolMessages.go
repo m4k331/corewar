@@ -17,23 +17,23 @@ func NewPoolMessages(serviceType int) *PoolMessages {
 	switch serviceType {
 	case ServiceTypeVM:
 		return &PoolMessages{
-			TypeMsgHeader:      NewHeader(b),
-			TypeMsgHandshakeVM: NewHandshake(b),
-			//TypeMsgGameNotification: &GameNotification{buff: b},
-			//TypeMsgGameStatus:       &GameStatus{buff: b},
-			//TypeMsgOperation:        &Operation{buff: b},
-			//TypeMsgStatusOfProcess:  &StatusOfProcess{buff: b},
-			//TypeMsgEndOfGame:        &EndOfGame{buff: b},
-			//TypeMsgGamePresentation: &GamePresentation{buff: b},
-			//TypeMsgInitialGame:      &InitialGame{buff: b},
-			//TypeMsgSendBot:          &BotASM{buff: b},
+			TypeMsgHeader:           NewHeader(b),
+			TypeMsgHandshakeVM:      NewHandshake(b),
+			TypeMsgGameNotification: NewGameNotification(b),
+			TypeMsgGameStatus:       NewGameStatus(b),
+			TypeMsgOperation:        NewOperation(b),
+			TypeMsgStatusOfProcess:  NewStatusOfProcess(b),
+			TypeMsgEndOfGame:        NewEndOfGame(b),
+			TypeMsgGamePresentation: NewGamePresentation(b),
+			TypeMsgInitialGame:      NewInitialGame(b),
+			TypeMsgBotASM:           NewBotASM(b),
 		}
 	case ServiceTypeASM:
 		return &PoolMessages{
 			TypeMsgHeader:       NewHeader(b),
 			TypeMsgHandshakeASM: NewHandshake(b),
 			TypeMsgErrorASM:     NewErrorASM(b),
-			TypeMsgBinaryASM:    NewBotASM(b),
+			TypeMsgBotASM:       NewBotASM(b),
 		}
 	}
 	return &PoolMessages{
