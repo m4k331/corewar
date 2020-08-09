@@ -12,41 +12,57 @@ const (
 	connSrvInterrupted  = "The connection to the new service was interrupted"
 	smAddedNewService   = "ServiceManage has successfully added a new service"
 	smStopped           = "Stopped ServiceManage"
+	successConnToManage = "RemoteService connected to ServiceManage"
+	failedConnToManage  = "Failed to connect the service to ServiceManage"
 	initSizeServicesMap = 8
 )
 
 type ServiceManage struct {
-	Addr     string
-	Conf     *Config
-	Services *SyncMap
-	Log      *zap.Logger
-	stopped  chan string
-	listen   *net.TCPListener
+	code     int
+	listener *net.TCPListener
+	conf     Config
+	log      *zap.Logger
 	ctx      context.Context
 	cancel   context.CancelFunc
+	slaves   *SyncMap
+	handler  HandleServiceFunc
+	stopped  chan string
 }
 
-func NewServiceManage(config *Config) (*ServiceManage, error) {
-	var (
-		e  error
-		sm = new(ServiceManage)
-	)
-
-	sm.Log, e = zap.NewProduction()
+func NewServiceManage(config Config) (*ServiceManage, error) {
+	log, e := zap.NewProduction()
 	if e != nil {
 		return nil, e
 	}
-	if e = sm.Listen(); e != nil {
-		_ = sm.Log.Sync()
+
+	addr, e := net.ResolveTCPAddr("tcp", config.ServiceManage.Addr)
+	if e != nil {
+		_ = log.Sync()
 		return nil, e
 	}
 
-	sm.Addr = sm.listen.Addr().String()
-	sm.Conf = config
-	sm.Services = NewSyncMap(initSizeServicesMap)
-	sm.stopped = make(chan string, config.ServiceManage.MaxNumChild)
-	sm.ctx, sm.cancel = context.WithCancel(context.Background())
+	listener, e := net.ListenTCP("tcp", addr)
+	if e != nil {
+		_ = log.Sync()
+		return nil, e
+	}
+	e = config.ServiceManage.TCPSettings.ApplyToListener(listener)
 
+	ctx, cancel := context.WithCancel(context.Background())
+
+	return &ServiceManage{
+		listener: listener,
+		conf:     config,
+		log:      log,
+		ctx:      ctx,
+		cancel:   cancel,
+		slaves:   NewSyncMap(initSizeServicesMap),
+		handler:  handleServiceManage,
+		stopped:  make(chan string, config.ServiceManage.MaxNumChild),
+	}, e
+}
+
+func (sm *ServiceManage) Run() {
 	// a handler that clears the service list of stopped services
 	go func() {
 		for {
@@ -54,51 +70,108 @@ func NewServiceManage(config *Config) (*ServiceManage, error) {
 			case <-sm.ctx.Done():
 				return
 			case addr := <-sm.stopped:
-				sm.Services.Delete(addr)
+				sm.slaves.Delete(addr)
 			}
 		}
 	}()
-
-	return sm, e
+	sm.HandleFuncLoop(sm.handler)
 }
 
-func (sm *ServiceManage) Listen() (e error) {
-	addr, e := net.ResolveTCPAddr("tcp", sm.Conf.ServiceManage.Addr)
-	if e != nil {
-		return e
+func (sm *ServiceManage) HandleFuncLoop(handler HandleServiceFunc) {
+	for {
+		handler(sm)
 	}
-	sm.listen, e = net.ListenTCP("tcp", addr)
+}
+
+func (sm *ServiceManage) RunNewSlave() (e error) {
+	conn, e := sm.listener.AcceptTCP()
 	if e != nil {
-		return e
+		return CloseFailedConnection(conn, sm.log, failedCreateNewConn, e)
 	}
-	e = sm.Conf.ServiceManage.TCPSettings.ApplyToListener(sm.listen)
+	if e = sm.conf.ServiceManage.TCPSettings.ApplyToConnection(conn); e != nil {
+		return CloseFailedConnection(conn, sm.log, failedApplySettings, e)
+	}
+
+	srv, e := NewUndefinedRemoteService(sm, conn)
+	if e != nil {
+		return CloseFailedConnection(conn, sm.log, connSrvInterrupted, e)
+	}
+
+	sm.slaves.Store(srv.GetAddr(), srv)
+	sm.log.Info(smAddedNewService, zap.String("addr", srv.GetAddr()))
+
+	srv.Run()
+	sm.log.Info(successConnToManage, zap.String("addr", srv.GetAddr()))
 	return e
 }
 
 func (sm *ServiceManage) Stop() {
-	if sm.Log != nil {
-		sm.Log.Info(smStopped, zap.String("addr", sm.Addr))
-		_ = sm.Log.Sync()
+	if sm.log != nil {
+		sm.log.Info(smStopped, zap.String("addr", sm.GetAddr()))
+		_ = sm.log.Sync()
 	}
-	if sm.listen != nil {
-		_ = sm.listen.Close()
+	if sm.listener != nil {
+		_ = sm.listener.Close()
 	}
 	sm.cancel()
 }
 
-func (sm *ServiceManage) ConnectNewService() (*Service, error) {
-	conn, e := sm.listen.AcceptTCP()
-	if e != nil {
-		return nil, CloseFailedConnection(conn, sm.Log, failedCreateNewConn, e)
-	}
-	if e = sm.Conf.ServiceManage.TCPSettings.ApplyToConnection(conn); e != nil {
-		return nil, CloseFailedConnection(conn, sm.Log, failedApplySettings, e)
-	}
-	srv, e := NewUndefinedService(sm, conn)
-	if e != nil {
-		return nil, CloseFailedConnection(conn, sm.Log, connSrvInterrupted, e)
-	}
-	sm.Services.Store(srv.Addr, srv)
-	sm.Log.Info(smAddedNewService, zap.String("addr", srv.Addr))
-	return srv, e
+func (sm *ServiceManage) GetCode() int {
+	return sm.code
+}
+
+func (sm *ServiceManage) GetAddr() string {
+	return sm.listener.Addr().String()
+}
+
+func (sm *ServiceManage) GetListener() *net.TCPListener {
+	return sm.listener
+}
+
+func (sm *ServiceManage) GetConn() *net.TCPConn {
+	return nil
+}
+
+func (sm *ServiceManage) GetMaster() Service {
+	return nil
+}
+
+func (sm *ServiceManage) GetConfig() interface{} {
+	return sm.conf
+}
+
+func (sm *ServiceManage) GetLog() *zap.Logger {
+	return sm.log
+}
+
+func (sm *ServiceManage) GetCtx() context.Context {
+	return sm.ctx
+}
+
+func (sm *ServiceManage) GetCtxCancel() context.CancelFunc {
+	return sm.cancel
+}
+
+func (sm *ServiceManage) GetPool() *PoolMessages {
+	return nil
+}
+
+func (sm *ServiceManage) GetHandler() HandleServiceFunc {
+	return sm.handler
+}
+
+func (sm *ServiceManage) GetSlaves() *SyncMap {
+	return sm.slaves
+}
+
+func (sm *ServiceManage) SetCode(code int) {
+	sm.code = code
+}
+
+func (sm *ServiceManage) SetConfig(config interface{}) {
+	sm.conf = config.(Config)
+}
+
+func (sm *ServiceManage) SetPool(pool *PoolMessages) {
+	_ = pool
 }

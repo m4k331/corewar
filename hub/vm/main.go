@@ -5,10 +5,8 @@ import (
 )
 
 const (
-	ConfigPath             = "/home/ahugh/go/cw/hub/vm/config/config.yaml"
-	startHubServer         = "Start hub server"
-	failedConnToHubServer  = "Failed to connect the service to the hub server"
-	successConnToHubServer = "Service connected to hub server"
+	ConfigPath     = "/home/ahugh/go/cw/hub/vm/config/config.yaml"
+	startHubServer = "Start hub server"
 )
 
 func main() {
@@ -17,21 +15,10 @@ func main() {
 		panic(err)
 	}
 
-	hub, err := NewServiceManage(config)
+	hub, err := NewServiceManage(*config)
 	if err != nil {
 		panic(err)
 	}
-	hub.Log.Info(startHubServer, zap.String("addr", hub.Addr))
-
-	for {
-		service, err := hub.ConnectNewService()
-		if err != nil {
-			hub.Log.Error(failedConnToHubServer, zap.Error(err))
-			continue
-		}
-
-		hub.Log.Info(successConnToHubServer, zap.String("addr", service.Addr))
-
-		service.Run()
-	}
+	hub.log.Info(startHubServer, zap.String("addr", hub.GetAddr()))
+	hub.Run()
 }

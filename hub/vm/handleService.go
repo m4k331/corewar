@@ -7,40 +7,58 @@ const (
 	errorSendHandshakeVM = "Error sending handshakeVM message"
 	receivedHandshakeVM  = "Received a handshakeVM message"
 	sentHandshakeVM      = "Sent a handshakeVM message"
+	errorRunWorkerVM     = "Error run worker VM"
 )
 
-// TODO: подумать над тем как реагировать если сообщение пришло не валидное
-func handleService(srv *Service) {
-	h := srv.pool.Get(TypeMsgHeader)
-	e := h.Read(srv.conn)
+// TODO: подумать над тем как реагировать если сообщение пришло битое
+func handleService(s Service) {
+	h := s.GetPool().Get(TypeMsgHeader)
+	e := h.Read(s.GetConn())
 	if e != nil {
-		srv.Log.Error(errorReadHeader, zap.String("addr", srv.Addr), zap.Error(e))
+		s.GetLog().Error(errorReadHeader,
+			zap.String("addr", s.GetAddr()),
+			zap.Error(e),
+		)
 		return
 	}
 
 	switch h.GetType() {
 	case TypeMsgHandshakeVM:
-		msg := srv.pool.Get(TypeMsgHandshakeVM)
+		msg := s.GetPool().Get(TypeMsgHandshakeVM)
 		msg.SetHeader(h)
-		srv.Log.Info(receivedHandshakeVM, zap.String("addr", srv.Addr))
+		s.GetLog().Info(receivedHandshakeVM,
+			zap.String("addr", s.GetAddr()),
+		)
 
-		srv.RegisterServiceTypeVM()
+		// Register VM
+		s.SetCode(ServiceTypeVM)
+		s.SetConfig(s.GetMaster().GetConfig().(*Config).ServiceVM)
+		s.SetPool(NewPoolMessages(ServiceTypeVM))
 
-		// TODO: implement handler
-		srv.RunWorkers(int(msg.GetLen()), nil)
+		var n uint32
+		for n < msg.GetLen() {
+			if e = s.RunNewSlave(); e != nil {
+				s.GetLog().Error(errorRunWorkerVM,
+					zap.String("addr", s.GetAddr()),
+					zap.Int("type", s.GetCode()),
+					zap.Error(e),
+				)
+			}
+			n--
+		}
 
 		// TODO: impl prepare ports for msg
-		if e = msg.Write(srv.conn); e != nil {
-			srv.Log.Error(errorSendHandshakeVM,
-				zap.String("addr", srv.Addr),
-				zap.Int("type", srv.Type),
+		if e = msg.Write(s.GetConn()); e != nil {
+			s.GetLog().Error(errorSendHandshakeVM,
+				zap.String("addr", s.GetAddr()),
+				zap.Int("type", s.GetCode()),
 				zap.Error(e),
 			)
 			return
 		}
-		srv.Log.Info(sentHandshakeVM,
-			zap.String("addr", srv.Addr),
-			zap.Int("type", srv.Type),
+		s.GetLog().Info(sentHandshakeVM,
+			zap.String("addr", s.GetAddr()),
+			zap.Int("type", s.GetCode()),
 			zap.Error(e),
 		)
 	case TypeMsgGameNotification:
