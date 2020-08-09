@@ -30,7 +30,7 @@ func handleService(s Service) {
 			zap.String("addr", s.GetAddr()),
 		)
 
-		// Register VM
+		// Register messages VM
 		s.SetCode(ServiceTypeVM)
 		s.SetConfig(s.GetMaster().GetConfig().(*Config).ServiceVM)
 		s.SetPool(NewPoolMessages(ServiceTypeVM))

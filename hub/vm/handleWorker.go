@@ -27,8 +27,7 @@ func handleWorker(s Service) {
 		}
 		_ = s.GetListener().Close()
 
-		// TODO: handler
-		srv, e := NewRemoteService(s, conn, nil)
+		srv, e := NewRemoteService(s, conn, handleGame)
 		if e != nil {
 			s.GetLog().Error(failedCreateNewService,
 				zap.String("addr", s.GetAddr()),
@@ -37,6 +36,11 @@ func handleWorker(s Service) {
 			s.Stop()
 			return
 		}
+
+		// Register messages VM
+		srv.SetCode(ServiceTypeVM)
+		srv.SetConfig(s.GetMaster().GetConfig())
+		srv.SetPool(NewPoolMessages(ServiceTypeVM))
 
 		s.GetSlaves().Store(srv.GetAddr(), srv)
 		s.GetLog().Info(addedNewService,
