@@ -53,6 +53,7 @@ func handleService(s Service) {
 			ports = append(ports, ExtractPort(addr))
 		}
 		msg.(*Handshake).Ports = ports
+		msg.SetLen(uint32(len(ports) * 4))
 
 		if e = msg.Write(s.GetConn()); e != nil {
 			s.GetLog().Error(errorSendHandshakeVM,

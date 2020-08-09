@@ -69,28 +69,14 @@ func (m *Handshake) GetLen() uint32 {
 	return m.Len
 }
 
-//func sendHandshakeVM(conn *net.TCPConn, vm *HandshakeVM) error {
-//	var (
-//		err     error
-//		i, port uint32
-//		ports   = make([]uint32, 0, vm.NumWorkers)
-//	)
-//
-//	ctx, interrupt := context.WithCancel(context.Background())
-//	for i = 0; i < vm.NumWorkers; i++ {
-//		port, err = launchWorkers(ctx)
-//		if err != nil {
-//			interrupt()
-//			return fmt.Errorf("Error launching worker: %v ", err)
-//		}
-//		ports = append(ports, port)
-//	}
-//
-//	msg := Handshake2VM{
-//		Type:  TypeMsgHandshakeHB,
-//		Key:   vm.Key,
-//		Ports: ports,
-//	}
-//
-//	return msg.Send(conn)
-//}
+func (m *Handshake) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *Handshake) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *Handshake) SetLen(v uint32) {
+	m.Len = v
+}

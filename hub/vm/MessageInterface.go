@@ -15,8 +15,7 @@ const (
 )
 
 const (
-	TypeMsgHandshakeHB = iota + 1
-	TypeMsgInitialGame
+	TypeMsgInitialGame = 2
 )
 
 const (
@@ -32,4 +31,7 @@ type Message interface {
 	GetType() uint8
 	GetKey() uint32
 	GetLen() uint32
+	SetType(v uint8)
+	SetKey(v uint32)
+	SetLen(v uint32)
 }

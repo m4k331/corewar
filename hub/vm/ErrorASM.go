@@ -57,3 +57,15 @@ func (m *ErrorASM) GetKey() uint32 {
 func (m *ErrorASM) GetLen() uint32 {
 	return m.Len
 }
+
+func (m *ErrorASM) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *ErrorASM) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *ErrorASM) SetLen(v uint32) {
+	m.Len = v
+}

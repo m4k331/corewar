@@ -72,3 +72,15 @@ func (m *Operation) GetKey() uint32 {
 func (m *Operation) GetLen() uint32 {
 	return m.Len
 }
+
+func (m *Operation) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *Operation) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *Operation) SetLen(v uint32) {
+	m.Len = v
+}

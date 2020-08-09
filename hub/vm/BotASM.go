@@ -55,3 +55,15 @@ func (m *BotASM) GetKey() uint32 {
 func (m *BotASM) GetLen() uint32 {
 	return m.Len
 }
+
+func (m *BotASM) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *BotASM) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *BotASM) SetLen(v uint32) {
+	m.Len = v
+}

@@ -57,3 +57,15 @@ func (m *StatusOfProcess) GetKey() uint32 {
 func (m *StatusOfProcess) GetLen() uint32 {
 	return m.Len
 }
+
+func (m *StatusOfProcess) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *StatusOfProcess) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *StatusOfProcess) SetLen(v uint32) {
+	m.Len = v
+}

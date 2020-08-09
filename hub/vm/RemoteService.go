@@ -172,33 +172,3 @@ func (srv *RemoteService) SetConfig(config interface{}) {
 func (srv *RemoteService) SetPool(pool *PoolMessages) {
 	srv.pool = pool
 }
-
-//func handleExecutor(wrk *Worker) {
-//	go func() {
-//		defer func() {
-////			TODO: close worker
-//}()
-//if err := wrk.AddNewExecutor(); err != nil {
-//}
-//
-//chanConn := make(chan net.Conn)
-//go func() {
-//	for {
-//		accept, err := wrk.listener.Accept()
-//		if err != nil {
-//			continue
-//		}
-//		chanConn <- accept
-//		break
-//	}
-//}()
-//select {
-//case conn := <-chanConn:
-//	fmt.Printf("ConnectNewRemoteService worker conn %v\n", conn.RemoteAddr().String())
-////			go handleConnection(conn, nil, handleGameWorker)
-////			case <-ctx.Done():
-////				break
-//}
-//}()
-//}
-//

@@ -50,3 +50,15 @@ func (m *GameNotification) GetKey() uint32 {
 func (m *GameNotification) GetLen() uint32 {
 	return m.Len
 }
+
+func (m *GameNotification) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *GameNotification) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *GameNotification) SetLen(v uint32) {
+	m.Len = v
+}

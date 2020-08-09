@@ -63,3 +63,15 @@ func (m *Header) GetKey() uint32 {
 func (m *Header) GetLen() uint32 {
 	return m.Len
 }
+
+func (m *Header) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *Header) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *Header) SetLen(v uint32) {
+	m.Len = v
+}

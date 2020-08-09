@@ -65,3 +65,15 @@ func (m *InitialGame) GetKey() uint32 {
 func (m *InitialGame) GetLen() uint32 {
 	return m.Len
 }
+
+func (m *InitialGame) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *InitialGame) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *InitialGame) SetLen(v uint32) {
+	m.Len = v
+}

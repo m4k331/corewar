@@ -100,3 +100,15 @@ func (m *GameStatus) GetKey() uint32 {
 func (m *GameStatus) GetLen() uint32 {
 	return m.Len
 }
+
+func (m *GameStatus) SetType(v uint8) {
+	m.Type = v
+}
+
+func (m *GameStatus) SetKey(v uint32) {
+	m.Key = v
+}
+
+func (m *GameStatus) SetLen(v uint32) {
+	m.Len = v
+}
