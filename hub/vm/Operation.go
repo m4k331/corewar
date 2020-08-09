@@ -39,9 +39,8 @@ func (m *Operation) Read(r io.Reader) (e error) {
 	if cap(m.Message) < m.buff.Len() {
 		m.Message = make([]byte, m.buff.Len())
 	}
-	m.Message = m.Message[:m.buff.Len()]
 
-	_, e = m.buff.Read(m.Message)
+	_, e = m.buff.Read(m.Message[:m.buff.Len()])
 	return e
 }
 
