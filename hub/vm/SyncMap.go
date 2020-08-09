@@ -44,3 +44,7 @@ func (syncm *SyncMap) Store(key string, value interface{}) {
 func (syncm *SyncMap) Len() int {
 	return int(atomic.LoadInt32(syncm.n))
 }
+
+func (syncm *SyncMap) GetMap() map[string]interface{} {
+	return syncm.m
+}

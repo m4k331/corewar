@@ -47,7 +47,13 @@ func handleService(s Service) {
 			n--
 		}
 
-		// TODO: impl prepare ports for msg
+		// prepare ports for msg
+		ports := make([]uint32, 0, s.GetSlaves().Len())
+		for addr := range s.GetSlaves().GetMap() {
+			ports = append(ports, ExtractPort(addr))
+		}
+		msg.(*Handshake).Ports = ports
+
 		if e = msg.Write(s.GetConn()); e != nil {
 			s.GetLog().Error(errorSendHandshakeVM,
 				zap.String("addr", s.GetAddr()),
