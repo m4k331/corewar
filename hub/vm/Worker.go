@@ -19,6 +19,39 @@ type Worker struct {
 	handler  HandleServiceFunc
 }
 
+func NewWorker(s Service, handler HandleServiceFunc) (*Worker, error) {
+	listener, e := net.ListenTCP("tcp", nil)
+	if e != nil {
+		return nil, e
+	}
+	e = s.GetConfig().(ServiceConf).WorkerConf.ApplyToListener(listener)
+	if e != nil {
+		s.GetLog().Error(failApplyTCPSetting,
+			zap.String("addr", s.GetAddr()),
+			zap.Int("type", s.GetCode()),
+		)
+	}
+
+	log, e := zap.NewProduction()
+	if e != nil {
+		_ = listener.Close()
+		return nil, e
+	}
+
+	ctx, cancel := context.WithCancel(context.Background())
+
+	return &Worker{
+		listener: listener,
+		conf:     s.GetConfig().(ServiceConf).WorkerConf,
+		log:      log,
+		ctx:      ctx,
+		cancel:   cancel,
+		master:   s,
+		handler:  handler,
+		pool:     NewPoolMessages(s.GetCode()),
+	}, e
+}
+
 func (wrk *Worker) Run() {
 	go func() {
 		select {

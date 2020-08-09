@@ -15,6 +15,7 @@ const (
 const (
 	srvStopped          = "Stopped RemoteService"
 	failApplyTCPSetting = "Failed to Apply TCPSettings"
+	failLaunchNewWorker = "Failed launch the new worker"
 	launchNewWorker     = "Launched the new worker"
 	initSizeWorkersMap  = 8
 )
@@ -98,41 +99,10 @@ func (srv *RemoteService) RunHandleFuncLoop() {
 }
 
 func (srv *RemoteService) RunNewSlave() error {
-	// Create New Worker
-	listener, e := net.ListenTCP("tcp", nil)
+	worker, e := NewWorker(srv, handleWorker)
 	if e != nil {
+		srv.log.Info(failLaunchNewWorker, zap.Error(e))
 		return e
-	}
-	if e = srv.conf.WorkerConf.ApplyToListener(listener); e != nil {
-		srv.log.Error(failApplyTCPSetting,
-			zap.String("addr", srv.GetAddr()),
-			zap.Int("type", srv.code),
-		)
-	}
-
-	log, e := zap.NewProduction()
-	if e != nil {
-		_ = listener.Close()
-		return e
-	}
-
-	ctx, cancel := context.WithCancel(context.Background())
-
-	var handler HandleServiceFunc
-	switch srv.code {
-	case ServiceTypeVM:
-		handler = handleWorker
-	}
-
-	worker := &Worker{
-		listener: listener,
-		conf:     srv.conf.WorkerConf,
-		log:      log,
-		ctx:      ctx,
-		cancel:   cancel,
-		master:   srv,
-		handler:  handler,
-		pool:     NewPoolMessages(srv.code),
 	}
 
 	worker.Run()
