@@ -5,33 +5,7 @@ import (
 )
 
 const (
-	ConfigPath = "/home/ahugh/go/cw/hub/vm/config/config.yaml"
-)
-
-const (
-	TypeMsgHandshakeVM = iota + 1
-	_
-	TypeMsgGameNotification
-	TypeMsgGameStatus
-	TypeMsgOperation
-	TypeMsgStatusOfProcess
-	TypeMsgEndOfGame
-	TypeMsgGamePresentation
-)
-
-const (
-	TypeMsgHandshakeHB = iota + 1
-	TypeMsgInitialGame
-	TypeMsgSendBot
-)
-
-const (
-	TypeMsgHandshakeASM = iota + 101
-	TypeMsgErrorASM
-	TypeMsgBinaryASM
-)
-
-const (
+	ConfigPath             = "/home/ahugh/go/cw/hub/vm/config/config.yaml"
 	startHubServer         = "Start hub server"
 	failedConnToHubServer  = "Failed to connect the service to the hub server"
 	successConnToHubServer = "Service connected to hub server"
