@@ -20,7 +20,6 @@ type Worker struct {
 }
 
 func (wrk *Worker) Run() {
-	wrk.HandleFuncLoop(wrk.handler)
 	go func() {
 		select {
 		case <-wrk.master.GetCtx().Done():
@@ -29,6 +28,7 @@ func (wrk *Worker) Run() {
 			return
 		}
 	}()
+	wrk.RunHandleFunc()
 }
 
 func (wrk *Worker) Stop() {
@@ -42,7 +42,11 @@ func (wrk *Worker) Stop() {
 	wrk.cancel()
 }
 
-func (wrk *Worker) HandleFuncLoop(handler HandleServiceFunc) {
+func (wrk *Worker) RunHandleFunc() {
+	wrk.handler(wrk)
+}
+
+func (wrk *Worker) RunHandleFuncLoop() {
 	go func() {
 		for {
 			select {
@@ -51,7 +55,7 @@ func (wrk *Worker) HandleFuncLoop(handler HandleServiceFunc) {
 			case <-wrk.ctx.Done():
 				return
 			default:
-				handler(wrk)
+				wrk.RunHandleFunc()
 			}
 		}
 	}()

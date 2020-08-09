@@ -14,7 +14,7 @@ const (
 
 const (
 	srvStopped          = "Stopped RemoteService"
-	failApplyTCPSetting = "Failed to Apply TCPSettings to Worker"
+	failApplyTCPSetting = "Failed to Apply TCPSettings"
 	launchNewWorker     = "Launched the new worker"
 	initSizeWorkersMap  = 8
 )
@@ -33,7 +33,7 @@ type RemoteService struct {
 	stopped chan string
 }
 
-func NewUndefinedRemoteService(manager Service, conn *net.TCPConn) (*RemoteService, error) {
+func NewRemoteService(manager Service, conn *net.TCPConn, handler HandleServiceFunc) (*RemoteService, error) {
 	log, e := zap.NewProduction()
 	if e != nil {
 		return nil, e
@@ -47,13 +47,13 @@ func NewUndefinedRemoteService(manager Service, conn *net.TCPConn) (*RemoteServi
 		cancel:  cancel,
 		master:  manager,
 		slaves:  NewSyncMap(initSizeWorkersMap),
-		handler: handleService,
+		handler: handler,
 		pool:    NewPoolMessages(ServiceTypeUndefined),
 	}, nil
 }
 
 func (srv *RemoteService) Run() {
-	srv.HandleFuncLoop(srv.handler)
+	srv.RunHandleFuncLoop()
 	go func() {
 		select {
 		case <-srv.master.GetCtx().Done():
@@ -78,7 +78,11 @@ func (srv *RemoteService) Stop() {
 	srv.cancel()
 }
 
-func (srv *RemoteService) HandleFuncLoop(handler HandleServiceFunc) {
+func (srv *RemoteService) RunHandleFunc() {
+	srv.handler(srv)
+}
+
+func (srv *RemoteService) RunHandleFuncLoop() {
 	go func() {
 		for {
 			select {
@@ -87,7 +91,7 @@ func (srv *RemoteService) HandleFuncLoop(handler HandleServiceFunc) {
 			case <-srv.ctx.Done():
 				return
 			default:
-				handler(srv)
+				srv.RunHandleFunc()
 			}
 		}
 	}()
@@ -117,7 +121,7 @@ func (srv *RemoteService) RunNewSlave() error {
 	var handler HandleServiceFunc
 	switch srv.code {
 	case ServiceTypeVM:
-		handler = nil // TODO: impl handler
+		handler = handleWorker
 	}
 
 	worker := &Worker{

@@ -10,7 +10,7 @@ const (
 	failedCreateNewConn = "Failed to create a new connection"
 	failedApplySettings = "Failed to apply settings"
 	connSrvInterrupted  = "The connection to the new service was interrupted"
-	smAddedNewService   = "ServiceManage has successfully added a new service"
+	addedNewService     = "Successfully added a new service"
 	smStopped           = "Stopped ServiceManage"
 	successConnToManage = "RemoteService connected to ServiceManage"
 	failedConnToManage  = "Failed to connect the service to ServiceManage"
@@ -74,12 +74,16 @@ func (sm *ServiceManage) Run() {
 			}
 		}
 	}()
-	sm.HandleFuncLoop(sm.handler)
+	sm.RunHandleFuncLoop()
 }
 
-func (sm *ServiceManage) HandleFuncLoop(handler HandleServiceFunc) {
+func (sm *ServiceManage) RunHandleFunc() {
+	sm.handler(sm)
+}
+
+func (sm *ServiceManage) RunHandleFuncLoop() {
 	for {
-		handler(sm)
+		sm.RunHandleFunc()
 	}
 }
 
@@ -92,13 +96,13 @@ func (sm *ServiceManage) RunNewSlave() (e error) {
 		return CloseFailedConnection(conn, sm.log, failedApplySettings, e)
 	}
 
-	srv, e := NewUndefinedRemoteService(sm, conn)
+	srv, e := NewRemoteService(sm, conn, handleService)
 	if e != nil {
 		return CloseFailedConnection(conn, sm.log, connSrvInterrupted, e)
 	}
 
 	sm.slaves.Store(srv.GetAddr(), srv)
-	sm.log.Info(smAddedNewService, zap.String("addr", srv.GetAddr()))
+	sm.log.Info(addedNewService, zap.String("addr", srv.GetAddr()))
 
 	srv.Run()
 	sm.log.Info(successConnToManage, zap.String("addr", srv.GetAddr()))

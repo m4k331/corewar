@@ -11,7 +11,8 @@ type HandleServiceFunc func(s Service)
 type Service interface {
 	Run()
 	Stop()
-	HandleFuncLoop(handler HandleServiceFunc)
+	RunHandleFunc()
+	RunHandleFuncLoop()
 	RunNewSlave() error
 	GetCode() int
 	GetAddr() string
