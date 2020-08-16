@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/21 16:35:31 by rnarbo            #+#    #+#             */
-/*   Updated: 2020/07/25 09:43:08 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/08/16 15:48:29 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,66 +55,116 @@ int print_error(char *err_msg)
 	return (-1);
 }
 
-void set_thread_dead(void *param)
+t_hub_msg *create_error_struct(int bot_id, char *err_msg)
 {
-	printf("cleanup\n");
-	((t_net_thread_param *)param)->thread_in_use = THREAD_FINISHED;
-	free_msg(((t_net_thread_param *)param)->data);
+	t_hub_msg *ret;
+
+	if ((ret = (t_hub_msg *)malloc(sizeof(t_hub_msg))) == NULL)
+		return NULL;
+	ret->msg_type = ASM_COMMAND_ERROR;
+	if ((ret->content = (t_asm_msg *)malloc(sizeof(t_asm_msg))) == NULL)
+	{
+		free_msg(ret);
+		return (NULL);
+	}
+	((t_asm_msg *)ret->content)->bot_id = bot_id;
+	((t_asm_msg *)ret->content)->len_msg = ft_strlen(err_msg);
+	((t_asm_msg *)ret->content)->body = ft_strdup(err_msg);
+	return (ret);
 }
 
+int send_error_msg(int fd, int bot_id, char *err_msg)
+{
+	t_hub_msg *err;
+
+	if ((err = create_error_struct(bot_id, err_msg)) == NULL)
+		return -1;
+	if (send_msg(fd, err) < 0)
+		return (-1 | free_msg(err));
+	free_msg(err);
+	return (0);
+}
+
+// void set_thread_dead(void *param)
+// {
+// 	printf("cleanup\n");
+// 	((t_net_thread_param *)param)->thread_in_use = THREAD_FINISHED;
+// 	printf("here is ok\n");
+// 	printf("%p -> %p\n", ((t_net_thread_param *)param)->data, ((t_hub_msg *)((t_net_thread_param *)param)->data)->content);
+// 	// ((t_asm_msg *)((t_hub_msg *)((t_net_thread_param *)param)->data)->content)->body;
+// 	// free_msg(((t_net_thread_param *)param)->data);
+// 	printf("freed\n");
+// 	printf("freed\n");
+// 	printf("freed\n");
+// }
+
+void *set_thread_dead(void *param)
+{
+	((t_net_thread_param *)param)->thread_in_use = THREAD_FINISHED;
+	free_msg(((t_net_thread_param *)param)->data);
+	return NULL;
+}
 
 void *asm_thread(void *param) //FIXME: free()
 {
 	int		fd;
 	t_data	*data;
-	// t_hub_msg *hmsg;
 	t_asm_msg *amsg;
 
-	pthread_cleanup_push(&set_thread_dead, param);
 	fd = ((t_net_thread_param *)param)->fd;
-	if ((data = init_data()) == NULL)
-		return (NULL); // TODO: create_error
 	amsg = ((t_hub_msg *)((t_net_thread_param *)param)->data)->content;
-	write(2, amsg->body, amsg->len_msg);
+	if ((data = init_data()) == NULL)
+	{
+		free_data(data);
+		send_error_msg(fd, amsg->bot_id, "Error while init_data!");
+		return (set_thread_dead(param));
+	}
+	// write(2, amsg->body, amsg->len_msg);
 	if (amsg->body[amsg->len_msg - 1] != '\n')
-		return (NULL); // TODO: create_error
+	{
+		free_data(data);
+		send_error_msg(fd, amsg->bot_id, "Error bot has no endline at the end!");
+		return (set_thread_dead(param));
+	}
 	if (!lexer_for_net(data, amsg->body, amsg->len_msg))
-		return (NULL);
-
-
-   t_token *tmp = data->token;
-    while (tmp) {
-        printf("{%s}, [%s]\n", tmp->type, tmp->content);
-        tmp = tmp->next;
-    }
-
-
+	{
+		free_data(data);
+		send_error_msg(fd, amsg->bot_id, "Error while lexing!");
+		return (set_thread_dead(param));
+	}
 	init_token(data, "(null)", 13, 6);
-
-	printf("%d\n", __LINE__);
 	if (!make_tree(data))
-		return (NULL);
-	printf("%d\n", __LINE__);
+	{
+		free_data(data);
+		send_error_msg(fd, amsg->bot_id, "Error while making tree!");
+		return (set_thread_dead(param));
+	}
 	if (!parse_tree(data))
-		return (NULL);
+	{
+		free_data(data);
+		send_error_msg(fd, amsg->bot_id, "Error while parsing tree!");
+		return (set_thread_dead(param));
+	}
 	calc_sizes(data);
 	if (!make_hex_buffer(data))
-		return (NULL);
-	printf("Thread:: %d\n", __LINE__);
+	{
+		free_data(data);
+		send_error_msg(fd, amsg->bot_id, "Error while creating hex buffer!");
+		return (set_thread_dead(param));
+	}
 	free(amsg->body);
 	amsg->len_msg = data->buffer_len - 1;
-	printf("Thread:: %d\n", __LINE__);
 	if ((amsg->body = (char *)malloc(amsg->len_msg)) == NULL)
-		return (NULL);
-	printf("Thread:: %d\n", __LINE__);
+	{
+		free_data(data);
+		send_error_msg(fd, amsg->bot_id, "Error while allocating msg!");
+		return (set_thread_dead(param));
+	}
 	ft_memmove(amsg->body, data->buffer, amsg->len_msg);
-	printf("Thread:: %d\n", __LINE__);
+	free_data(data);
 	((t_hub_msg *)((t_net_thread_param *)param)->data)->msg_type = ASM_COMMAND_BINARY;
-	printf("Thread:: %d\n", __LINE__);
 	send_msg(fd, ((t_net_thread_param *)param)->data);
-	printf("msg sended\n");
-	pthread_cleanup_pop(1);
-	return NULL;
+	return set_thread_dead(param);
 }
 
 int set_keep_alive(int fd)
@@ -271,10 +321,11 @@ int recv_command(t_hub_msg **msg, int fd)
 	printf("recv_command\n");
 	while (recv_needed(buff, buff_len))
 	{
-		if ((recv_len = recv(fd, recv_buff, RECV_BUFF_SIZE, 0)) <= 0)
+		recv_len = recv(fd, recv_buff, RECV_BUFF_SIZE, 0);
+		if (recv_len <= 0)
 		{
 			free(buff);
-			return (-1);
+			return (recv_len ? -1 : 1);
 		}
 		if ((tmp = realloc(buff, buff_len + recv_len)) == NULL)
 		{
@@ -293,6 +344,7 @@ int recv_command(t_hub_msg **msg, int fd)
 	if (parse_hub_msg_struct(msg, buff, buff_len) < 0)
 	{
 		free(buff);
+		send_error_msg(fd, -1, "Error: invalid msg!");
 		return (-1); // FIXME: 
 	}
 	printf("OK!\n");
@@ -338,6 +390,7 @@ int send_msg(int fd, t_hub_msg *msg)
 			return (-1);
 		*(uint32_t *)(buff + ASM_BOT_ID_OFFSET) = htonl(((t_asm_msg *)msg->content)->bot_id);
 		*(uint32_t *)(buff + ASM_MSG_LEN_OFFSET) = htonl(((t_asm_msg *)msg->content)->len_msg);
+		printf("msg_len: %d\n", htonl(((t_asm_msg *)msg->content)->len_msg));
 		ft_memmove(buff + ASM_MSG_HEADER_LEN, ((t_asm_msg *)msg->content)->body, ((t_asm_msg *)msg->content)->len_msg);
 	}
 	buff[0] = msg->msg_type;
@@ -426,6 +479,7 @@ int network(t_options *opt)
 	t_net_thread_param	thread_data[THREADS];
 	t_hub_msg			*msg;
 	int					thread;
+	int					recv_ret;
 
 	if ((fd = create_keep_alive_socket(opt->ip, opt->port)) < 0)
 		return (-1);
@@ -440,8 +494,10 @@ int network(t_options *opt)
 		if ((thread = find_unused_thread(thread_data, THREADS)) < 0)
 			continue ;
 		printf("Unused thread found\n");
-		if (recv_command(&msg, fd) < 0) // FIXME: обработка ошибок
+		if ((recv_ret = recv_command(&msg, fd)) < 0) // FIXME: обработка ошибок
 			continue ;
+		if (recv_ret == 1)
+			break;
 		printf("Command received\n");
 		if (msg->msg_type == HUB_COMMAND_HANDSHAKE)
 			free_msg(msg);
@@ -523,28 +579,28 @@ int			lexer_for_net(t_data *data, char *buff, size_t buff_size)
 	i = 0;
 	while (buff_size > 0)
 	{
-	    delim = memchr(buff, '\n', buff_size);
-	    if (delim == NULL) {
-	        delim = buff + buff_size;
-	    }
-	    ln = delim - buff + 1;
-	    newline = calloc(ln, 1);
-	    memcpy(newline, buff, ln-1);
-	    buff = delim + 1;
-	    buff_size -= ln;
+		delim = memchr(buff, '\n', buff_size);
+		if (delim == NULL) {
+			delim = buff + buff_size;
+		}
+		ln = delim - buff + 1;
+		if ((newline = (char *)malloc(ln)) == NULL)
+			return (0);
+		ft_memset(newline, 0, ln);
+		memcpy(newline, buff, ln-1);
+		buff = delim + 1;
+		buff_size -= ln;
 		printf("LINE_FROM_BUFFER: <%s>\n", newline);
 		i++;
 		data->line_num++;
 		data->char_num = 0;
 
-		//line = ft_strdup(line);
-
 		if (!get_tokens_from_line(data, newline))
 		{
-			//free(line);
+			free(newline);
 			return (0);
 		}
-		//free(line);
+		free(newline);
 	}
 	printf("%d\n", __LINE__);
 //	free(line);
