@@ -12,22 +12,22 @@
 
 #include "vm_server.h"
 
-void			vm_message_sendgame_carriages(t_worker *wk)
+static void		vm_message_sendgame_carriages(t_worker *wk)
 {
 	t_car		*tmp;
-	uint8_t		buf[4];
+	uint8_t		newSet[MEM_SIZE];
 
+	ft_memcmp(newSet, wk->set, MEM_SIZE);
 	tmp = (t_car*)wk->carrs->data + wk->live_head;
 	while (tmp)
 	{
-		vm_socket_int_to_bytes(buf, tmp->id, 4);
-		darr_join(wk->io->netbuf, buf, 4, sizeof(uint8_t));
-		vm_socket_int_to_bytes(buf, tmp->position, 2);
-		darr_join(wk->io->netbuf, buf, 2, sizeof(uint8_t));
+		newSet[tmp->position] |= 1u << 4;
 		if (tmp->next == -1)
 			break ;
 		tmp = (t_car*)wk->carrs->data + tmp->next;
 	}
+	darr_join(wk->io->netbuf,
+		newSet, MEM_SIZE, sizeof(uint8_t));
 }
 
 void			vm_message_sendgame(t_worker *wk)
@@ -48,8 +48,6 @@ void			vm_message_sendgame(t_worker *wk)
 	darr_join(wk->io->netbuf, buf, 1, sizeof(uint8_t));
 	darr_join(wk->io->netbuf,
 			wk->map, MEM_SIZE, sizeof(uint8_t));
-	darr_join(wk->io->netbuf,
-			wk->set, MEM_SIZE, sizeof(uint8_t));
 	vm_message_sendgame_carriages(wk);
 	vm_socket_int_to_bytes((uint8_t*)(wk->io->netbuf->start) + 5,
 						   (int)(wk->io->netbuf->len_data - 9L), 4);
