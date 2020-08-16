@@ -21,7 +21,7 @@ INCDIRS = $(HDIR) $(LBDIRS) $(addsuffix /includes, $(LBDIRS))
 
 # DBCFLAGS = -Wno-error -g
 OPTFLAGS = -O3
-CFLAGS = -Wall -Wextra -Werror -MD $(addprefix -I , $(INCDIRS)) $(DBCFLAGS) $(OPTFLAGS)
+CFLAGS = -g -Wall -Wextra -Werror -MD $(addprefix -I , $(INCDIRS)) $(DBCFLAGS) $(OPTFLAGS)
 
 SOURCES = \
          check_file_name.c\
@@ -51,7 +51,10 @@ SOURCES = \
          calc_sizes.c\
          get_op_weight.c\
          make_file.c\
-         main.c
+         main.c\
+\
+		 network.c\
+		 handle_options.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 

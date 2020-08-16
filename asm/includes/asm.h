@@ -6,7 +6,7 @@
 /*   By: rnarbo <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/05/28 13:22:39 by dorphan           #+#    #+#             */
-/*   Updated: 2020/06/21 18:51:42 by rnarbo           ###   ########.fr       */
+/*   Updated: 2020/07/01 20:44:32 by rnarbo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,16 @@ typedef struct		s_data
 */
 
 typedef struct s_options{
-	char	server;
+	// char	server;
+	char	*ip;
 	short	port;
 	char	*filename;
 }	t_options;
+
+/*
+** handle_options.c
+*/
+int	get_options(t_options *opt, int argc, char **argv);
 
 /*
 ** error.c
