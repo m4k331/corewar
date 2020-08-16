@@ -39,8 +39,9 @@ int			get_continue_of_string(t_data *data, char *line)
 	else
 	{
 		tmp = data->current_token->content;
-		tmp_2 = ft_strjoin(tmp, "\n");
-		data->current_token->content = ft_strjoin(tmp_2, line);
+		data->current_token->content = ft_strjoin(tmp, line);
+		tmp_2 = data->current_token->content;
+		data->current_token->content = ft_strjoin(tmp_2, "\n");
 		free_tmp_pointers(tmp, tmp_2);
 		data->char_num = i;
 	}

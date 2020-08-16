@@ -64,7 +64,7 @@ int main(int argc, char **argv)
 	t_data		*data;
 	t_options	opt;
 
-	if (checks(&opt, argc, argv))
+	if (!checks(&opt, argc, argv)) // поставил "!", иначе ломалось
 		return (1);
 	if (opt.server)
 		return (network(&opt));

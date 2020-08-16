@@ -17,12 +17,12 @@ int			check_string_len(t_data *data, int t)
 	int		len;
 
 	len = (int)ft_strlen(data->current_token->content) - 2;
-	if (t == 1 && len >= PROG_NAME_LENGTH)
+	if (t == 1 && len > PROG_NAME_LENGTH)
 	{
 		ft_putstr_fd(ERROR_LONG_NAME, 2);
 		return (0);
 	}
-	else if (t == 2 && len >= COMMENT_LENGTH)
+	else if (t == 2 && len > COMMENT_LENGTH)
 	{
 		ft_putstr_fd(ERROR_LONG_COMMENT, 2);
 		return (0);

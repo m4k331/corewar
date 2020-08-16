@@ -52,10 +52,10 @@ int					put_label(t_data *data, t_token *arg,
 	{
 		while (tmp && !ft_strcmp(tmp->type, "LABEL"))
 			tmp = tmp->next;
-		if (!tmp)
-			content = data->current_token->byte_size;
-		else
-			content = tmp->byte_number - data->current_token->byte_number;
+//		if (!ft_strcmp(tmp->type, "END"))   // заменил !tmp
+//			content = data->current_token->byte_size;
+//		else
+		content = tmp->byte_number - data->current_token->byte_number;
 		return (put_num(data, arg, current_pos, content));
 	}
 }
