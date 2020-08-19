@@ -8,6 +8,7 @@ const (
 	RandomGame   = "Random game page"
 	LocalGame    = "Local game page"
 	ListOfGame   = "List of game page"
+	Game         = "Game page"
 )
 
 var Pages = map[string]string{
@@ -18,4 +19,5 @@ var Pages = map[string]string{
 	RandomGame:   "templates/random_game.html",
 	LocalGame:    "templates/local_game.html",
 	ListOfGame:   "templates/list_of_game.html",
+	Game:         "templates/game.html",
 }

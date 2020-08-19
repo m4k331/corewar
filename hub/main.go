@@ -157,6 +157,10 @@ func (b *Base) LocalGamePage(w http.ResponseWriter, r *http.Request) {
 	execTemplate(w, r, b.Templates[pages.LocalGame], nil)
 }
 
+func (b *Base) GamePage(w http.ResponseWriter, r *http.Request) {
+	execTemplate(w, r, b.Templates[pages.Game], nil)
+}
+
 func (b *Base) ListOfGamePage(w http.ResponseWriter, r *http.Request) {
 	execTemplate(w, r, b.Templates[pages.ListOfGame], &struct {
 		Games []*GameTemplate
@@ -344,6 +348,7 @@ func (b *Base) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				id := strings.TrimPrefix(r.URL.String(), "/game/")
 				if game := b.Games.Get(id); game != nil {
 					// TODO: process game
+					b.GamePage(w, r)
 					_ = game
 					break
 				}
