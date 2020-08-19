@@ -50,7 +50,7 @@ func handleIncomingASM(ctx context.Context, conn net.Conn) {
 				if err = handleErrorASM(conn); err != nil {
 					fmt.Printf("Error handle error ASM message: %v ", err)
 				}
-			case TypeMsgBinaryASM:
+			case TypeMsgBotASM:
 				fmt.Printf("Conn %v: Handling binary ASM...\n", addr)
 				if err = handleBinaryASM(conn); err != nil {
 					fmt.Printf("Error handle binary ASM message: %v ", err)

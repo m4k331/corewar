@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="data/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="data/css/bootstrap.min.css">
+    <link rel="stylesheet" href="data/css/fonts.css">
+    <link rel="stylesheet" href="data/css/nav.css">
+    <link rel="stylesheet" href="data/css/load.css">
+    <title>Local Game</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand navbar-dark" href="/">
+            <img src="data/img/21.svg" width="30" height="30" class="d-inline-block align-top mr-3" alt="21">
+            CoreWar
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link disabled" href="profile">Profile</a>
+                <a class="nav-item nav-link" href="new_game">New Game</a>
+                <a class="nav-item nav-link" href="list_of_game">List of Game</a>
+                <a class="nav-item nav-link disabled" href="construction">Statistics</a>
+                <a class="nav-item nav-link disabled" href="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+</header>
+<section>
+    <div class="container min-vh-100">
+        <div class="row align-content-center min-vh-100">
+            <div class="col shadow align-items-center text-center">
+                <div class="row justify-content-center m-1"><img src="data/img/home.svg" alt="bot" width="150" height="150"></div>
+                <div class="row-12 p-2 load-text">LOCAL</div>
+                <div class="row p-3 justify-content-center align-items-center align-content-center text-left">
+                    <div class="col-6">
+                        <div class="row my-3">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Name of the game</label>
+                            <input type="text" class="form-control mr-sm-2" id="nameGame" placeholder="Name...">
+                        </div>
+                        <div class="row my-3">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Bot #1</label>
+                            <div class="col-12 col-md-9">
+                                <input type="text" class="form-control mr-sm-2" id="nameBot1" placeholder="Name...">
+                                <input type="file" class="form-control-file" id="fileBot1">
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Bot #2</label>
+                            <div class="col-12 col-md-9">
+                                <input type="text" class="form-control mr-sm-2" id="nameBot2" placeholder="Name...">
+                                <input type="file" class="form-control-file" id="fileBot2">
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Bot #3</label>
+                            <div class="col-12 col-md-9">
+                                <input type="text" class="form-control mr-sm-2" id="nameBot3" placeholder="Name...">
+                                <input type="file" class="form-control-file" id="fileBot3">
+                            </div>
+                        </div>
+                        <div class="row my-3">
+                            <label class="mr-sm-2" for="inlineFormCustomSelect">Bot #4</label>
+                            <div class="col-12 col-md-9">
+                                <input type="text" class="form-control mr-sm-2" id="nameBot4" placeholder="Name...">
+                                <input type="file" class="form-control-file" id="fileBot4">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div id="alert"></div>
+                    <input class="col-6 btn btn-dark p-1 mx-2 my-4" type="button" name="start" id="start" value="Start">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="footer-copyright text-center bg-dark">© 2020 Copyright:
+        <a class="text-white" href="https://21-school.ru/">21-school.ru</a>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="data/js/bootstrap.min.js"></script>
+<script src="data/js/bots.js"></script>
+<script src="data/js/local_game.js"></script>
+</body>
+</html>

@@ -8,40 +8,6 @@ import (
 	"net"
 )
 
-type HandshakeASM struct {
-	Type uint8
-	Key  uint32
-}
-
-func (hba *HandshakeASM) Send(conn net.Conn) error {
-	var (
-		err error
-		buf = new(bytes.Buffer)
-	)
-
-	if err = binary.Write(buf, binary.BigEndian, hba.Type); err != nil {
-		return err
-	}
-	if err = binary.Write(buf, binary.BigEndian, hba.Key); err != nil {
-		return err
-	}
-	if _, err = conn.Write(buf.Bytes()); err != nil {
-		return err
-	}
-	return err
-}
-
-func readHandshakeASM(conn net.Conn) (*HandshakeASM, error) {
-	var (
-		e error
-		m = new(HandshakeASM)
-	)
-
-	m.Type = TypeMsgHandshakeASM
-	e = binary.Read(conn, binary.BigEndian, &m.Key)
-	return m, e
-}
-
 func handleHandshakeASM(conn net.Conn) error {
 	var (
 		err  error
