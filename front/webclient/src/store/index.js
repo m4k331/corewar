@@ -25,7 +25,7 @@ export default new Vuex.Store({
 			state.connected = false
 		},
 		WS_MESSAGE(state, message) {
-			state.message = state.message.push(message)
+			state.message.push(message)
 		},
 		WS_HELLO_WORLD(state, message) {
 			state.message = state.message.push(message)
