@@ -1,3 +1,8 @@
+.idea/*
+*.ws*
+*.o
+hub/go_build*
+hb/vm/champs/main.go
 corewar_vm/CMakeLists.txt
 corewar_vm/cmake-build-debug
 corewar_vm/cmake-build-debug/

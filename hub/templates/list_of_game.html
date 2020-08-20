@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="data/img/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="data/css/bootstrap.min.css">
+    <link rel="stylesheet" href="data/css/fonts.css">
+    <link rel="stylesheet" href="data/css/nav.css">
+    <link rel="stylesheet" href="data/css/load.css">
+    <title>List of Game</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <a class="navbar-brand navbar-dark" href="/">
+            <img src="data/img/21.svg" width="30" height="30" class="d-inline-block align-top mr-3" alt="21">
+            CoreWar
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link disabled" href="profile">Profile</a>
+                <a class="nav-item nav-link" href="new_game">New Game</a>
+                <a class="nav-item nav-link" href="list_of_game">List of Game</a>
+                <a class="nav-item nav-link disabled" href="statistics">Statistics</a>
+                <a class="nav-item nav-link disabled" href="logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+</header>
+<section>
+    <div class="container min-vh-100">
+        <div class="row align-content-center min-vh-100">
+            <div class="col">
+                <div class="row text-center">
+                    <div class="col load-text">GAMES</div>
+                </div>
+                <div class="list-group" id="games">
+                    {{range .Games}}
+                    <a href="/game/{{.Id}}" class="list-group-item list-group-item-action flex-column align-items-start">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">Game: {{.Title}} #{{.Id}}</h5>
+                            {{if .Play}}
+                            <small class="text-success">playing</small>
+                            {{else}}
+                            <small class="text-warning">waiting</small>
+                            {{end}}
+                        </div>
+                        {{range .Bots}}
+                            <p class="mb-1">Bot: {{.}}</p>
+                        {{end}}
+                        <small>{{.Current}}/{{.Total}}</small>
+                    </a>
+                    {{end}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<footer>
+    <div class="footer-copyright text-center bg-dark">© 2020 Copyright:
+        <a class="text-white" href="https://21-school.ru/">21-school.ru</a>
+    </div>
+</footer>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="data/js/bootstrap.min.js"></script>
+<script src="data/js/list_of_game.js"></script>
+</body>
+</html>

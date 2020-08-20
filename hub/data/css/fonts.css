@@ -1,0 +1,19 @@
+@font-face {
+    font-family: Righteous-Regular;
+    src: url('../font/Righteous-Regular.ttf');
+}
+
+@font-face {
+    font-family: Poppins-Regular;
+    src: url('../font/Poppins-Regular.ttf');
+}
+
+@font-face {
+    font-family: PermanentMarker-Regular;
+    src: url('../font/PermanentMarker-Regular.ttf');
+}
+
+@font-face {
+    font-family: LexendTera-Regular;
+    src: url('../font/LexendTera-Regular.ttf');
+}
