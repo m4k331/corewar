@@ -3,4 +3,13 @@
 *.o
 hub/go_build*
 hb/vm/champs/main.go
-
+corewar_vm/CMakeLists.txt
+corewar_vm/cmake-build-debug
+corewar_vm/cmake-build-debug/
+corewar_vm/.idea
+*.o
+*.a
+*.d
+cmake-build-debug
+CMakeLists.txt
+.idea
