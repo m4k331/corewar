@@ -135,17 +135,11 @@ int main(int argc, char **argv)
 	t_data		*data;
 	t_options	opt;
 
-<<<<<<< HEAD
-	if (!checks(&opt, argc, argv)) // поставил "!", иначе ломалось
-		return (1);
-	if (opt.server)
-=======
 	if (checks(&opt, argc, argv))
 		return (1 | usage(2, argv[0]));
 	// print_opt(&opt);
 	// return (0);
 	if (!opt.filename)
->>>>>>> 1bd872b90d8296e2eadf04975cac0bf38bf0bc84
 		return (network(&opt));
 	if ((data = compile(argv[1])) == NULL)
 		return (1);

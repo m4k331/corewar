@@ -14,11 +14,7 @@
 # define OP_H
 
 # define COMMENT_CHAR			'#'
-<<<<<<< HEAD
-# define ALT_COMMENT_CHAR			';'
-=======
 # define ALT_COMMENT_CHAR		';'
->>>>>>> 1bd872b90d8296e2eadf04975cac0bf38bf0bc84
 # define LABEL_CHAR				':'
 # define DIRECT_CHAR			'%'
 # define SEPARATOR_CHAR			','
