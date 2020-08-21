@@ -52,7 +52,7 @@ void			*work_with_file(t_data *data, char *filename)
 // FIXED: Исправил затерание data->fd;
 //			Разбил compile  на работу с файлом и работу с заполненной структурой data
 
-#include <stdio.h>
+#include <stdio.h> // не забыть убрать
 
 t_data			*compile(char *filename)
 {

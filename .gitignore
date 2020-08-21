@@ -9,3 +9,7 @@ asm/.idea
 asm/asm
 .vscode
 *.cor
+../.DS_Store
+.DS_Store
+CMakeLists.txt
+cmake-build-debug/

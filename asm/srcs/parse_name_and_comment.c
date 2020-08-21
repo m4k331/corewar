@@ -85,8 +85,8 @@ int			parse_name_and_comment(t_data *data, int calc)
 	if (!data->current_token->next)
 		return (error(data));
 	if (data->current_token->next
-			&& (!ft_strcmp(data->current_token->type, "NAME")
-			|| !ft_strcmp(data->current_token->type, "NAME_COMMENT")))
+			&& ((!ft_strcmp(data->current_token->type, "NAME") && !data->name)
+			|| (!ft_strcmp(data->current_token->type, "NAME_COMMENT") && !data->comment)))
 	{
 		if (!check_string(data))
 			return (0);
