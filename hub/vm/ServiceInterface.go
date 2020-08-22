@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"corewar/hub/syncd"
 	"go.uber.org/zap"
 	"net"
 )
@@ -25,7 +26,7 @@ type Service interface {
 	GetCtxCancel() context.CancelFunc
 	GetPool() *PoolMessages
 	GetHandler() HandleServiceFunc
-	GetSlaves() *SyncMap
+	GetSlaves() *syncd.Map
 	SetCode(code int)
 	SetConfig(config interface{})
 	SetPool(pool *PoolMessages)

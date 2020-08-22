@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"corewar/hub/syncd"
 	"go.uber.org/zap"
 	"net"
 )
@@ -24,7 +25,7 @@ type ServiceManage struct {
 	log      *zap.Logger
 	ctx      context.Context
 	cancel   context.CancelFunc
-	slaves   *SyncMap
+	slaves   *syncd.Map
 	handler  HandleServiceFunc
 	stopped  chan string
 }
@@ -56,11 +57,14 @@ func NewServiceManage(config Config) (*ServiceManage, error) {
 		log:      log,
 		ctx:      ctx,
 		cancel:   cancel,
-		slaves:   NewSyncMap(initSizeServicesMap),
+		slaves:   syncd.NewMap(initSizeServicesMap),
 		handler:  handleServiceManage,
 		stopped:  make(chan string, config.ServiceManage.MaxNumChild),
 	}, e
 }
+
+// TODO:
+func (sm *ServiceManage) CompileBot()
 
 func (sm *ServiceManage) Run() {
 	// a handler that clears the service list of stopped services
@@ -164,7 +168,7 @@ func (sm *ServiceManage) GetHandler() HandleServiceFunc {
 	return sm.handler
 }
 
-func (sm *ServiceManage) GetSlaves() *SyncMap {
+func (sm *ServiceManage) GetSlaves() *syncd.Map {
 	return sm.slaves
 }
 

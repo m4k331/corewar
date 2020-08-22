@@ -49,8 +49,9 @@ func handleService(s Service) {
 
 		// prepare ports for msg
 		ports := make([]uint32, 0, s.GetSlaves().Len())
-		for addr := range s.GetSlaves().GetMap() {
-			ports = append(ports, ExtractPort(addr))
+		addrs := s.GetSlaves().GetKeys()
+		for i := range addrs {
+			ports = append(ports, ExtractPort(addrs[i]))
 		}
 		msg.(*Handshake).Ports = ports
 		msg.SetLen(uint32(len(ports) * 4))

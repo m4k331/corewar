@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"corewar/hub/syncd"
 	"go.uber.org/zap"
 	"net"
 )
@@ -14,7 +15,7 @@ type Worker struct {
 	ctx      context.Context
 	cancel   context.CancelFunc
 	master   Service
-	slaves   *SyncMap
+	slaves   *syncd.Map
 	pool     *PoolMessages
 	handler  HandleServiceFunc
 }
@@ -138,7 +139,7 @@ func (wrk *Worker) GetHandler() HandleServiceFunc {
 	return wrk.handler
 }
 
-func (wrk *Worker) GetSlaves() *SyncMap {
+func (wrk *Worker) GetSlaves() *syncd.Map {
 	return wrk.slaves
 }
 

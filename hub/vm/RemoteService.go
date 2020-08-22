@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"corewar/hub/syncd"
 	"go.uber.org/zap"
 	"net"
 )
@@ -28,7 +29,7 @@ type RemoteService struct {
 	ctx     context.Context
 	cancel  context.CancelFunc
 	master  Service
-	slaves  *SyncMap
+	slaves  *syncd.Map
 	pool    *PoolMessages
 	handler HandleServiceFunc
 	stopped chan string
@@ -47,7 +48,7 @@ func NewRemoteService(manager Service, conn *net.TCPConn, handler HandleServiceF
 		ctx:     ctx,
 		cancel:  cancel,
 		master:  manager,
-		slaves:  NewSyncMap(initSizeWorkersMap),
+		slaves:  syncd.NewMap(initSizeWorkersMap),
 		handler: handler,
 		pool:    NewPoolMessages(ServiceTypeUndefined),
 	}, nil
@@ -157,7 +158,7 @@ func (srv *RemoteService) GetHandler() HandleServiceFunc {
 	return srv.handler
 }
 
-func (srv *RemoteService) GetSlaves() *SyncMap {
+func (srv *RemoteService) GetSlaves() *syncd.Map {
 	return srv.slaves
 }
 
