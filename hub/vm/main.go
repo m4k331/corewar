@@ -5,7 +5,8 @@ import (
 )
 
 const (
-	ConfigPath     = "/home/ahugh/go/cw/hub/vm/config/config.yaml"
+	//ConfigPath     = "/home/ahugh/go/cw/hub/vm/config/config.yaml"
+	ConfigPath     = "/Users/ahugh/go/src/cw/hub/vm/config/config.yaml"
 	startHubServer = "Start hub server"
 )
 

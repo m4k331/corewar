@@ -1,6 +1,7 @@
-package main
+package job
 
 import (
+	"cw/hub/utils"
 	"errors"
 	"time"
 )
@@ -60,7 +61,7 @@ func (ctr *Databus) Out() (data interface{}, err error) {
 
 func (ctr *Databus) Close() {
 	ctr.Available = false
-	SafeChanClosure(ctr.in)
-	SafeChanClosure(ctr.out)
-	SafeChanClosure(ctr.close)
+	utils.SafeChanClosure(ctr.in)
+	utils.SafeChanClosure(ctr.out)
+	utils.SafeChanClosure(ctr.close)
 }

@@ -1,6 +1,9 @@
 package main
 
-import "go.uber.org/zap"
+import (
+	"cw/hub/utils"
+	"go.uber.org/zap"
+)
 
 const (
 	errorReadHeader      = "Error reading header"
@@ -51,7 +54,7 @@ func handleService(s Service) {
 		ports := make([]uint32, 0, s.GetSlaves().Len())
 		addrs := s.GetSlaves().GetKeys()
 		for i := range addrs {
-			ports = append(ports, ExtractPort(addrs[i]))
+			ports = append(ports, utils.ExtractPort(addrs[i]))
 		}
 		msg.(*Handshake).Ports = ports
 		msg.SetLen(uint32(len(ports) * 4))

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"cw/hub/utils"
 	"gopkg.in/yaml.v3"
 	"net"
 	"os"
@@ -53,7 +54,7 @@ func NewConfig(path string) (*Config, error) {
 
 func (settings TCPSettings) ApplyToListener(listener *net.TCPListener) (e error) {
 	if settings.Deadline > 0 {
-		if e = listener.SetDeadline(GetTimeFromNSecond(settings.Deadline)); e != nil {
+		if e = listener.SetDeadline(utils.GetTimeFromNSecond(settings.Deadline)); e != nil {
 			return e
 		}
 	}
@@ -77,12 +78,12 @@ func (settings TCPSettings) ApplyToConnection(conn *net.TCPConn) (e error) {
 		}
 	}
 	if settings.WriteDeadline > 0 {
-		if e = conn.SetWriteDeadline(GetTimeFromNSecond(settings.WriteDeadline)); e != nil {
+		if e = conn.SetWriteDeadline(utils.GetTimeFromNSecond(settings.WriteDeadline)); e != nil {
 			return e
 		}
 	}
 	if settings.ReadDeadline > 0 {
-		if e = conn.SetReadDeadline(GetTimeFromNSecond(settings.ReadDeadline)); e != nil {
+		if e = conn.SetReadDeadline(utils.GetTimeFromNSecond(settings.ReadDeadline)); e != nil {
 			return e
 		}
 	}

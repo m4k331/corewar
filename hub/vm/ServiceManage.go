@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"cw/hub/syncd"
+	"cw/hub/utils"
 	"go.uber.org/zap"
 	"net"
 )
@@ -94,15 +95,15 @@ func (sm *ServiceManage) RunHandleFuncLoop() {
 func (sm *ServiceManage) RunNewSlave() (e error) {
 	conn, e := sm.listener.AcceptTCP()
 	if e != nil {
-		return CloseFailedConnection(conn, sm.log, failedCreateNewConn, e)
+		return utils.CloseFailedConnection(conn, sm.log, failedCreateNewConn, e)
 	}
 	if e = sm.conf.ServiceManage.TCPSettings.ApplyToConnection(conn); e != nil {
-		return CloseFailedConnection(conn, sm.log, failedApplySettings, e)
+		return utils.CloseFailedConnection(conn, sm.log, failedApplySettings, e)
 	}
 
 	srv, e := NewRemoteService(sm, conn, handleService)
 	if e != nil {
-		return CloseFailedConnection(conn, sm.log, connSrvInterrupted, e)
+		return utils.CloseFailedConnection(conn, sm.log, connSrvInterrupted, e)
 	}
 
 	sm.slaves.Store(srv.GetAddr(), srv)

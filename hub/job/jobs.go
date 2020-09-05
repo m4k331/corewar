@@ -1,4 +1,4 @@
-package main
+package job
 
 import (
 	"cw/hub/gen"
@@ -32,32 +32,33 @@ func (j *Job) Type() string {
 	return j._type
 }
 
-type JobBucket struct {
+type Bucket struct {
 	Type    string
 	Jobs    *syncd.Queue
 	Databus *syncd.Queue
 }
 
-func NewJobBucket(_type string) *JobBucket {
-	return &JobBucket{
+func NewBucket(_type string) *Bucket {
+	return &Bucket{
 		Type:    _type,
 		Jobs:    syncd.NewQueue(8),
 		Databus: syncd.NewQueue(8),
 	}
 }
 
-type JobPool struct {
+type Pool struct {
 	buckets *syncd.Map
 }
 
-func (jp *JobPool) Run() error {
+func (jp *Pool) Run() error {
+
 	return nil
 }
 
-func (jp *JobPool) Push(bag trait.BagPoolInterface) (err error) {
+func (jp *Pool) Push(bag trait.BagPool) (err error) {
 	bucket := jp.loadBucket(bag.Type())
 	if bucket == nil {
-		bucket = NewJobBucket(bag.Type())
+		bucket = NewBucket(bag.Type())
 		jp.buckets.Store(bag.Type(), bucket)
 	}
 
@@ -72,14 +73,14 @@ func (jp *JobPool) Push(bag trait.BagPoolInterface) (err error) {
 	return err
 }
 
-func (jp *JobPool) loadBucket(_type string) *JobBucket {
+func (jp *Pool) loadBucket(_type string) *Bucket {
 	if bucket, ok := jp.buckets.Load(_type); ok {
-		return bucket.(*JobBucket)
+		return bucket.(*Bucket)
 	}
 	return nil
 }
 
-func (jp *JobPool) popDatabus(_type string) *Databus {
+func (jp *Pool) popDatabus(_type string) *Databus {
 	bucket := jp.loadBucket(_type)
 	if bucket != nil && bucket.Databus.Len() > 0 {
 		return bucket.Databus.Pop().(*Databus)
@@ -87,7 +88,7 @@ func (jp *JobPool) popDatabus(_type string) *Databus {
 	return nil
 }
 
-func (jp *JobPool) popJob(_type string) *Job {
+func (jp *Pool) popJob(_type string) *Job {
 	bucket := jp.loadBucket(_type)
 	if bucket != nil && bucket.Jobs.Len() > 0 {
 		return bucket.Jobs.Pop().(*Job)
