@@ -5,7 +5,7 @@ import "go.uber.org/zap"
 // TODO: move all consts description to a separate file
 const (
 	failedCreateNewService = "Failed to create a new Service"
-	successConnToWorker    = "RemoteService connected to Worker"
+	successConnToWorker    = "RemoteService connected to WorkerTODO"
 )
 
 func handleWorker(s Service) {

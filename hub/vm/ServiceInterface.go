@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"corewar/hub/syncd"
+	"cw/hub/syncd"
 	"go.uber.org/zap"
 	"net"
 )

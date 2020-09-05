@@ -2,12 +2,12 @@ package main
 
 import (
 	"context"
-	"corewar/hub/syncd"
+	"cw/hub/syncd"
 	"go.uber.org/zap"
 	"net"
 )
 
-type Worker struct {
+type WorkerTODO struct {
 	code     int
 	listener *net.TCPListener
 	conf     WorkerConf
@@ -20,7 +20,7 @@ type Worker struct {
 	handler  HandleServiceFunc
 }
 
-func NewWorker(s Service, handler HandleServiceFunc) (*Worker, error) {
+func NewWorker(s Service, handler HandleServiceFunc) (*WorkerTODO, error) {
 	listener, e := net.ListenTCP("tcp", nil)
 	if e != nil {
 		return nil, e
@@ -41,7 +41,7 @@ func NewWorker(s Service, handler HandleServiceFunc) (*Worker, error) {
 
 	ctx, cancel := context.WithCancel(context.Background())
 
-	return &Worker{
+	return &WorkerTODO{
 		listener: listener,
 		conf:     s.GetConfig().(ServiceConf).WorkerConf,
 		log:      log,
@@ -53,7 +53,7 @@ func NewWorker(s Service, handler HandleServiceFunc) (*Worker, error) {
 	}, e
 }
 
-func (wrk *Worker) Run() {
+func (wrk *WorkerTODO) Run() {
 	go func() {
 		select {
 		case <-wrk.master.GetCtx().Done():
@@ -65,7 +65,7 @@ func (wrk *Worker) Run() {
 	wrk.RunHandleFunc()
 }
 
-func (wrk *Worker) Stop() {
+func (wrk *WorkerTODO) Stop() {
 	if wrk.log != nil {
 		wrk.log.Info(srvStopped, zap.String("addr", wrk.GetAddr()))
 		_ = wrk.log.Sync()
@@ -76,11 +76,11 @@ func (wrk *Worker) Stop() {
 	wrk.cancel()
 }
 
-func (wrk *Worker) RunHandleFunc() {
+func (wrk *WorkerTODO) RunHandleFunc() {
 	wrk.handler(wrk)
 }
 
-func (wrk *Worker) RunHandleFuncLoop() {
+func (wrk *WorkerTODO) RunHandleFuncLoop() {
 	go func() {
 		for {
 			select {
@@ -95,66 +95,66 @@ func (wrk *Worker) RunHandleFuncLoop() {
 	}()
 }
 
-func (wrk *Worker) RunNewSlave() error {
+func (wrk *WorkerTODO) RunNewSlave() error {
 	return nil
 }
 
-func (wrk *Worker) GetAddr() string {
+func (wrk *WorkerTODO) GetAddr() string {
 	return wrk.listener.Addr().String()
 }
 
-func (wrk *Worker) GetListener() *net.TCPListener {
+func (wrk *WorkerTODO) GetListener() *net.TCPListener {
 	return wrk.listener
 }
 
-func (wrk *Worker) GetConn() *net.TCPConn {
+func (wrk *WorkerTODO) GetConn() *net.TCPConn {
 	return nil
 }
 
-func (wrk *Worker) GetMaster() Service {
+func (wrk *WorkerTODO) GetMaster() Service {
 	return wrk.master
 }
 
-func (wrk *Worker) GetConfig() interface{} {
+func (wrk *WorkerTODO) GetConfig() interface{} {
 	return wrk.conf
 }
 
-func (wrk *Worker) GetLog() *zap.Logger {
+func (wrk *WorkerTODO) GetLog() *zap.Logger {
 	return wrk.log
 }
 
-func (wrk *Worker) GetCtx() context.Context {
+func (wrk *WorkerTODO) GetCtx() context.Context {
 	return wrk.ctx
 }
 
-func (wrk *Worker) GetCtxCancel() context.CancelFunc {
+func (wrk *WorkerTODO) GetCtxCancel() context.CancelFunc {
 	return wrk.cancel
 }
 
-func (wrk *Worker) GetPool() *PoolMessages {
+func (wrk *WorkerTODO) GetPool() *PoolMessages {
 	return wrk.pool
 }
 
-func (wrk *Worker) GetHandler() HandleServiceFunc {
+func (wrk *WorkerTODO) GetHandler() HandleServiceFunc {
 	return wrk.handler
 }
 
-func (wrk *Worker) GetSlaves() *syncd.Map {
+func (wrk *WorkerTODO) GetSlaves() *syncd.Map {
 	return wrk.slaves
 }
 
-func (wrk *Worker) GetCode() int {
+func (wrk *WorkerTODO) GetCode() int {
 	return wrk.code
 }
 
-func (wrk *Worker) SetCode(code int) {
+func (wrk *WorkerTODO) SetCode(code int) {
 	wrk.code = code
 }
 
-func (wrk *Worker) SetConfig(config interface{}) {
+func (wrk *WorkerTODO) SetConfig(config interface{}) {
 	wrk.conf = config.(WorkerConf)
 }
 
-func (wrk *Worker) SetPool(pool *PoolMessages) {
+func (wrk *WorkerTODO) SetPool(pool *PoolMessages) {
 	wrk.pool = pool
 }

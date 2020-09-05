@@ -2,9 +2,9 @@ package main
 
 import (
 	"bytes"
-	"corewar/hub/gen"
-	"corewar/hub/pages"
 	"crypto/md5"
+	"cw/hub/gen"
+	"cw/hub/pages"
 	"encoding/hex"
 	"encoding/json"
 	"html/template"

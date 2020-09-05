@@ -1,8 +1,10 @@
 package main
 
 import (
-	"corewar/hub/gen"
-	"corewar/hub/syncd"
+	"cw/hub/gen"
+	"cw/hub/syncd"
+	"cw/hub/trait"
+	"errors"
 )
 
 const (
@@ -11,19 +13,23 @@ const (
 )
 
 type Job struct {
-	Id   int
-	Type string
-	Body interface{}
-	Out  chan interface{}
+	Id    int
+	_type string
+	Body  interface{}
+	Out   chan interface{}
 }
 
-func NewJob(body interface{}, _type string) *Job {
+func NewJob(_type string, body interface{}) *Job {
 	return &Job{
-		Id:   gen.GetIntID(),
-		Type: _type,
-		Body: body,
-		Out:  make(chan interface{}, 1),
+		Id:    gen.GetIntID(),
+		_type: _type,
+		Body:  body,
+		Out:   make(chan interface{}, 1),
 	}
+}
+
+func (j *Job) Type() string {
+	return j._type
 }
 
 type JobBucket struct {
@@ -44,17 +50,47 @@ type JobPool struct {
 	buckets *syncd.Map
 }
 
-func (jp *JobPool) Push(job *Job) {
-	if b, ok := jp.buckets.Load(job.Type); ok {
-		bucket := b.(*JobBucket)
-		bucket.Jobs.Push(job)
-		return
-	}
-	bucket := NewJobBucket(job.Type)
-	bucket.Jobs.Push(job)
-	jp.buckets.Store(job.Type, bucket)
+func (jp *JobPool) Run() error {
+	return nil
 }
 
-func (jp *JobPool) GetNewDa {
-	
+func (jp *JobPool) Push(bag trait.BagPoolInterface) (err error) {
+	bucket := jp.loadBucket(bag.Type())
+	if bucket == nil {
+		bucket = NewJobBucket(bag.Type())
+		jp.buckets.Store(bag.Type(), bucket)
+	}
+
+	switch bag.(type) {
+	case *Job:
+		bucket.Jobs.Push(bag.(*Job))
+	case trait.Worker:
+		bucket.Databus.Push(bag.(trait.Worker))
+	default:
+		err = errors.New("undefined bag")
+	}
+	return err
+}
+
+func (jp *JobPool) loadBucket(_type string) *JobBucket {
+	if bucket, ok := jp.buckets.Load(_type); ok {
+		return bucket.(*JobBucket)
+	}
+	return nil
+}
+
+func (jp *JobPool) popDatabus(_type string) *Databus {
+	bucket := jp.loadBucket(_type)
+	if bucket != nil && bucket.Databus.Len() > 0 {
+		return bucket.Databus.Pop().(*Databus)
+	}
+	return nil
+}
+
+func (jp *JobPool) popJob(_type string) *Job {
+	bucket := jp.loadBucket(_type)
+	if bucket != nil && bucket.Jobs.Len() > 0 {
+		return bucket.Jobs.Pop().(*Job)
+	}
+	return nil
 }

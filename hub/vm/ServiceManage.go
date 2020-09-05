@@ -2,7 +2,7 @@ package main
 
 import (
 	"context"
-	"corewar/hub/syncd"
+	"cw/hub/syncd"
 	"go.uber.org/zap"
 	"net"
 )
@@ -63,8 +63,8 @@ func NewServiceManage(config Config) (*ServiceManage, error) {
 	}, e
 }
 
-// TODO:
-func (sm *ServiceManage) CompileBot()
+//TODO:
+//func (sm *ServiceManage) CompileBot()
 
 func (sm *ServiceManage) Run() {
 	// a handler that clears the service list of stopped services
