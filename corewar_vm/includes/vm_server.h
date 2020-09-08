@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/03/05 21:18:02 by limry             #+#    #+#             */
-/*   Updated: 2020/07/02 16:23:15 by limry            ###   ########.fr       */
+/*   Updated: 2020/07/25 11:59:37 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,19 @@
 # define KEEPALIVE_IDLE	1
 # define KEEPALIVE_INTL	1
 # define KEEPALIVE_MAXP	10
+
+//# ifndef IPPROTO_TCP
+//#  define IPPROTO_TCP SOL_TCP
+//# endif
+# ifndef TCP_KEEPIDLE
+#  define TCP_KEEPIDLE TCP_KEEPALIVE
+# endif
+//# ifndef TCP_KEEPINTVL
+//#  define TCP_KEEPINTVL
+//# endif
+//# ifndef TCP_KEEPCNT
+//#  define TCP_KEEPCNT
+//# endif
 
 void					vm_server_start(t_input *input);
 void					vm_server_run(t_input *input, pthread_attr_t *tattr);

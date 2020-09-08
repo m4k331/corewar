@@ -24,7 +24,8 @@ int			vm_command_connect_workers(t_io_interface *io)
 	{
 		vm_worker_fill_io_interface(
 				super->worker_mngr->workers[wk_id]->io, super, wk_id);
-		if ((err_num = vm_socket_connect(super->worker_mngr->workers[wk_id]->io)))
+		if ((err_num =
+				vm_socket_connect(super->worker_mngr->workers[wk_id]->io)))
 		{
 			ft_printfd(io->cout, "ERROR: can't connect worker %d", err_num);
 			return (err_num);
@@ -32,8 +33,7 @@ int			vm_command_connect_workers(t_io_interface *io)
 		ft_printfd(io->cout, "Worker #%d connected on %s:%s from %d\n", wk_id,
 				super->worker_mngr->workers[wk_id]->io->address,
 				super->worker_mngr->workers[wk_id]->io->port,
-				super->worker_mngr->workers[wk_id]->io->sock_fd
-				   );
+				super->worker_mngr->workers[wk_id]->io->sock_fd);
 	}
 	return (0);
 }

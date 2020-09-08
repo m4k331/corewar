@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:02:33 by limry             #+#    #+#             */
-/*   Updated: 2020/07/04 14:59:01 by limry            ###   ########.fr       */
+/*   Updated: 2020/09/08 18:48:49 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,8 @@ static int				vm_socket_connection_processing(
 				servinfo->ai_protocol)) == -1)
 			ft_printfd(io->err_fd, "Error: can't get socket\n");
 		else if (!vm_socket_connect_wait(sockfd, servinfo->ai_addr,
-				servinfo->ai_addrlen, TIMEOUT_CONNECT)) {
+				servinfo->ai_addrlen, TIMEOUT_CONNECT))
 			break ;
-		}
 		if (sockfd != -1)
 		{
 			ft_printfd(io->err_fd, "Error: can't connect sock %d\n", sockfd);
@@ -57,7 +56,7 @@ static in_port_t		get_in_port(t_sockaddr *sa)
 }
 
 static t_addrinfo		*vm_connection_getservinfo(t_io_interface *io,
-						t_addrinfo	**servinfo)
+						t_addrinfo **servinfo)
 {
 	int					rv;
 

@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:00:47 by limry             #+#    #+#             */
-/*   Updated: 2020/07/02 16:00:47 by limry            ###   ########.fr       */
+/*   Updated: 2020/09/08 18:41:46 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ int					vm_input_parse_champ_online(t_champ *champ,
 					uint8_t *raw_data, int err_fd)
 {
 	t_header_new	*head;
+	int				r;
 
 	head = (t_header_new*)raw_data;
-	int r;
 	if ((r = vm_parse_byte_to_32int(&(head->magic), 4)) != COREWAR_EXEC_MAGIC)
 		return (vm_nofity_err(err_fd,
 			ERR_PARSE_MSG_WRONG_MAGIC, CODE_ERR_PARSE_MSG_WRONG_MAGIC));

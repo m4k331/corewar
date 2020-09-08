@@ -52,6 +52,4 @@ void		vm_server_mode_multithread(t_input *input)
 	input->threads = malloc(sizeof(pthread_t) * reg);
 	if (!(input->threads))
 		vm_exit("Error: no multithread mode\n", input);
-//	sigaction(SIGPIPE, &(struct sigaction){sigpipe_handler}, NULL);
-//	signal(SIGPIPE, MSG_NOSIGNAL);
 }

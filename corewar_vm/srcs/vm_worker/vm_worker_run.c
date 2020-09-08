@@ -83,7 +83,6 @@ int				vm_worker_run_cycle(t_worker *worker)
 				break ;
 			car = (t_car*)worker->carrs->data + car->next;
 		}
-
 		if (worker->dump == worker->cur_ctd)
 			return (vm_worker_show_map(worker, 32));
 	}
