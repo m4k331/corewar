@@ -44,16 +44,6 @@ void			*work_with_file(t_data *data, char *filename)
 	return (filename);
 }
 
-// FIXME: надо наверно пофиксить ретурны при ошибках, но мне пока лень
-
-/// Объясни, что не так, я поправлю. Сейчас на каждую ошибку есть соответствующий вывод.
-
-// FIXME: Лучше наверно разбить на 2 части и в check_last_end происходит затирание открытого data->fd, надо пофиксить
-// FIXED: Исправил затерание data->fd;
-//			Разбил compile  на работу с файлом и работу с заполненной структурой data
-
-#include <stdio.h> // не забыть убрать
-
 t_data			*compile(char *filename)
 {
 	t_data		*data;
@@ -62,12 +52,6 @@ t_data			*compile(char *filename)
 		return (0);
 	if (!work_with_file(data, filename))
 		return (0);
-
-    t_token *tmp = data->token;
-    while (tmp) {
-        printf("{%s}, [%s]\n", tmp->type, tmp->content);
-        tmp = tmp->next;
-    }
 	if (!make_tree(data))
 		return (free_and_return(data));
 	if (!parse_tree(data))
@@ -75,9 +59,8 @@ t_data			*compile(char *filename)
 	calc_sizes(data);
 	if (!make_hex_buffer(data))
 		return (free_and_return(data));
-	// Убрал, чтобы можно было использовать функцию для сетевой части
-	// if (!make_file(data, filename))
-	// 	return (free_and_return(data));
-	// free_data(data);
+	if (!make_file(data, filename))
+	 	return (free_and_return(data));
+	free_data(data);
 	return (data);
 }
