@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:04:53 by limry             #+#    #+#             */
-/*   Updated: 2020/07/02 16:04:53 by limry            ###   ########.fr       */
+/*   Updated: 2020/09/11 17:43:21 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int			vm_op_byte_to_32int(uint8_t *data_start, int32_t pos, int32_t size)
 	uint8_t	sign;
 	int		i;
 
+	pos = vm_get_addr(pos);
 	sign = data_start[pos] & 0x80u;
 	res = 0;
 	i = -1;
@@ -41,6 +42,7 @@ void		vm_op_from_int32_to_byte(uint8_t *data_start, int num,
 	int		i;
 
 	i = -1;
+	pos = vm_get_addr(pos);
 	while (++i < size)
 		*(data_start + vm_get_addr(pos + i)) =
 		(uint8_t)((num >> ((size - 1 - i) * 8U)) & 0xFFu);
@@ -52,6 +54,7 @@ void		vm_op_set_val_to_byte(uint8_t *data_start, uint8_t setter,
 	int		i;
 
 	i = -1;
+	pos = vm_get_addr(pos);
 	while (++i < size)
 		*(data_start + vm_get_addr(pos + i)) =
 				(uint8_t)(setter & 0xFFu);

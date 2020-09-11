@@ -130,19 +130,25 @@ DEPS = $(SRC:%.c=$(DIR_OBJ)%.d)
 
 MKDIR_P = mkdir -p
 
-COMPILER = gcc
-FLAGS = -O2 -Wall -Wextra -Werror -pthread
+COMPILER = clang
+FLAGS = -Wall -Wextra -Werror -pthread
 
 all: $(NAME)
 
-$(NAME): libft $(DIRS) $(OBJS)
+$(NAME): libft $(OBJS)
+	@echo Preparing CoreWarMachine
 	$(COMPILER) $(FLAGS) -o $(NAME) $(OBJS) -L$(DIR_LIB) -lft
 
-$(DIRS):
-	@$(MKDIR_P) $(DIRS)
+#$(DIRS):
+#	@$(MKDIR_P) $(DIRS)
 
-$(DIR_OBJ)%.o: $(DIR_SRC)%.c
-	$(COMPILER) $(FLAGS) -MD -o $@ -c $< $(DIR_INC)
+$(DIR_OBJ):
+	mkdir $@
+
+$(DIR_OBJ)%.o: $(DIR_SRC)/%.c |  $(DIR_OBJ)
+	@mkdir -p $(DIR_OBJ)
+	@echo Compiling: $<
+	@$(COMPILER) $(FLAGS) -MD -o $@ -c $< $(DIR_INC)
 
 -include $(DEPS)
 
