@@ -42,11 +42,13 @@ int			check_last_end(t_data *data, char *filename)
 	while ((ret = read(data->fd, buf, 1000)))
 	{
 		buf[ret] = '\0';
-		if ((len = ft_strlen(buf)) < 1000 && buf[ret - 1] != '\n' && ft_strcmp(data->current_token->type, "ENDLINE"))
+		if ((len = ft_strlen(buf)) < 1000 && buf[ret - 1] != '\n'
+				&& ft_strcmp(data->current_token->type, "ENDLINE"))
 			return (no_end_of_line(data));
 		last_char = buf[ret - 1];
 	}
-	if (ret == 0 && last_char != '\n' && ft_strcmp(data->current_token->type, "ENDLINE"))
+	if (ret == 0 && last_char != '\n'
+			&& ft_strcmp(data->current_token->type, "ENDLINE"))
 		return (no_end_of_line(data));
 	init_token(data, "(null)", 13, 6);
 	close(data->fd);

@@ -18,6 +18,12 @@ void		free_tmp_pointers(char *tmp, char *tmp_2)
 	free(tmp_2);
 }
 
+void		epic_fight_with_norm(char *line, int *i)
+{
+	while (line[*i] && line[*i] != '\"')
+		(*i)++;
+}
+
 int			get_continue_of_string(t_data *data, char *line)
 {
 	int		i;
@@ -25,8 +31,7 @@ int			get_continue_of_string(t_data *data, char *line)
 	char	*tmp_2;
 
 	i = 0;
-	while (line[i] && line[i] != '\"')
-		i++;
+	epic_fight_with_norm(line, &i);
 	if (line[i])
 	{
 		tmp = ft_strsub(line, 0, i + 1);

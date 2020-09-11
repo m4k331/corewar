@@ -93,22 +93,6 @@ typedef struct		s_data
 }					t_data;
 
 /*
-** struct for command line options
-*/
-
-typedef struct s_options{
-	// char	server;
-	char	*ip;
-	short	port;
-	char	*filename;
-}	t_options;
-
-/*
-** handle_options.c
-*/
-int	get_options(t_options *opt, int argc, char **argv);
-
-/*
 ** error.c
 */
 int					error(t_data *data);

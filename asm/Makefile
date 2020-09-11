@@ -52,9 +52,6 @@ SOURCES = \
          get_op_weight.c\
          make_file.c\
          main.c\
-\
-		 network.c\
-		 handle_options.c
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
 

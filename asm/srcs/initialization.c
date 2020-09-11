@@ -63,18 +63,14 @@ t_token		*init_token(t_data *data, char *line, int type, int len)
 {
 	t_token	*token;
 
-	if (!(token = (t_token *)malloc(sizeof(t_token))))
+	if (!(token = (t_token *)malloc(sizeof(t_token)))
+		|| !(token->type = ft_strdup(g_name_of_type[type])))
 	{
 		ft_putstr_fd(ERROR_MEMORY_ALLOCATION, 2);
 		return (NULL);
 	}
 	token->char_num = data->char_num;
 	token->line_num = data->line_num;
-
-    if (!(token->type = ft_strdup(g_name_of_type[type])))
-        ft_putstr("\n\n\n!!!!!!!!\n\n\n");
-
-
 	token->content = ft_strsub(line, data->char_num, len);
 	token->is_finished = 1;
 	add_zeros(token);

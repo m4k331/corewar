@@ -18,7 +18,9 @@ int			get_tokens_from_line_2(t_data *data, char *line)
 		return (1);
 	else if (line[data->char_num] == '\"' && is_string(data, line))
 		return (1);
-	else if ((line[data->char_num] == COMMENT_CHAR || line[data->char_num] == ALT_COMMENT_CHAR) && is_comment(data, line))
+	else if ((line[data->char_num] == COMMENT_CHAR
+				|| line[data->char_num] == ALT_COMMENT_CHAR)
+				&& is_comment(data, line))
 		return (1);
 	else if (line[data->char_num] == SEPARATOR_CHAR && is_separator(data, line))
 		return (1);

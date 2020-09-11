@@ -57,7 +57,7 @@ void		put_operation_weight(t_data *data)
 void		calc_sizes(t_data *data)
 {
 	data->current_token = data->token;
-	while (data->current_token) // was: while (data->current_token->next)
+	while (data->current_token)
 	{
 		if (!ft_strcmp(data->current_token->type, "LABEL"))
 			data->current_token = data->current_token->next;

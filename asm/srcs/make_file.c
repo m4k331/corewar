@@ -59,9 +59,8 @@ int			make_file(t_data *data, char *filename)
 		free(dot_cor);
 		return (0);
 	}
-	// FIXME: write can fail
-	// FIXED
-	if (write(data->fd, data->buffer, data->buffer_len - 1) != data->buffer_len - 1)
+	if (write(data->fd, data->buffer, data->buffer_len - 1)
+			!= data->buffer_len - 1)
 		return (error_write(data, dot_cor));
 	ft_putstr("Writing output program to ");
 	ft_putstr(dot_cor);

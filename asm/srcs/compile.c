@@ -60,7 +60,7 @@ t_data			*compile(char *filename)
 	if (!make_hex_buffer(data))
 		return (free_and_return(data));
 	if (!make_file(data, filename))
-	 	return (free_and_return(data));
+		return (free_and_return(data));
 	free_data(data);
 	return (data);
 }
