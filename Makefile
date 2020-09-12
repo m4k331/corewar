@@ -1,3 +1,5 @@
+.PHONY: all clean fclean re norm obnulyay
+
 BIN_DIR=$(PWD)
 WHITE:='\033[1;107m'
 BLUE:='\033[0;104m'
