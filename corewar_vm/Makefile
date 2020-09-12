@@ -158,7 +158,7 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
 	@echo $(BBLUE)Compiling: $< $(EOC)
 	@$(COMPILER) $(FLAGS) -MD -o $@ -c $< $(DIR_INC)
 
-libft:
+libft/libft.a:
 	$(MAKE) -C $(DIR_LIB)
 
 clean:
