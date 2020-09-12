@@ -2,8 +2,6 @@
 .comment "300 baks"
 
 live:	live %0
-		zjmp %:live
-		live %0
 		fork %-11
 		live %0
 		fork %-11
