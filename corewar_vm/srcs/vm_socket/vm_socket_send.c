@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:03:02 by limry             #+#    #+#             */
-/*   Updated: 2020/07/25 17:05:15 by limry            ###   ########.fr       */
+/*   Updated: 2020/09/12 12:45:58 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,5 @@ int			vm_socket_send_buff(t_io_interface *io)
 	ft_printf("Sended to %s:%s = %d bytes (fd:%d)\n",
 			io->address, io->port, io->netbuf->len_data, io->sock_fd);
 	darr_remove_front(io->netbuf, io->netbuf->len);
-//	usleep(SLEEPTIME);
 	return (sended);
 }
