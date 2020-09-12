@@ -24,7 +24,7 @@ static int			vm_check_file_name(char *file_name, t_input *input)
 	{
 		ft_printfd(input->io->err_fd, "ERROR: can't read file %s\n",
 				file_name);
-		vm_error("VM is closed.\n", input);
+		vm_error("VM is closed.", input);
 	}
 	return (1);
 }
@@ -38,14 +38,14 @@ t_gminput			*vm_input_av_parse(t_input *input)
 	ft_bzero(&new_game, sizeof(t_gminput));
 	i = -1;
 	if (input->num_champs == 0)
-		vm_error("Error: no champions\n", input);
+		vm_error("Error: no champions", input);
 	while (++i < MAX_PLAYERS)
 		if (vm_check_file_name(input->champ_files[i], input))
 		{
 			if ((fd = open(input->champ_files[i], O_RDONLY)) < 0)
-				vm_error("Error: the champ file cannot be opened\n", input);
+				vm_error("Error: the champ file cannot be opened", input);
 			if (vm_input_parse_champ_offline(fd, new_game.players + i, input))
-				vm_error("Error: can't parse champ file\n", input);
+				vm_error("Error: can't parse champ file", input);
 			close(fd);
 			new_game.players[i].id = i + 1;
 			new_game.num_players++;

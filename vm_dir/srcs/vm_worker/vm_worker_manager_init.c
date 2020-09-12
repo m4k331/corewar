@@ -261,7 +261,7 @@ void						vm_worker_create(t_input *input, uint32_t id_wk)
 	t_worker				*worker_new;
 
 	if (!(worker_new = malloc(sizeof(t_worker))))
-		vm_error("Error: can't create worker for server\n", input);
+		vm_error("Error: can't create worker for server", input);
 	else
 	{
 		ft_bzero(worker_new, sizeof(t_worker));
@@ -286,7 +286,7 @@ void						vm_worker_manager_init(t_input *input)
 	uint32_t				reg_workers;
 
 	if (!(new_manager = malloc(sizeof(t_worker_manager))))
-		vm_error("Error: can't create manager server\n", input);
+		vm_error("Error: can't create manager server", input);
 	input->worker_mngr = new_manager;
 	reg_workers = input->mode < 0 ? -input->mode : input->mode;
 	input->worker_mngr->reg_workers = 0;
@@ -295,7 +295,7 @@ void						vm_worker_manager_init(t_input *input)
 	reg_workers = input->mode < 0 ? -input->mode : input->mode;
 	if (!(input->worker_mngr->workers =
 				(t_worker**)malloc(sizeof(t_worker*) * reg_workers)))
-		vm_error("Error: can't create workers for server\n", input);
+		vm_error("Error: can't create workers for server", input);
 	while (reg_workers--)
 		vm_worker_create(input, reg_workers);
 }
