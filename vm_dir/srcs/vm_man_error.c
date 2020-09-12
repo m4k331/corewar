@@ -31,9 +31,15 @@ void		vm_error(char *msg, t_input *g)
 	if (msg)
 	{
 		if (g)
+		{
 			ft_putstr_fd(msg, g->io->err_fd);
+			ft_putstr_fd("\n", g->io->err_fd);
+		}
 		else
+		{
 			ft_putstr_fd(msg, 2);
+			ft_putstr_fd("\n", 2);
+		}
 	}
 	if (g)
 		vm_remove_all(g);

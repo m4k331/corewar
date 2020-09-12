@@ -1,4 +1,4 @@
-.PHONY: all clean fclean re libft
+.PHONY: all clean fclean re libft norm
 
 # ----- Colors -----
 BLACK:="\033[1;30m"

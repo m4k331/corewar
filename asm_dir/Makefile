@@ -1,3 +1,5 @@
+.PHONY: all clean fclean re norm libs clean_name
+
 NAME = asm
 
 CC = gcc
@@ -52,8 +54,6 @@ SOURCES = \
          main.c\
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
-
-.PHONY: all libs clean clean_name fclean re
 
 all: libs $(ODIR) $(BIN_DIR) $(BIN_DIR)/$(NAME)
 

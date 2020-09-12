@@ -61,6 +61,7 @@ int					vm_input_parse_champ_offline(int fd, t_champ *champ,
 		vm_error("Error: wrong champ file - not enough of code", input);
 	else
 		ft_memcpy(champ->code, buf, champ->code_size);
+	read(fd, buf, 1) ? vm_error("Error: champ code is fat", input) : 1;
 	return (0);
 }
 

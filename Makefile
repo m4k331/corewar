@@ -1,4 +1,6 @@
-NAME = bin
+NAME = BIN
+
+.PHONY: all clean fclean re norm obnulyay
 
 PROJECT_PART_PATHS = $(ASM) $(VM)
 BIN_DIR = $(PWD)/$(NAME)
