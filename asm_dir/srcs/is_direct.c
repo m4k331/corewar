@@ -65,5 +65,5 @@ int		is_direct(t_data *data, char *line)
 				&& ft_isdigit(line[data->char_num + 2]))
 				|| ft_isdigit(line[data->char_num + 1])))
 		return (is_direct_value(data, line));
-	return (lex_error_direct(data));
+	return (0);
 }
