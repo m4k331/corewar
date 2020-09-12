@@ -1,8 +1,9 @@
-BIN_DIR=@pwd
+BIN_DIR=$(PWD)
 
 export BIN_DIR
 
 all:
+	echo ---------------------------------- $(BIN_DIR)
 	make -C asm
 	make -C vm
 

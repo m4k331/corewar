@@ -6,7 +6,7 @@
 /*   By: limry <limry@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/02 16:00:47 by limry             #+#    #+#             */
-/*   Updated: 2020/09/08 18:41:46 by limry            ###   ########.fr       */
+/*   Updated: 2020/09/12 15:04:00 by limry            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ int					vm_input_parse_champ_offline(int fd, t_champ *champ,
 		vm_error("Error: wrong champ file - not enough of code", input);
 	else
 		ft_memcpy(champ->code, buf, champ->code_size);
+	if (read(fd, buf, 1))
+		vm_error("Error: wrong champ file - codesize is too big", input);
 	return (0);
 }
 
