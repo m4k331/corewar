@@ -143,10 +143,9 @@ $(NAME): libft $(OBJS)
 #	@$(MKDIR_P) $(DIRS)
 
 $(DIR_OBJ):
-	mkdir $@
+	@$(MKDIR_P) $@
 
-$(DIR_OBJ)%.o: $(DIR_SRC)/%.c |  $(DIR_OBJ)
-	@mkdir -p $(DIR_OBJ)
+$(DIR_OBJ)%.o: $(DIR_SRC)%.c | $(DIR_OBJ)
 	@echo Compiling: $<
 	@$(COMPILER) $(FLAGS) -MD -o $@ -c $< $(DIR_INC)
 
