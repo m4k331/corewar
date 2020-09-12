@@ -108,7 +108,6 @@ SERVER = vm_main.c \
 
 NAME = corewar
 
-#BIN_DIR = ../resources
 BIN_DIR ?= .
 
 DIR_SRC = srcs

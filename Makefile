@@ -1,32 +1,43 @@
-BIN_DIR=$(PWD)
-WHITE:='\033[1;107m'
-BLUE:='\033[0;104m'
-RED:='\033[1;101m'
-TEXT_BLACK:='\033[1;30m'
-EOC:='\033[0;0m'
+NAME = bin
 
-ASM=asm_dir
-VM=vm_dir
-
+PROJECT_PART_PATHS = $(ASM) $(VM)
+BIN_DIR = $(PWD)/$(NAME)
 export BIN_DIR
 
-all:
-	make -C $(ASM)
-	make -C $(VM)
+WHITE		:= '\033[1;107m'
+BLUE		:= '\033[0;104m'
+RED			:= '\033[1;101m'
+TEXT_BLACK	:= '\033[1;30m'
+EOC			:= '\033[0;0m'
+
+ASM	= ./asm_dir
+VM	= ./vm_dir
+
+all: $(NAME)
+	@for i in $(PROJECT_PART_PATHS); do \
+		make -C $$i; \
+	done
+
+$(NAME):
+	mkdir -p $(BIN_DIR)
 
 clean:
-	make -C $(ASM) clean
-	make -C $(VM) clean
+	@for i in $(PROJECT_PART_PATHS); do \
+		make -C $$i clean; \
+	done
 
 fclean: clean
-	make -C $(ASM) fclean
-	make -C $(VM) fclean
+	rm -rf $(NAME)
+	@for i in $(PROJECT_PART_PATHS); do \
+		make -C $$i fclean; \
+	done
 
 re: fclean all
 
 norm:
-	make -C $(ASM) norm
-	make -C $(VM) norm
+	@for i in $(PROJECT_PART_PATHS); do \
+		make -C $$i norm; \
+	done
 
 obnulyay:
 	@echo $(TEXT_BLACK) $(WHITE) "⣿⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" $(EOC)
