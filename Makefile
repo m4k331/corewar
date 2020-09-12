@@ -1,9 +1,17 @@
-NAME = BIN
-
 .PHONY: all clean fclean re norm obnulyay
 
-PROJECT_PART_PATHS = $(ASM) $(VM)
-BIN_DIR = $(PWD)/$(NAME)
+ASM	= ./asm_dir
+VM	= ./vm_dir
+
+PROJECTS = $(ASM) $(VM)
+
+define part_exec
+	@for i in $(PROJECTS); do \
+    	make -C $$i $(1); \
+    done
+endef
+
+BIN_DIR = $(PWD)
 export BIN_DIR
 
 WHITE		:= '\033[1;107m'
@@ -12,34 +20,19 @@ RED			:= '\033[1;101m'
 TEXT_BLACK	:= '\033[1;30m'
 EOC			:= '\033[0;0m'
 
-ASM	= ./asm_dir
-VM	= ./vm_dir
-
-all: $(NAME)
-	@for i in $(PROJECT_PART_PATHS); do \
-		make -C $$i; \
-	done
-
-$(NAME):
-	mkdir -p $(BIN_DIR)
+all:
+	$(call part_exec,$@)
 
 clean:
-	@for i in $(PROJECT_PART_PATHS); do \
-		make -C $$i clean; \
-	done
+	$(call part_exec,$@)
 
 fclean: clean
-	rm -rf $(NAME)
-	@for i in $(PROJECT_PART_PATHS); do \
-		make -C $$i fclean; \
-	done
+	$(call part_exec,$@)
 
 re: fclean all
 
 norm:
-	@for i in $(PROJECT_PART_PATHS); do \
-		make -C $$i norm; \
-	done
+	$(call part_exec,$@)
 
 obnulyay:
 	@echo $(TEXT_BLACK) $(WHITE) "⣿⣿⣿⣿⣻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" $(EOC)
