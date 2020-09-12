@@ -148,7 +148,7 @@ all: $(NAME)
 
 $(NAME): libft/libft.a $(DIRS) $(OBJS)
 	@echo $(BBLUE)Preparing CoreWarMachine $(EOC)
-	$(COMPILER) $(FLAGS) -o $(NAME) $(OBJS) -L$(DIR_LIB) -lft
+	@$(COMPILER) $(FLAGS) -o $(NAME) $(OBJS) -L$(DIR_LIB) -lft
 	@echo $(BMAGENTA)CoreWarMachine is ready $(EOC)
 
 $(DIRS):
