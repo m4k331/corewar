@@ -1,7 +1,7 @@
-corewar_vm/CMakeLists.txt
-corewar_vm/cmake-build-debug
-corewar_vm/cmake-build-debug/
-corewar_vm/.idea
+vm/CMakeLists.txt
+vm/cmake-build-debug
+vm/cmake-build-debug/
+vm/.idea
 asm/.idea
 *.o
 *.a

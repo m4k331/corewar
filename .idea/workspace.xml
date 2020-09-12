@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="e84f8638-c7c9-4f55-896c-b7cc8d6bc0a6" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/asm/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/asm/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/vm/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/includes/corewar_vm.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/includes/corewar_vm.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/includes/op.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/includes/op.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/includes/vm_game_input.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/includes/vm_game_input.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/includes/vm_io_interface.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/includes/vm_io_interface.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/includes/vm_messages.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/includes/vm_messages.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/includes/vm_server.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/includes/vm_server.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/author" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/author" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_binary_heap.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_binary_heap.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_checkers.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_checkers.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_darr.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_darr.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_dstr.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_dstr.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_lst.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_lst.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_mem.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_mem.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_printf.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_printf.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_put.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_put.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_strchange.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_strchange.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_string.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_string.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/ft_tonum.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/ft_tonum.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/get_next_line.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/get_next_line.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/includes/libft.h" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/includes/libft.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_checkers/ft_isalnum.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_checkers/ft_isalnum.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_checkers/ft_isalpha.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_checkers/ft_isalpha.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_checkers/ft_isascii.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_checkers/ft_isascii.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_checkers/ft_isdigit.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_checkers/ft_isdigit.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_checkers/ft_isprint.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_checkers/ft_isprint.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_bzero.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_bzero.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_memalloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_memalloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_memccpy.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_memccpy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_memchr.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_memchr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_memcmp.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_memcmp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_memcpy.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_memcpy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_memdel.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_memdel.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_memmove.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_memmove.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/0_mem/ft_memset.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/0_mem/ft_memset.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strcat.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strcat.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strchr.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strchr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strchrcount.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strchrcount.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strclr.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strclr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strcmp.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strcmp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strcpy.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strcpy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strdel.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strdel.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strdup.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strdup.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strequ.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strequ.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_striter.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_striter.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_striteri.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_striteri.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strjoin.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strjoin.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strlcat.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strlcat.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strlcpy.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strlcpy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strlen.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strlen.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strmap.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strmap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strmapi.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strmapi.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strncat.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strncat.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strncmp.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strncmp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strncpy.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strncpy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strnequ.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strnequ.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strnew.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strnew.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strnlen.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strnlen.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strnstr.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strnstr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strrchr.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strrchr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strsplit.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strsplit.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strstr.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strstr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strsub.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strsub.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strtolower.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strtolower.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strtoupper.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strtoupper.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_string/ft_strtrim.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_string/ft_strtrim.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_tonum/ft_atoi.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_tonum/ft_atoi.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/1_tonum/ft_atoli.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/1_tonum/ft_atoli.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_get_next_line/ft_get_next_line.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_get_next_line/ft_get_next_line.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_get_next_line/ft_get_next_line2.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_get_next_line/ft_get_next_line2.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_lst/ft_del.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_lst/ft_del.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_lst/ft_lstadd.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_lst/ft_lstadd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_lst/ft_lstdel.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_lst/ft_lstdel.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_lst/ft_lstdelone.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_lst/ft_lstdelone.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_lst/ft_lstiter.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_lst/ft_lstiter.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_lst/ft_lstmap.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_lst/ft_lstmap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_lst/ft_lstnew.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_lst/ft_lstnew.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_put/ft_putchar.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_put/ft_putchar.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_put/ft_putchar_fd.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_put/ft_putchar_fd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_put/ft_putendl.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_put/ft_putendl.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_put/ft_putendl_fd.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_put/ft_putendl_fd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_put/ft_putnbr.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_put/ft_putnbr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_put/ft_putnbr_fd.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_put/ft_putnbr_fd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_put/ft_putstr.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_put/ft_putstr.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_put/ft_putstr_fd.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_put/ft_putstr_fd.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_strchange/ft_itoa.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_strchange/ft_itoa.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_strchange/ft_tolower.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_strchange/ft_tolower.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/2_strchange/ft_toupper.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/2_strchange/ft_toupper.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_binary_heap/bin_free.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_binary_heap/bin_free.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_binary_heap/bin_get_root.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_binary_heap/bin_get_root.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_binary_heap/bin_heapify.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_binary_heap/bin_heapify.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_binary_heap/bin_inc_key.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_binary_heap/bin_inc_key.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_binary_heap/bin_insert.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_binary_heap/bin_insert.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_binary_heap/bin_remove_root.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_binary_heap/bin_remove_root.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_binary_heap/bin_swap.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_binary_heap/bin_swap.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_binary_heap/binary_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_binary_heap/binary_init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_binsearch.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_binsearch.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_delete.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_delete.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_delete_ith.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_delete_ith.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_join.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_join.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_pop_all.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_pop_all.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_pop_all_wo_malloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_pop_all_wo_malloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_pop_back.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_pop_back.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_pop_back_wo_malloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_pop_back_wo_malloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_pop_front.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_pop_front.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_pop_front_wo_malloc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_pop_front_wo_malloc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_remove_back.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_remove_back.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_remove_front.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_remove_front.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_shrink.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_shrink.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_timsort.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_timsort.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_timsort_getrun.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_timsort_getrun.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_darr/darr_timsort_merge.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_darr/darr_timsort_merge.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_dstr/dstr_del.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_dstr/dstr_del.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_dstr/dstr_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_dstr/dstr_init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_dstr/dstr_join.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_dstr/dstr_join.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_dstr/dstr_pop_back.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_dstr/dstr_pop_back.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_dstr/dstr_pop_front.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_dstr/dstr_pop_front.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_dstr/dstr_remove_back.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_dstr/dstr_remove_back.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_dstr/dstr_remove_front.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_dstr/dstr_remove_front.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/bint_api.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/bint_api.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/c_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/c_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/di_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/di_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/f_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/f_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/f_proc_ldbl.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/f_proc_ldbl.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/f_proc_powten.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/f_proc_powten.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/f_proc_prec_ldbl.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/f_proc_prec_ldbl.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/f_proc_prec_ldbl_rounding.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/f_proc_prec_ldbl_rounding.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/f_proc_support.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/f_proc_support.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/f_proc_support2.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/f_proc_support2.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/ft_printf.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/ft_printf.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/handle_f_extremums.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/handle_f_extremums.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/o_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/o_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/o_proc_continue.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/o_proc_continue.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/p_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/p_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/parsecolors.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/parsecolors.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/parseman.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/parseman.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/pf_stringrunner.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/pf_stringrunner.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/processor.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/processor.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/rules_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/rules_init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/s_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/s_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/u_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/u_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/x_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/x_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/libft/srcs/3_printf/x_proc_continue.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/libft/srcs/3_printf/x_proc_continue.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/op.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/op.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_car/vm_car_get_types_and_step.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_car/vm_car_get_types_and_step.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_car/vm_car_implement_op.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_car/vm_car_implement_op.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_car/vm_car_play.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_car/vm_car_play.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_clean.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_clean.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_connect.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_connect.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_connect_parse.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_connect_parse.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_connect_workers.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_connect_workers.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_disconnect.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_disconnect.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_exit.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_exit.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_handshake.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_handshake.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_help.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_help.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_process.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_process.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_status.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_status.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_commands_server/vm_command_wksetlog.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_commands_server/vm_command_wksetlog.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_av_parse.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_av_parse.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_create_queue.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_create_queue.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_define_mode.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_define_mode.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_parse.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_parse.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_parse_champ.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_parse_champ.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_receive_data.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_receive_data.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_remove.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_remove.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_input/vm_input_socket_parse.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_input/vm_input_socket_parse.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_main.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_main.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_man_error.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_man_error.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_message/vm_message_endgame.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_message/vm_message_endgame.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_message/vm_message_game_loaded.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_message/vm_message_game_loaded.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_message/vm_message_operation.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_message/vm_message_operation.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_message/vm_message_presentation_champs.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_message/vm_message_presentation_champs.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_message/vm_message_proc_statuses.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_message/vm_message_proc_statuses.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_message/vm_message_sendgame.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_message/vm_message_sendgame.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_message/vm_message_set_header.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_message/vm_message_set_header.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_server_multithread.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_server_multithread.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_server_run.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_server_run.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_server_start.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_server_start.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_block.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_block.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_close.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_close.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_connect_wait.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_connect_wait.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_connection_process.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_connection_process.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_disconnect.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_disconnect.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_fill.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_fill.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_io_destroy.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_io_destroy.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_io_setup.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_io_setup.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_recv.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_recv.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_send.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_send.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_unblock.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_unblock.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_socket/vm_socket_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_socket/vm_socket_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_game_state_notify.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_game_state_notify.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_get_data_from_queue.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_get_data_from_queue.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_log_dead_proc.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_log_dead_proc.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_manager_init.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_manager_init.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_manager_remove.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_manager_remove.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_run.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_run.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_show_map.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_show_map.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_socket_notify.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_socket_notify.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/vm_worker/vm_worker_winner_notify.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/vm_worker/vm_worker_winner_notify.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_log.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_log.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_add.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_add.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_aff.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_aff.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_and.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_and.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_fork.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_fork.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_ld.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_ld.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_ldi.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_ldi.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_lfork.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_lfork.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_live.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_live.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_lld.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_lld.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_lldi.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_lldi.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_or.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_or.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_st.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_st.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_sti.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_sti.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_sub.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_sub.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_xor.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_xor.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_op_worker_zjmp.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_op_worker_zjmp.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_worker_fork_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_worker_fork_utils.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/corewar_vm/srcs/worker_operations/vm_worker_op_utils.c" beforeDir="false" afterPath="$PROJECT_DIR$/vm/srcs/worker_operations/vm_worker_op_utils.c" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="GOROOT" path="$USER_HOME$/.brew/Cellar/go/1.14.5/libexec" />
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="1hPIGZUbsko3idDUt1hymDKaudI" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="go.import.settings.migrated" value="true" />
+    <property name="go.sdk.automatically.set" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$" />
+    <property name="settings.editor.selected.configurable" value="Errors" />
+  </component>
+  <component name="RunManager">
+    <configuration name="all" type="MAKEFILE_TARGET_RUN_CONFIGURATION" factoryName="Makefile" temporary="true">
+      <makefile filename="$PROJECT_DIR$/Makefile" target="all" workingDirectory="" arguments="">
+        <envs />
+      </makefile>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Makefile.all" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="1116" y="553" key="#Other_File_Types" timestamp="1599906457235">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state x="1116" y="553" key="#Other_File_Types/0.23.2560.1337@0.23.2560.1337" timestamp="1599906457235" />
+    <state width="909" height="1217" key="GridCell.Tab.0.bottom" timestamp="1599907787101">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="909" height="1217" key="GridCell.Tab.0.bottom/0.23.2560.1337@0.23.2560.1337" timestamp="1599907787101" />
+    <state width="909" height="1217" key="GridCell.Tab.0.center" timestamp="1599907787100">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="909" height="1217" key="GridCell.Tab.0.center/0.23.2560.1337@0.23.2560.1337" timestamp="1599907787100" />
+    <state width="909" height="1217" key="GridCell.Tab.0.left" timestamp="1599907787100">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="909" height="1217" key="GridCell.Tab.0.left/0.23.2560.1337@0.23.2560.1337" timestamp="1599907787100" />
+    <state width="909" height="1217" key="GridCell.Tab.0.right" timestamp="1599907787101">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state width="909" height="1217" key="GridCell.Tab.0.right/0.23.2560.1337@0.23.2560.1337" timestamp="1599907787101" />
+    <state x="789" y="330" key="SettingsEditor" timestamp="1599906446273">
+      <screen x="0" y="23" width="2560" height="1337" />
+    </state>
+    <state x="789" y="330" key="SettingsEditor/0.23.2560.1337@0.23.2560.1337" timestamp="1599906446273" />
+  </component>
+</project>
