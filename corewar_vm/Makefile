@@ -1,5 +1,19 @@
 .PHONY: all clean fclean re libft
 
+# ----- Colors -----
+BLACK:="\033[1;30m"
+RED:="\033[1;31m"
+GREEN:="\033[1;32m"
+CYAN:="\033[1;35m"
+PURPLE:="\033[1;36m"
+WHITE:="\033[1;37m"
+YELLOW:="\033[1;33m"
+BBLUE:="\033[1;104m"
+BMAGENTA:="\033[1;105m"
+
+EOC:="\033[0;0m"
+# ==================
+
 DIR_CAR = vm_car
 CAR =	$(DIR_CAR)/vm_car_get_types_and_step.c \
 		$(DIR_CAR)/vm_car_implement_op.c\
@@ -94,17 +108,13 @@ SERVER = vm_main.c \
 
 NAME = corewar
 
-DIR_SRC = srcs/
-DIR_INC = -I./includes/ -I./libft/includes/
-DIR_OBJ = obj/
+DIR_SRC = srcs
+DIR_OBJ = obj
 
 LIB = libft.a
 DIR_LIB = ./libft/
 
 HEADERS = corewar_vm.h op.h vm_game_input.h vm_io_interface.h vm_messages.h vm_server.h libft.h
-
-OBJ = $(SRC:%.c=%.o)
-DEP = $(OBJ:%.o=%.d)
 
 SRC =	$(CAR) \
 		$(COMMANDS) \
@@ -124,32 +134,29 @@ DIRS = $(DIR_OBJ) \
 		$(DIR_OBJ)/$(DIR_WORKER) \
 		$(DIR_OBJ)/$(DIR_OPERATIONS)
 
-SRCS = $(SRC:%.c=$(DIR_SRC)%.c)
-OBJS = $(SRC:%.c=$(DIR_OBJ)%.o)
-DEPS = $(SRC:%.c=$(DIR_OBJ)%.d)
+SRCS = $(SRC:%.c=$(DIR_SRC)/%.c)
+OBJ = $(SRC:%.c=%.o)
+OBJS = $(SRC:%.c=$(DIR_OBJ)/%.o)
+DEPS = $(OBJS:.o=.d)
 
-MKDIR_P = mkdir -p
-
-COMPILER = clang
 FLAGS = -Wall -Wextra -Werror -pthread
+COMPILER = gcc
+MKDIR_P = mkdir -p
+DIR_INC = -I./includes/ -I./libft/includes/
 
 all: $(NAME)
 
-$(NAME): libft $(OBJS)
-	@echo Preparing CoreWarMachine
+$(NAME): libft/libft.a $(DIRS) $(OBJS)
+	@echo $(BBLUE)Preparing CoreWarMachine $(EOC)
 	$(COMPILER) $(FLAGS) -o $(NAME) $(OBJS) -L$(DIR_LIB) -lft
+	@echo $(BMAGENTA)CoreWarMachine is ready $(EOC)
 
-#$(DIRS):
-#	@$(MKDIR_P) $(DIRS)
+$(DIRS):
+	$(MKDIR_P) $(DIRS)
 
-$(DIR_OBJ):
-	@$(MKDIR_P) $@
-
-$(DIR_OBJ)%.o: $(DIR_SRC)%.c | $(DIR_OBJ)
-	@echo Compiling: $<
+$(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
+	@echo $(BBLUE)Compiling: $< $(EOC)
 	@$(COMPILER) $(FLAGS) -MD -o $@ -c $< $(DIR_INC)
-
--include $(DEPS)
 
 libft:
 	$(MAKE) -C $(DIR_LIB)
@@ -161,3 +168,5 @@ fclean: clean
 		rm $(NAME)
 
 re: clean all
+
+-include $(wildcard $(DEPS))
