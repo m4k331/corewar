@@ -12,9 +12,7 @@ ODIR = objects
 LBDIRS = libft
 LBNAMES = libft.a
 
-FRAMEWORKS = -framework OpenGL -framework AppKit
-
-LDFLAGS += $(addprefix -L , $(LBDIRS)) $(FRAMEWORKS)
+LDFLAGS += $(addprefix -L , $(LBDIRS))
 LDLIBS += $(addprefix -l , $(LBNAMES:lib%.a=%))
 
 INCDIRS = $(HDIR) $(LBDIRS) $(addsuffix /includes, $(LBDIRS))
@@ -85,6 +83,9 @@ clean_name:
 fclean: clean clean_name
 
 re: fclean all
+
+norm:
+	norminette $(CDIR)/* $(HDIR)/*
 
 MAKEOVERRIDES =
 libs:

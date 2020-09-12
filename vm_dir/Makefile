@@ -108,6 +108,9 @@ SERVER = vm_main.c \
 
 NAME = corewar
 
+#BIN_DIR = ../resources
+BIN_DIR ?= .
+
 DIR_SRC = srcs
 DIR_OBJ = obj
 
@@ -144,11 +147,11 @@ COMPILER = gcc
 MKDIR_P = mkdir -p
 DIR_INC = -I./includes/ -I./libft/includes/
 
-all: $(NAME)
+all: $(BIN_DIR) $(BIN_DIR)/$(NAME)
 
-$(NAME): libft/libft.a $(DIRS) $(OBJS)
+$(BIN_DIR)/$(NAME): libft/libft.a $(DIRS) $(OBJS)
 	@echo $(BBLUE)Preparing CoreWarMachine $(EOC)
-	@$(COMPILER) $(FLAGS) -o $(NAME) $(OBJS) -L$(DIR_LIB) -lft
+	@$(COMPILER) $(FLAGS) -o $(BIN_DIR)/$(NAME) $(OBJS) -L$(DIR_LIB) -lft
 	@echo $(BMAGENTA)CoreWarMachine is ready $(EOC)
 
 $(DIRS):
@@ -159,14 +162,17 @@ $(DIR_OBJ)/%.o: $(DIR_SRC)/%.c
 	@$(COMPILER) $(FLAGS) -MD -o $@ -c $< $(DIR_INC)
 
 libft/libft.a:
-	$(MAKE) -C $(DIR_LIB)
+	$(MAKE) -C $(DIR_LIB) > /dev/null
 
 clean:
 	rm -rf $(DIR_OBJ)
 
 fclean: clean
-		rm $(NAME)
+	rm -f $(BIN_DIR)/$(NAME)
 
 re: clean all
+
+norm:
+	norminette $(DIR_SRC)/* ./includes/*
 
 -include $(wildcard $(DEPS))
