@@ -12,25 +12,13 @@
 
 #include "asm.h"
 
-int		is_lonely_label_char(t_data *data)
-{
-	ft_putstr_fd(ERROR_LEXICAL, 2);
-	ft_putchar_fd('[', 2);
-	ft_putnbr_fd(data->line_num, 2);
-	ft_putchar_fd(':', 2);
-	ft_putnbr_fd(data->char_num + 1, 2);
-	ft_putchar_fd(']', 2);
-	ft_putchar_fd('\n', 2);
-	return (0);
-}
-
 int		is_label_char(t_data *data, char *line)
 {
 	int	i;
 
 	if (!line[data->char_num + 1]
 			|| !ft_strchr(LABEL_CHARS, line[data->char_num + 1]))
-		return (is_lonely_label_char(data));
+		return (0);
 	i = data->char_num + 1;
 	while (line[i] && ft_strchr(LABEL_CHARS, line[i]))
 		i++;

@@ -44,18 +44,6 @@ int		is_direct_value(t_data *data, char *line)
 	return (0);
 }
 
-int		lex_error_direct(t_data *data)
-{
-	ft_putstr_fd(ERROR_LEXICAL, 2);
-	ft_putchar_fd('[', 2);
-	ft_putnbr_fd(data->line_num, 2);
-	ft_putchar_fd(':', 2);
-	ft_putnbr_fd(data->char_num + 1, 2);
-	ft_putchar_fd(']', 2);
-	ft_putchar_fd('\n', 2);
-	return (0);
-}
-
 int		is_direct(t_data *data, char *line)
 {
 	if (line[data->char_num + 1] && line[data->char_num + 1] == ':')
