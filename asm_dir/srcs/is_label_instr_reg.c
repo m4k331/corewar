@@ -80,5 +80,5 @@ int		is_label_instr_reg(t_data *data, char *line)
 		return (is_instruction(data, line, i));
 	}
 	else
-		return (lex_error_label(data, i));
+		return (0);
 }

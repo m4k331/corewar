@@ -28,11 +28,30 @@ int			no_end_of_line(t_data *data)
 	return (0);
 }
 
+int			check_buf(t_data *data, const char *buf, int ret)
+{
+	if (buf[ret] == '\n')
+		return (1);
+	if (ft_strcmp(data->current_token->type, "ENDLINE"))
+		return (0);
+	while (buf[ret - 1] != '\n')
+		ret--;
+	while (buf[ret])
+	{
+		if (buf[ret] != ' ' && buf[ret] != '\t'
+				&& buf[ret] != COMMENT_CHAR && buf[ret] != ALT_COMMENT_CHAR)
+			return (0);
+		if (buf[ret] == COMMENT_CHAR || buf[ret] == ALT_COMMENT_CHAR)
+			break ;
+		ret++;
+	}
+	return (1);
+}
+
 int			check_last_end(t_data *data, char *filename)
 {
 	char	buf[1001];
 	int		ret;
-	int		len;
 	char	last_char;
 
 	ret = 0;
@@ -42,8 +61,7 @@ int			check_last_end(t_data *data, char *filename)
 	while ((ret = read(data->fd, buf, 1000)))
 	{
 		buf[ret] = '\0';
-		if ((len = ft_strlen(buf)) < 1000 && buf[ret - 1] != '\n'
-				&& ft_strcmp(data->current_token->type, "ENDLINE"))
+		if (ft_strlen(buf) < 1000 && !check_buf(data, buf, ret - 1))
 			return (no_end_of_line(data));
 		last_char = buf[ret - 1];
 	}
