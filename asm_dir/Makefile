@@ -54,6 +54,7 @@ SOURCES = \
          main.c\
 
 OBJECTS = $(addprefix $(ODIR)/, $(SOURCES:.c=.o))
+DEPS = $(OBJECTS:.o=.d)
 
 all: libs $(ODIR) $(BIN_DIR) $(BIN_DIR)/$(NAME)
 
@@ -92,3 +93,5 @@ libs:
 	@for i in $(LBDIRS); do \
 		make -C $$i 2> /dev/null ; \
 	done
+
+-include $(wildcard $(DEPS))
